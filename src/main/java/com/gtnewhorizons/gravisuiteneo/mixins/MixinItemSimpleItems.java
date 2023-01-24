@@ -1,5 +1,6 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import gravisuite.ItemSimpleItems;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
@@ -18,6 +19,6 @@ public class MixinItemSimpleItems {
     @Inject(at = @At("HEAD"), method = "registerIcons")
     private void registerAntidoteIcon(IIconRegister iconRegister, CallbackInfo ci) {
         this.iconsList = new IIcon[8];
-        this.iconsList[7] = iconRegister.registerIcon("gravisuite:itemAntidote");
+        this.iconsList[7] = iconRegister.registerIcon(GraviSuiteNeo.MODID + ":itemAntidote");
     }
 }

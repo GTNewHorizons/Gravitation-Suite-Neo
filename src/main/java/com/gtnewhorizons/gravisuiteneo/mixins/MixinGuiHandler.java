@@ -1,5 +1,6 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
+import com.gtnewhorizons.gravisuiteneo.client.GuiPlasmaLauncher;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import com.gtnewhorizons.gravisuiteneo.inventory.ContainerPlasmaLauncher;
 import com.gtnewhorizons.gravisuiteneo.inventory.InventoryItem;
@@ -14,16 +15,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(GuiHandler.class)
 public class MixinGuiHandler {
 
-    @Inject(at = @At("RETURN"), method = "getServerGuiElement", remap = false)
+    @Inject(at = @At("RETURN"), cancellable = true, method = "getServerGuiElement", remap = false)
     private void gravisuiteneo$getServerGuiElement(
             int ID, EntityPlayer player, World world, int X, int Y, int Z, CallbackInfoReturnable<Object> cir) {
         if (ID == Properties.GUIID_PLASMALAUNCHER) {
-            cir.setReturnValue(
-                    new ContainerPlasmaLauncher(player.inventory, new InventoryItem(player.getHeldItem())));
+            cir.setReturnValue(new ContainerPlasmaLauncher(player.inventory, new InventoryItem(player.getHeldItem())));
         }
     }
 
-    @Inject(at = @At("TAIL"), method = "getClientGuiElement", remap = false)
+    @Inject(at = @At("TAIL"), cancellable = true, method = "getClientGuiElement", remap = false)
     private void gravisuiteneo$getClientGuiElement(
             int ID, EntityPlayer player, World world, int X, int Y, int Z, CallbackInfoReturnable<Object> cir) {
         //        if(ID == Properties.GUIID_ADVDRILL) {
@@ -31,8 +31,7 @@ public class MixinGuiHandler {
         //            return;
         //        }
         if (ID == Properties.GUIID_PLASMALAUNCHER) {
-            cir.setReturnValue(
-                    new ContainerPlasmaLauncher(player.inventory, new InventoryItem(player.getHeldItem())));
+            cir.setReturnValue(new GuiPlasmaLauncher(new ContainerPlasmaLauncher(player.inventory, new InventoryItem(player.getHeldItem()))));
         }
     }
 }

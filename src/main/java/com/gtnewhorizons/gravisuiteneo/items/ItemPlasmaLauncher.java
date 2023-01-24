@@ -1,5 +1,6 @@
 package com.gtnewhorizons.gravisuiteneo.items;
 
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
 import com.gtnewhorizons.gravisuiteneo.client.ICustomItemBars;
 import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
@@ -31,7 +32,7 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
         powerPerMaxShot = Properties.ElectricPresets.PlasmaLauncher.energyPerOperation;
         this.setCreativeTab(GraviSuiteNeoRegistry.graviCreativeTab);
         this.setMaxStackSize(1);
-        this.setTextureName("gravisuite:PlasmaCannon_0");
+        this.setTextureName(GraviSuiteNeo.MODID + ":PlasmaCannon_0");
         this.setUnlocalizedName("plasmaLauncher");
     }
 
@@ -103,7 +104,7 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
     }
 
     private static void notifyWorldPlasmaFired(EntityPlayer player) {
-        player.worldObj.playSoundAtEntity(player, "gravisuite:plasmaFired", 1.25F, 1.0F);
+        player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":plasmaFired", 1.25F, 1.0F);
     }
 
     public ItemStack getAmmunition(ItemStack itemStack) {
@@ -165,42 +166,42 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
 
     @Override
     public Color getColorForMinValue(ItemStack itemStack, int barIndex) {
-        return ((ItemPlasmaCell) GraviSuiteNeoRegistry.itemPlasmaCell)
+        return ((ICustomItemBars) GraviSuiteNeoRegistry.itemPlasmaCell)
                 .getColorForMinValue(this.getAmmunition(itemStack), barIndex);
     }
 
     @Override
     public Color getColorForMaxValue(ItemStack itemStack, int barIndex) {
-        return ((ItemPlasmaCell) GraviSuiteNeoRegistry.itemPlasmaCell)
+        return ((ICustomItemBars) GraviSuiteNeoRegistry.itemPlasmaCell)
                 .getColorForMaxValue(this.getAmmunition(itemStack), barIndex);
     }
 
     @Override
     public double getMaxValue(ItemStack itemStack, int barIndex) {
-        return ((ItemPlasmaCell) GraviSuiteNeoRegistry.itemPlasmaCell)
+        return ((ICustomItemBars) GraviSuiteNeoRegistry.itemPlasmaCell)
                 .getMaxValue(this.getAmmunition(itemStack), barIndex);
     }
 
     @Override
     public double getValueForBar(ItemStack itemStack, int barIndex) {
-        return ((ItemPlasmaCell) GraviSuiteNeoRegistry.itemPlasmaCell)
+        return ((ICustomItemBars) GraviSuiteNeoRegistry.itemPlasmaCell)
                 .getValueForBar(this.getAmmunition(itemStack), barIndex);
     }
 
     @Override
     public BarAlignment getBarAlignment() {
-        return ((ItemPlasmaCell) GraviSuiteNeoRegistry.itemPlasmaCell).getBarAlignment();
+        return ((ICustomItemBars) GraviSuiteNeoRegistry.itemPlasmaCell).getBarAlignment();
     }
 
     @Override
     public int getBarThickness(ItemStack itemStack, int barIndex) {
-        return ((ItemPlasmaCell) GraviSuiteNeoRegistry.itemPlasmaCell)
+        return ((ICustomItemBars) GraviSuiteNeoRegistry.itemPlasmaCell)
                 .getBarThickness(this.getAmmunition(itemStack), barIndex);
     }
 
     @Override
     public boolean getIsBarInverted(ItemStack itemStack, int barIndex) {
-        return ((ItemPlasmaCell) GraviSuiteNeoRegistry.itemPlasmaCell)
+        return ((ICustomItemBars) GraviSuiteNeoRegistry.itemPlasmaCell)
                 .getIsBarInverted(this.getAmmunition(itemStack), barIndex);
     }
 }

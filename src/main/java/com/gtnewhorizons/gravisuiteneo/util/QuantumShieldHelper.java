@@ -1,5 +1,6 @@
 package com.gtnewhorizons.gravisuiteneo.util;
 
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.common.Achievements;
 import com.gtnewhorizons.gravisuiteneo.common.PacketQuantumShield;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
@@ -115,12 +116,12 @@ public class QuantumShieldHelper {
     }
 
     private static void notifyWorldShieldUp(EntityPlayer player) {
-        player.worldObj.playSoundAtEntity(player, "gravisuite:qshieldon", 1.25F, 1.0F);
+        player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":qshieldon", 1.25F, 1.0F);
         PacketQuantumShield.issue(player.getEntityId(), -4);
     }
 
     public static void notifyWorldShieldDown(EntityPlayer player) {
-        player.worldObj.playSoundAtEntity(player, "gravisuite:qshieldoff", 1.25F, 1.0F);
+        player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":qshieldoff", 1.25F, 1.0F);
         PacketQuantumShield.issue(player.getEntityId(), -5);
     }
 
@@ -142,7 +143,7 @@ public class QuantumShieldHelper {
             player.setHealth(lastHealthElement.getLeft());
             player.addPotionEffect(new PotionEffect(Potion.regeneration.getId(), 40, 4));
             ElectricItem.manager.discharge(itemStack, 4000.0D, 4, false, false, false);
-            player.worldObj.playSoundAtEntity(player, "gravisuite:qshieldimpact", 1.25F, 1.0F);
+            player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":qshieldimpact", 1.25F, 1.0F);
             PacketQuantumShield.issue(player.getEntityId(), -1);
             if (lastHealthElement.getRight() - System.currentTimeMillis() < -2000L) {
                 PLAYER_HEALTH_MAP.put(playerID, Pair.of(currHealth, System.currentTimeMillis()));
@@ -182,7 +183,7 @@ public class QuantumShieldHelper {
             if (nanobotsUsed) {
                 ElectricItem.manager.discharge(itemstack, DISCHARGE_MEDKIT, 4, true, false, false);
                 curePotions(itemstack, player, true);
-                player.worldObj.playSoundAtEntity(player, "gravisuite:medkit", 1.25F, 1.0F);
+                player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":medkit", 1.25F, 1.0F);
                 ServerProxy.sendPlayerMessage(
                         player,
                         EnumChatFormatting.GREEN

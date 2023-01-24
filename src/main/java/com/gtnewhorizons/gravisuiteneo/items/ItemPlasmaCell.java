@@ -1,5 +1,6 @@
 package com.gtnewhorizons.gravisuiteneo.items;
 
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
 import com.gtnewhorizons.gravisuiteneo.client.ICustomItemBars;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
@@ -41,7 +42,7 @@ public class ItemPlasmaCell extends Item
         this.setMaxDamage(27);
         this.setMaxStackSize(1);
         this.setUnlocalizedName("PlasmaCell");
-        this.setTextureName("gravisuite:itemPlasmaCell");
+        this.setTextureName(GraviSuiteNeo.MODID + ":itemPlasmaCell");
     }
 
     /*

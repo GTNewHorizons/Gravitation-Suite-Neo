@@ -1,7 +1,8 @@
 package com.gtnewhorizons.gravisuiteneo.client;
 
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.inventory.ContainerPlasmaLauncher;
-import gravisuite.ItemSonicLauncher;
+import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaLauncher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
@@ -9,6 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public class GuiPlasmaLauncher extends GuiContainer {
+    
+    private static final ResourceLocation TEXTURE_GUI = new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/PlasmaGunGUI.png");
 
     public static ItemStack getCurrentItem() {
         return Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem();
@@ -16,18 +19,15 @@ public class GuiPlasmaLauncher extends GuiContainer {
 
     public GuiPlasmaLauncher(ContainerPlasmaLauncher inventorySlots) {
         super(inventorySlots);
-        if (!(getCurrentItem().getItem() instanceof ItemSonicLauncher)) {
+        if (!(getCurrentItem().getItem() instanceof ItemPlasmaLauncher)) {
             return; // Something is wrong; The current item is not a PlasmaLauncher
         }
-
-        this.xSize = 176;
-        this.ySize = 166;
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.bindTexture(new ResourceLocation("GraviSuite:textures/gui/PlasmaGunGUI.png"));
+        this.mc.renderEngine.bindTexture(TEXTURE_GUI);
         int xStart = (this.width - this.xSize) / 2;
         int yStart = (this.height - this.ySize) / 2;
         GL11.glEnable(GL11.GL_BLEND);

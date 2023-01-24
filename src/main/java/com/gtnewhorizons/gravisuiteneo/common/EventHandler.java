@@ -1,5 +1,6 @@
 package com.gtnewhorizons.gravisuiteneo.common;
 
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.common.DamageSources.EntityDamageSourcePlazma;
 import com.gtnewhorizons.gravisuiteneo.util.QuantumShieldHelper;
 import cpw.mods.fml.common.eventhandler.EventPriority;
@@ -152,7 +153,7 @@ public class EventHandler {
             target = -3;
         }
 
-        player.worldObj.playSoundAtEntity(player, "gravisuite:qshieldimpact", 1.25f, 1.0f);
+        player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":qshieldimpact", 1.25f, 1.0f);
         PacketQuantumShield.issue(player.getEntityId(), target);
     }
 }

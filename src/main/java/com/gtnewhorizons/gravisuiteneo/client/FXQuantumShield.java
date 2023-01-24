@@ -1,5 +1,6 @@
 package com.gtnewhorizons.gravisuiteneo.client;
 
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityFX;
@@ -12,9 +13,6 @@ import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import org.lwjgl.opengl.GL11;
 
-/**
- * This code is based on Thaumcraft
- */
 public class FXQuantumShield extends EntityFX {
 
     public enum EShieldMode {
@@ -23,11 +21,24 @@ public class FXQuantumShield extends EntityFX {
         IMPACT
     }
 
-    private static final ResourceLocation MDL_SHIELD =
-            new ResourceLocation("gravisuite", "textures/models/qshield/shield.obj");
-    private static final String SHIELD_TEXTURE_HIT = "textures/models/qshield/hit/quantumShield%d.png";
-    private static final String SHIELD_TEXTURE_POWER_UP = "textures/models/qshield/up/quantumShield%d.png";
-    private static final String SHIELD_TEXTURE_POWER_DOWN = "textures/models/qshield/down/quantumShield%d.png";
+    private static final ResourceLocation MDL_SHIELD;
+    private static final ResourceLocation[] SHIELD_TEXTURE_HIT;
+    private static final ResourceLocation[] SHIELD_TEXTURE_POWER_UP;
+    private static final ResourceLocation[] SHIELD_TEXTURE_POWER_DOWN;
+    
+    static {
+        MDL_SHIELD = new ResourceLocation(GraviSuiteNeo.MODID, "textures/models/qshield/shield.obj");
+        
+        final int numFrames = 16;
+        SHIELD_TEXTURE_HIT = new ResourceLocation[numFrames];
+        SHIELD_TEXTURE_POWER_UP = new ResourceLocation[numFrames];
+        SHIELD_TEXTURE_POWER_DOWN = new ResourceLocation[numFrames];
+        for(int i = 0; i < numFrames; i++) {
+            SHIELD_TEXTURE_HIT[i] = new ResourceLocation(GraviSuiteNeo.MODID, "textures/models/qshield/hit/quantumShield" + i + ".png");
+            SHIELD_TEXTURE_POWER_UP[i] = new ResourceLocation(GraviSuiteNeo.MODID, "textures/models/qshield/up/quantumShield" + i + ".png");
+            SHIELD_TEXTURE_POWER_DOWN[i] = new ResourceLocation(GraviSuiteNeo.MODID, "textures/models/qshield/down/quantumShield" + i + ".png");
+        }
+    }
 
     private final EShieldMode shieldMode;
     private final Entity target;
@@ -73,16 +84,13 @@ public class FXQuantumShield extends EntityFX {
 
     private static ResourceLocation getResLoc(int frame, EShieldMode mode) {
         switch (mode) {
-            case IMPACT:
-                return new ResourceLocation("gravisuite", String.format(SHIELD_TEXTURE_HIT, frame));
-
             case POWER_DOWN:
-                return new ResourceLocation("gravisuite", String.format(SHIELD_TEXTURE_POWER_DOWN, frame));
-
+                return SHIELD_TEXTURE_POWER_DOWN[frame];
             case POWER_UP:
-                return new ResourceLocation("gravisuite", String.format(SHIELD_TEXTURE_POWER_UP, frame));
+                return SHIELD_TEXTURE_POWER_UP[frame];
+            default: //also matching IMPACT is intended
+                return SHIELD_TEXTURE_HIT[frame];
         }
-        return new ResourceLocation("gravisuite", String.format(SHIELD_TEXTURE_HIT, frame));
     }
 
     @Override

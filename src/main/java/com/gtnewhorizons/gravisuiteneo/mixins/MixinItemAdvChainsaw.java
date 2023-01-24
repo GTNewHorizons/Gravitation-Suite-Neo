@@ -1,5 +1,6 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -95,7 +96,7 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
             remap = false)
     private void gravisuiteneo$playChainsawSound(
             ItemStack itemstack, int x, int y, int z, EntityPlayer player, CallbackInfoReturnable<Boolean> cir) {
-        player.worldObj.playSoundAtEntity(player, "gravisuite:chainsaw", 1.25f, 1.0f);
+        player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":chainsaw", 1.25f, 1.0f);
     }
 
     @Inject(at = @At(ordinal = 1, value = "RETURN"), method = "onBlockStartBreak", remap = false)

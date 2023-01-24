@@ -1,5 +1,6 @@
 package com.gtnewhorizons.gravisuiteneo.client;
 
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.util.LevelableToolHelper;
 import gravisuite.ItemAdvDDrill;
 import net.minecraft.client.Minecraft;
@@ -10,6 +11,9 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public class GuiAdvDrill extends GuiContainer {
+    
+    private static final ResourceLocation GUI_TEXTURE_T2 = new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/DrillGUITier2.png");
+    private static final ResourceLocation GUI_TEXTURE_T3 = new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/DrillGUITier3.png");
 
     private int tier;
     private ItemStack currentDrill;
@@ -35,9 +39,9 @@ public class GuiAdvDrill extends GuiContainer {
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         if (this.tier == 1) {
-            this.mc.renderEngine.bindTexture(new ResourceLocation("GraviSuite:textures/gui/DrillGUITier2.png"));
+            this.mc.renderEngine.bindTexture(GUI_TEXTURE_T2);
         } else if (this.tier == 2) {
-            this.mc.renderEngine.bindTexture(new ResourceLocation("GraviSuite:textures/gui/DrillGUITier3.png"));
+            this.mc.renderEngine.bindTexture(GUI_TEXTURE_T3);
         }
         int x = (this.width - this.xSize) / 2;
         int y = (this.height - this.ySize) / 2;

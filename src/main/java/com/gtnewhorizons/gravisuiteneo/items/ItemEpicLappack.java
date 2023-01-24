@@ -1,6 +1,7 @@
 package com.gtnewhorizons.gravisuiteneo.items;
 
 import cofh.api.energy.IEnergyContainerItem;
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import cpw.mods.fml.relauncher.Side;
@@ -26,7 +27,7 @@ public class ItemEpicLappack extends ItemUltimateLappack implements IElectricIte
     public ItemEpicLappack() {
         super(
                 ArmorMaterial.DIAMOND,
-                GraviSuite.proxy.addArmor("GraviSuite"),
+                GraviSuite.proxy.addArmor(GraviSuiteNeo.MODID),
                 1,
                 Properties.ElectricPresets.EpicLappack.maxCharge,
                 Properties.ElectricPresets.EpicLappack.tier,
@@ -39,13 +40,13 @@ public class ItemEpicLappack extends ItemUltimateLappack implements IElectricIte
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
-        this.itemIcon = iconRegister.registerIcon("gravisuite:itemEpicLappack");
+        this.itemIcon = iconRegister.registerIcon(GraviSuiteNeo.MODID + ":itemEpicLappack");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
-        return "gravisuite:textures/armor/armor_epic_lappack.png";
+        return GraviSuiteNeo.MODID + ":textures/armor/armor_epic_lappack.png";
     }
 
     @Override

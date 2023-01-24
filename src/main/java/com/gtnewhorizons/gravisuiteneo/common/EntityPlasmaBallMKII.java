@@ -1,5 +1,6 @@
 package com.gtnewhorizons.gravisuiteneo.common;
 
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.mixins.MixinEntityPlasmaBall;
 import gravisuite.BlockRelocatorPortal;
 import gravisuite.EntityPlasmaBall;
@@ -182,7 +183,7 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
             final EntityPlasmaBall explosionBall = new EntityPlasmaBallMKII(this.worldObj, this, this.charge);
             if (!this.worldObj.isRemote) {
                 this.worldObj.playSoundEffect(
-                        mop.blockX, mop.blockY, mop.blockZ, "gravisuite:plasmaImpact", 1.25F, 1.0F);
+                        mop.blockX, mop.blockY, mop.blockZ, GraviSuiteNeo.MODID + ":plasmaImpact", 1.25F, 1.0F);
                 this.worldObj.spawnEntityInWorld(explosionBall);
                 // setVelocity(0.0D, 0.0D, 0.0D);
                 // actionType = 3;
