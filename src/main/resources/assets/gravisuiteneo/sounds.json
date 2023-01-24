@@ -1,0 +1,10 @@
+{
+    "chainsaw": {"category": "player","sounds": [{"name": "chainsaw0","stream": false}, {"name": "chainsaw1","stream": false}, {"name": "chainsaw2","stream": false}]},
+    "drill": {"category": "player","sounds": [{"name": "drill0","stream": false}, {"name": "drill1","stream": false}, {"name": "drill2","stream": false}]},
+    "medkit": {"category": "master","sounds": [{"name": "medkit","stream": false}]},
+    "qshieldimpact": {"category": "player","sounds": [{"name": "quantumshield_impact","stream": false}]},
+    "qshieldon": {"category": "player","sounds": [{"name": "quantumshield_powerup","stream": false}]},
+    "qshieldoff": {"category": "player","sounds": [{"name": "quantumshield_powerdown","stream": false}]},
+    "plasmaFired": {"category": "player","sounds": [{"name": "plasmaFired","stream": false}]},
+    "plasmaImpact": {"category": "player","sounds": [{"name": "plasmaImpact","stream": false}]}
+}
