@@ -2,6 +2,7 @@ package com.gtnewhorizons.gravisuiteneo;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import com.gtnewhorizons.gravisuiteneo.items.ItemEpicLappack;
+import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaCell;
 import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaLauncher;
 import com.gtnewhorizons.gravisuiteneo.util.GregTechAPIHelper;
 import cpw.mods.fml.common.FMLLog;
@@ -37,8 +38,10 @@ public class GraviSuiteNeoRegistry {
         };
         plasmaLauncher = new ItemPlasmaLauncher();
         epicLappack = new ItemEpicLappack();
+        itemPlasmaCell = new ItemPlasmaCell();
         GameRegistry.registerItem(plasmaLauncher, "sonicLauncher");
         GameRegistry.registerItem(epicLappack, "epicLappack");
+        GameRegistry.registerItem(itemPlasmaCell, "itemPlasmaCell");
     }
 
     /**
