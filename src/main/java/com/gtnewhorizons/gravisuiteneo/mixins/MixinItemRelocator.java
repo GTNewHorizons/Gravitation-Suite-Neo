@@ -1,14 +1,18 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
+import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
+import gravisuite.EntityPlasmaBall;
 import gravisuite.ItemRelocator;
 import gravisuite.ItemRelocator.TeleportPoint;
 import gravisuite.ServerProxy;
 import java.util.List;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,6 +36,12 @@ public class MixinItemRelocator {
         if (this.energyPerDimesionTp > this.maxCharge) {
             this.energyPerDimesionTp = (int) (this.maxCharge / 2.0 - 100.0);
         }
+    }
+
+    @Redirect(at = @At(remap = false, target = "gravisuite/EntityPlasmaBall", value = "NEW"), method = "onItemRightClick")
+    private EntityPlasmaBall gravisuiteneo$constructEntityPlasmaBall(
+            World world, EntityLivingBase entityLiving, TeleportPoint tpPoint, byte entityType) {
+        return new EntityPlasmaBallMKII(world, entityLiving, tpPoint, entityType);
     }
 
     @Redirect(

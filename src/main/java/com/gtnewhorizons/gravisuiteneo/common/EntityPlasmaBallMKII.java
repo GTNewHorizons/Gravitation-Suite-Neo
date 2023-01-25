@@ -81,6 +81,10 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
         super(world, entityLiving, tpPoint, entityType);
     }
 
+    public EntityPlasmaBallMKII(World world) {
+        super(world);
+    }
+
     @Override
     protected void entityInit() {
         super.entityInit();

@@ -1,8 +1,10 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
 import com.gtnewhorizon.mixinextras.injector.WrapWithCondition;
+import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import gravisuite.EntityPlasmaBall;
 import gravisuite.GraviSuite;
 import ic2.api.recipe.ICraftingRecipeManager;
 import net.minecraft.item.Item;
@@ -11,8 +13,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.config.Configuration;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -88,6 +92,11 @@ public class MixinGraviSuite {
                                             value = "INVOKE")))
     private void gravisuiteneo$preventSonicLauncherRegistration(Item item, String name) {
         // NO-OP
+    }
+
+    @ModifyConstant(constant = @Constant(classValue = EntityPlasmaBall.class), method = "preInit", remap = false)
+    private Class<?> gravisuiteneo$getEntityPlasmaBallClass(Class<?> original) {
+        return EntityPlasmaBallMKII.class;
     }
 
     @WrapWithCondition(
