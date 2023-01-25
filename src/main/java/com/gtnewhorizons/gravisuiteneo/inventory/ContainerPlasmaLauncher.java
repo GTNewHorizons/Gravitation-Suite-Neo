@@ -50,7 +50,7 @@ public class ContainerPlasmaLauncher extends Container {
     public boolean canInteractWith(EntityPlayer entityplayer) {
         // be sure to return the inventory's isUseableByPlayer method
         // if you defined special behavior there:
-        return /*inventory.isUseableByPlayer(entityplayer);*/ false;
+        return inventory.isUseableByPlayer(entityplayer);
     }
 
     /**
