@@ -1,5 +1,6 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.client.SelectedItemMKII;
 import cpw.mods.fml.common.FMLLog;
 import gravisuite.GraviSuite;
@@ -127,6 +128,10 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
 
     @Shadow(remap = false)
     private int itemBGdelY;
+    
+    static {
+        tex = new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/relocator_display2.png");
+    }
 
     /**
      * Get the current selected index from the Dislocator; According to the mouse position
@@ -194,7 +199,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
 
             // Load TP-Destinations from our ItemStack
             List<TeleportPoint> tpList = new ArrayList<>(ItemRelocator.loadTeleportPoints(
-                Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem()));
+                    Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem()));
             // Get the current selected Item that has been clicked; If any
             SelectedItem selectedItem = this.getSelected(tpList);
             if (selectedItem == null) {
@@ -237,7 +242,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
         int yStart = (this.height - this.ySize) / 2;
         try {
             List<TeleportPoint> tpList = new ArrayList<>(ItemRelocator.loadTeleportPoints(
-                Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem()));
+                    Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem()));
             this.maxOffset = (int) Math.floor((tpList.size() - 1) / 10);
 
             if (tpList.size() > 0) {
@@ -292,7 +297,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
             GL11.glDisable(GL11.GL_BLEND);
 
             ArrayList<TeleportPoint> tpList = new ArrayList<>(ItemRelocator.loadTeleportPoints(
-                Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem()));
+                    Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem()));
 
             if (this.prevButtonAvailable()) {
                 this.drawTexturedModalRect(xStart + prevButtonX, yStart + prevButtonY, 0, 182, 9, 9);
