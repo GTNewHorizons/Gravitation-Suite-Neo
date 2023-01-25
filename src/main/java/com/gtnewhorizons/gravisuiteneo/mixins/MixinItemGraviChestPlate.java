@@ -53,15 +53,13 @@ public class MixinItemGraviChestPlate {
         }
     }
 
-    @ModifyExpressionValue(at = @At(target = "Lnet/minecraft/entity/Entity;isBurning()Z", value = "INVOKE", remap = true), method = "onArmorTick", remap = false)
+    @ModifyExpressionValue(at = @At(target = "Lnet/minecraft/entity/player/EntityPlayer;isBurning()Z", value = "INVOKE", remap = true), method = "onArmorTick", remap = false)
     private boolean gravisuiteneo$checkCanExtinguish(boolean original, World worldObj, EntityPlayer player, ItemStack itemStack) {
-        return original && ElectricItem.manager.canUse(itemStack, QuantumShieldHelper.DISCHARGE_EXTINGUISH);
-    }
-
-    @Inject(at = @At(target = "Lnet/minecraft/entity/Entity;extinguish()V", remap = true, value = "INVOKE"), method = "onArmorTick", remap = false)
-    private void gravisuiteneo$dischargeForExtinguish(World worldObj, EntityPlayer player, ItemStack itemStack,
-            CallbackInfo ci) {
-        ElectricItem.manager.discharge(itemStack, QuantumShieldHelper.DISCHARGE_EXTINGUISH, 4, true, false, false);
+        if(original && ElectricItem.manager.canUse(itemStack, QuantumShieldHelper.DISCHARGE_EXTINGUISH)) {
+            ElectricItem.manager.discharge(itemStack, QuantumShieldHelper.DISCHARGE_EXTINGUISH, 4, true, false, false);
+            return true;
+        }
+        return false;
     }
 
     @Inject(at = @At("TAIL"), method = "onArmorTick", remap = false)
