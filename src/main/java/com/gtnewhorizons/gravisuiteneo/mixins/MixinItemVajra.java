@@ -41,12 +41,15 @@ public class MixinItemVajra {
 
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
-    @Inject(at = @At(remap = false, target = "Ljava/util/List;add(Ljava/lang/Object;)Z", value = "INVOKE"), method = "addInformation")
+    @Inject(
+            at = @At(remap = false, target = "Ljava/util/List;add(Ljava/lang/Object;)Z", value = "INVOKE"),
+            method = "addInformation")
     private void gravisuiteneo$addSilktouchInformation(
             ItemStack itemstack,
             EntityPlayer player,
             @SuppressWarnings("rawtypes") List tooltip,
-            boolean advancedTooltips, CallbackInfo ci) {
+            boolean advancedTooltips,
+            CallbackInfo ci) {
         tooltip.add(EnumChatFormatting.AQUA + StatCollector.translateToLocal("message.vajra.clickRightForSilk"));
     }
 }

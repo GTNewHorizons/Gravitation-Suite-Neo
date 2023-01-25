@@ -14,10 +14,11 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.MinecraftForgeClient;
+import org.lwjgl.input.Keyboard;
 
 public class ClientProxy extends CommonProxy {
 
-    public static KeyBinding medicalKey = new KeyBinding("GraviSuite MedKit", 23, "GraviSuite");
+    public static final KeyBinding MEDICAL_KEY = new KeyBinding("GraviSuite MedKit", Keyboard.KEY_I, "GraviSuite");
 
     @Override
     public void registerRenderers() {
@@ -28,13 +29,13 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void registerKeys() {
-        ClientRegistry.registerKeyBinding(medicalKey);
+        ClientRegistry.registerKeyBinding(MEDICAL_KEY);
         FMLCommonHandler.instance().bus().register(this);
     }
 
     @SubscribeEvent
     public void onKeyInput(KeyInputEvent event) {
-        if (!FMLClientHandler.instance().isGUIOpen(GuiChat.class) && medicalKey.isPressed()) {
+        if (!FMLClientHandler.instance().isGUIOpen(GuiChat.class) && MEDICAL_KEY.isPressed()) {
             ItemStack itemstack = Minecraft.getMinecraft().thePlayer.inventory.armorItemInSlot(2);
             if (itemstack != null && itemstack.getItem() == GraviSuite.graviChestPlate) {
                 PacketKeyPress.issue(4);

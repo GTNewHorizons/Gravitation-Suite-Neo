@@ -31,7 +31,8 @@ public class MixinGuiHandler {
         //            return;
         //        }
         if (ID == Properties.GUIID_PLASMALAUNCHER) {
-            cir.setReturnValue(new GuiPlasmaLauncher(new ContainerPlasmaLauncher(player.inventory, new InventoryItem(player.getHeldItem()))));
+            cir.setReturnValue(new GuiPlasmaLauncher(
+                    new ContainerPlasmaLauncher(player.inventory, new InventoryItem(player.getHeldItem()))));
         }
     }
 }

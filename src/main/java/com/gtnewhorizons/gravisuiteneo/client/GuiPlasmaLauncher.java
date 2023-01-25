@@ -10,8 +10,9 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public class GuiPlasmaLauncher extends GuiContainer {
-    
-    private static final ResourceLocation TEXTURE_GUI = new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/PlasmaGunGUI.png");
+
+    private static final ResourceLocation TEXTURE_GUI =
+            new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/PlasmaGunGUI.png");
 
     public static ItemStack getCurrentItem() {
         return Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem();

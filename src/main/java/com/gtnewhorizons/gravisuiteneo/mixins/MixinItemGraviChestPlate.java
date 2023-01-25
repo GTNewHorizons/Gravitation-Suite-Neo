@@ -24,15 +24,20 @@ import org.spongepowered.libraries.org.objectweb.asm.Opcodes;
 @Mixin(ItemGraviChestPlate.class)
 public class MixinItemGraviChestPlate {
 
-    @Inject(at = @At(opcode = Opcodes.IFEQ, ordinal = 7, value = "JUMP"), cancellable = true, method = "onArmorTick", remap = false)
-    private void gravisuiteneo$handleShieldAndNanobots(World worldObj, EntityPlayer player, ItemStack itemStack,
-            CallbackInfo ci) {
-        if (!QuantumShieldHelper.readShieldMode(itemStack))
-            return;
+    @Inject(
+            at = @At(opcode = Opcodes.IFEQ, ordinal = 7, value = "JUMP"),
+            cancellable = true,
+            method = "onArmorTick",
+            remap = false)
+    private void gravisuiteneo$handleShieldAndNanobots(
+            World worldObj, EntityPlayer player, ItemStack itemStack, CallbackInfo ci) {
+        if (!QuantumShieldHelper.readShieldMode(itemStack)) return;
 
         if (!QuantumShieldHelper.hasValidShieldEquipment(player)) {
-            ServerProxy.sendPlayerMessage(player, EnumChatFormatting.RED
-                    + StatCollector.translateToLocal("message.graviChestPlate.invalidSetupShieldBreak"));
+            ServerProxy.sendPlayerMessage(
+                    player,
+                    EnumChatFormatting.RED
+                            + StatCollector.translateToLocal("message.graviChestPlate.invalidSetupShieldBreak"));
             QuantumShieldHelper.saveShieldMode(itemStack, false);
             QuantumShieldHelper.notifyWorldShieldDown(player);
             ci.cancel();
@@ -41,8 +46,10 @@ public class MixinItemGraviChestPlate {
 
         if (!player.capabilities.isCreativeMode) {
             if (ItemGraviChestPlate.getCharge(itemStack) < QuantumShieldHelper.DISCHARGE_IDLE) {
-                ServerProxy.sendPlayerMessage(player, EnumChatFormatting.RED
-                        + StatCollector.translateToLocal("message.graviChestPlate.lowpowerShieldBreak"));
+                ServerProxy.sendPlayerMessage(
+                        player,
+                        EnumChatFormatting.RED
+                                + StatCollector.translateToLocal("message.graviChestPlate.lowpowerShieldBreak"));
                 QuantumShieldHelper.saveShieldMode(itemStack, false);
                 QuantumShieldHelper.notifyWorldShieldDown(player);
                 ci.cancel();
@@ -53,9 +60,13 @@ public class MixinItemGraviChestPlate {
         }
     }
 
-    @ModifyExpressionValue(at = @At(target = "Lnet/minecraft/entity/player/EntityPlayer;isBurning()Z", value = "INVOKE", remap = true), method = "onArmorTick", remap = false)
-    private boolean gravisuiteneo$checkCanExtinguish(boolean original, World worldObj, EntityPlayer player, ItemStack itemStack) {
-        if(original && ElectricItem.manager.canUse(itemStack, QuantumShieldHelper.DISCHARGE_EXTINGUISH)) {
+    @ModifyExpressionValue(
+            at = @At(target = "Lnet/minecraft/entity/player/EntityPlayer;isBurning()Z", value = "INVOKE", remap = true),
+            method = "onArmorTick",
+            remap = false)
+    private boolean gravisuiteneo$checkCanExtinguish(
+            boolean original, World worldObj, EntityPlayer player, ItemStack itemStack) {
+        if (original && ElectricItem.manager.canUse(itemStack, QuantumShieldHelper.DISCHARGE_EXTINGUISH)) {
             ElectricItem.manager.discharge(itemStack, QuantumShieldHelper.DISCHARGE_EXTINGUISH, 4, true, false, false);
             return true;
         }

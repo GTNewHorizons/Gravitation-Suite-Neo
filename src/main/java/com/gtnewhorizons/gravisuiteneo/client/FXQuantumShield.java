@@ -25,18 +25,21 @@ public class FXQuantumShield extends EntityFX {
     private static final ResourceLocation[] SHIELD_TEXTURE_HIT;
     private static final ResourceLocation[] SHIELD_TEXTURE_POWER_UP;
     private static final ResourceLocation[] SHIELD_TEXTURE_POWER_DOWN;
-    
+
     static {
         MDL_SHIELD = new ResourceLocation(GraviSuiteNeo.MODID, "textures/models/qshield/shield.obj");
-        
+
         final int numFrames = 16;
         SHIELD_TEXTURE_HIT = new ResourceLocation[numFrames];
         SHIELD_TEXTURE_POWER_UP = new ResourceLocation[numFrames];
         SHIELD_TEXTURE_POWER_DOWN = new ResourceLocation[numFrames];
-        for(int i = 0; i < numFrames; i++) {
-            SHIELD_TEXTURE_HIT[i] = new ResourceLocation(GraviSuiteNeo.MODID, "textures/models/qshield/hit/quantumShield" + i + ".png");
-            SHIELD_TEXTURE_POWER_UP[i] = new ResourceLocation(GraviSuiteNeo.MODID, "textures/models/qshield/up/quantumShield" + i + ".png");
-            SHIELD_TEXTURE_POWER_DOWN[i] = new ResourceLocation(GraviSuiteNeo.MODID, "textures/models/qshield/down/quantumShield" + i + ".png");
+        for (int i = 0; i < numFrames; i++) {
+            SHIELD_TEXTURE_HIT[i] =
+                    new ResourceLocation(GraviSuiteNeo.MODID, "textures/models/qshield/hit/quantumShield" + i + ".png");
+            SHIELD_TEXTURE_POWER_UP[i] =
+                    new ResourceLocation(GraviSuiteNeo.MODID, "textures/models/qshield/up/quantumShield" + i + ".png");
+            SHIELD_TEXTURE_POWER_DOWN[i] = new ResourceLocation(
+                    GraviSuiteNeo.MODID, "textures/models/qshield/down/quantumShield" + i + ".png");
         }
     }
 
@@ -88,7 +91,7 @@ public class FXQuantumShield extends EntityFX {
                 return SHIELD_TEXTURE_POWER_DOWN[frame];
             case POWER_UP:
                 return SHIELD_TEXTURE_POWER_UP[frame];
-            default: //also matching IMPACT is intended
+            default: // also matching IMPACT is intended
                 return SHIELD_TEXTURE_HIT[frame];
         }
     }

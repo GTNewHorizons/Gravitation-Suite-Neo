@@ -128,7 +128,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
 
     @Shadow(remap = false)
     private int itemBGdelY;
-    
+
     static {
         tex = new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/relocator_display2.png");
     }

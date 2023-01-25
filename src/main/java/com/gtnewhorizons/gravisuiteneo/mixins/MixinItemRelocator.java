@@ -38,7 +38,9 @@ public class MixinItemRelocator {
         }
     }
 
-    @Redirect(at = @At(remap = false, target = "gravisuite/EntityPlasmaBall", value = "NEW"), method = "onItemRightClick")
+    @Redirect(
+            at = @At(remap = false, target = "gravisuite/EntityPlasmaBall", value = "NEW"),
+            method = "onItemRightClick")
     private EntityPlasmaBall gravisuiteneo$constructEntityPlasmaBall(
             World world, EntityLivingBase entityLiving, TeleportPoint tpPoint, byte entityType) {
         return new EntityPlasmaBallMKII(world, entityLiving, tpPoint, entityType);

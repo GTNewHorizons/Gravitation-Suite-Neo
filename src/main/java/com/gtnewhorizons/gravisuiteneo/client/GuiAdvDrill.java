@@ -11,9 +11,11 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public class GuiAdvDrill extends GuiContainer {
-    
-    private static final ResourceLocation GUI_TEXTURE_T2 = new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/DrillGUITier2.png");
-    private static final ResourceLocation GUI_TEXTURE_T3 = new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/DrillGUITier3.png");
+
+    private static final ResourceLocation GUI_TEXTURE_T2 =
+            new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/DrillGUITier2.png");
+    private static final ResourceLocation GUI_TEXTURE_T3 =
+            new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/DrillGUITier3.png");
 
     private int tier;
     private ItemStack currentDrill;

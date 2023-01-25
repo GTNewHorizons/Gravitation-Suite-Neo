@@ -14,8 +14,7 @@ public class ContainerPlasmaLauncher extends Container {
             HOTBAR_START = INV_END + 1,
             HOTBAR_END = HOTBAR_START + 8;
 
-    public ContainerPlasmaLauncher(
-        InventoryPlayer inventoryPlayer, InventoryItem inventoryItem) {
+    public ContainerPlasmaLauncher(InventoryPlayer inventoryPlayer, InventoryItem inventoryItem) {
         this.inventory = inventoryItem;
 
         int i;
@@ -71,8 +70,7 @@ public class ContainerPlasmaLauncher extends Container {
                 }
 
                 slot.onSlotChange(itemstack1, itemstack);
-            }
-            else {
+            } else {
                 if (!this.mergeItemStack(itemstack1, 0, INV_START, false)) {
                     return null;
                 }

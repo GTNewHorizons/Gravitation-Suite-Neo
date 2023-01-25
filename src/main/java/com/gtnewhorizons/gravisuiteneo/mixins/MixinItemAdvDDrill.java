@@ -406,11 +406,9 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
                             if (canHarvest) {
                                 if (localBlock != null && localHardness >= 0.0F) {
                                     for (final Material material : materials) {
-                                        if (material == localBlock.getMaterial()
-                                                || localBlock == Blocks.monster_egg) {
+                                        if (material == localBlock.getMaterial() || localBlock == Blocks.monster_egg) {
                                             if (!player.capabilities.isCreativeMode) {
-                                                if (localBlock.removedByPlayer(
-                                                        world, player, xPos, yPos, zPos, true)) {
+                                                if (localBlock.removedByPlayer(world, player, xPos, yPos, zPos, true)) {
                                                     localBlock.onBlockDestroyedByPlayer(
                                                             world, xPos, yPos, zPos, localMeta);
                                                 }
@@ -425,8 +423,7 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
                                                 }
 
                                                 localBlock.harvestBlock(world, player, xPos, yPos, zPos, localMeta);
-                                                localBlock.onBlockHarvested(
-                                                        world, xPos, yPos, zPos, localMeta, player);
+                                                localBlock.onBlockHarvested(world, xPos, yPos, zPos, localMeta, player);
 
                                                 if (blockHardness > 0.0F) {
                                                     this.onBlockDestroyed(
@@ -434,8 +431,7 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
                                                 }
 
                                                 world.func_147479_m(X, Y, Z);
-                                                ElectricItem.manager.use(
-                                                        itemstack, tFinalEnergyPerOperation, player);
+                                                ElectricItem.manager.use(itemstack, tFinalEnergyPerOperation, player);
                                             } else {
                                                 Helpers.setBlockToAir(world, xPos, yPos, zPos);
                                                 world.func_147479_m(X, Y, Z);

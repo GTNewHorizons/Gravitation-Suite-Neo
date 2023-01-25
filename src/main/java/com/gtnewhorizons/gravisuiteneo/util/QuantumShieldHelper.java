@@ -31,11 +31,11 @@ public class QuantumShieldHelper {
 
     /** Maps player UUID -> HP and time */
     private static final Map<UUID, Pair<Float, Long>> PLAYER_HEALTH_MAP = new HashMap<>();
+
     private static final int DISCHARGE_CURATIVE = 4000;
     private static final int DISCHARGE_MEDKIT = 4000;
     public static final int DISCHARGE_EXTINGUISH = 1000;
     public static final int DISCHARGE_IDLE = 5000;
-
 
     /**
      * Check if the player has a full set of QuantumArmor + GraviChestplate

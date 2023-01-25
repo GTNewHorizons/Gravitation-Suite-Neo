@@ -14,7 +14,17 @@ import org.spongepowered.libraries.org.objectweb.asm.Opcodes;
 @Mixin(Keyboard.class)
 public class MixinKeyboard {
 
-    @Inject(at = @At(args = "array=get", opcode = Opcodes.GETFIELD, ordinal = 1, target = "Lnet/minecraft/entity/player/InventoryPlayer;armorInventory:[Lnet/minecraft/item/ItemStack;", value = "FIELD"), method = "processKeyPressed", remap = false)
+    @Inject(
+            at =
+                    @At(
+                            args = "array=get",
+                            opcode = Opcodes.GETFIELD,
+                            ordinal = 1,
+                            target =
+                                    "Lnet/minecraft/entity/player/InventoryPlayer;armorInventory:[Lnet/minecraft/item/ItemStack;",
+                            value = "FIELD"),
+            method = "processKeyPressed",
+            remap = false)
     private void gravisuiteneo$switchGraviChestShieldMode(EntityPlayer player, int keyPressed, CallbackInfo ci) {
         ItemStack itemstack = player.inventory.armorInventory[2];
         if (itemstack != null && itemstack.getItem() == GraviSuite.graviChestPlate && Keyboard.isSneakKeyDown(player)) {
