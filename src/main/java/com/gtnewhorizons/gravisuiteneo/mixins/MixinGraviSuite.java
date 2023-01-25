@@ -1,8 +1,10 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
+import com.gtnewhorizon.mixinextras.injector.WrapWithCondition;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import gravisuite.GraviSuite;
+import ic2.api.recipe.ICraftingRecipeManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -86,6 +88,34 @@ public class MixinGraviSuite {
                                             value = "INVOKE")))
     private void gravisuiteneo$preventSonicLauncherRegistration(Item item, String name) {
         // NO-OP
+    }
+
+    @WrapWithCondition(
+            at =
+                    @At(
+                            remap = false,
+                            target =
+                                    "Lcpw/mods/fml/common/registry/GameRegistry;addRecipe(Lnet/minecraft/item/ItemStack;[Ljava/lang/Object;)V",
+                            value = "INVOKE"),
+            method = "afterModsLoaded",
+            remap = false)
+    private boolean gravisuiteneo$enableBasicRecipes(ItemStack output, Object... params) {
+        return !Properties.disableBasicRecipes;
+    }
+
+    @WrapWithCondition(
+            at =
+                    @At(
+                            ordinal = 0,
+                            remap = false,
+                            target =
+                                    "Lic2/api/recipe/ICraftingRecipeManager;addRecipe(Lnet/minecraft/item/ItemStack;[Ljava/lang/Object;)V",
+                            value = "INVOKE"),
+            method = "afterModsLoaded",
+            remap = false)
+    private boolean gravisuiteneo$enableBasicRecipes(
+            ICraftingRecipeManager instance, ItemStack output, Object... input) {
+        return !Properties.disableBasicRecipes;
     }
 
     @Inject(
