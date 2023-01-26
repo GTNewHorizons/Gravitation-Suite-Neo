@@ -1,18 +1,18 @@
 package com.gtnewhorizons.gravisuiteneo.common;
 
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
 import com.gtnewhorizons.gravisuiteneo.common.DamageSources.EntityDamageSourcePlazma;
 import com.gtnewhorizons.gravisuiteneo.util.QuantumShieldHelper;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 import gravisuite.GraviSuite;
 import gravisuite.ItemGraviChestPlate;
 import gravisuite.ServerProxy;
 import ic2.api.item.ElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -33,18 +33,11 @@ public class EventHandler {
             return;
         }
 
-        ItemStack stack = event.crafting.copy();
-
-        UniqueIdentifier uIDCrafted = GameRegistry.findUniqueIdentifierFor(stack.getItem());
-        UniqueIdentifier uID_Drill = GameRegistry.findUniqueIdentifierFor(GraviSuite.advDDrill);
-        // UniqueIdentifier uID_Plasma = GameRegistry.findUniqueIdentifierFor(GraviSuite.advDDrill);
-
-        if (uIDCrafted != null && uID_Drill != null /* && uID_Plasma != null*/) {
-            if (uIDCrafted.equals(uID_Drill)) {
-                Achievements.POWERDRILL.triggerAchievement(event.player);
-                //  else if (uIDCrafted.equals(uID_Plasma))
-                //    GraviAchievement.PLASMAGUN.triggerAchievement(event.player);
-            }
+        Item craftedItem = event.crafting.getItem();
+        if (craftedItem == GraviSuite.advDDrill) {
+            event.player.triggerAchievement(Achievements.POWERDRILL);
+        } else if (craftedItem == GraviSuiteNeoRegistry.plasmaLauncher) {
+            event.player.triggerAchievement(Achievements.PLASMAGUN);
         }
     }
 
@@ -125,7 +118,7 @@ public class EventHandler {
         }
 
         if (event.source instanceof EntityDamageSourcePlazma) {
-            Achievements.QSHIELD_PLASMAIMPACT.triggerAchievement(player);
+            player.triggerAchievement(Achievements.QSHIELD_PLASMAIMPACT);
         }
         // Drain half the amount of energy to absorb the damage, as we're already draining ~20kEU/s
         ElectricItem.manager.discharge(

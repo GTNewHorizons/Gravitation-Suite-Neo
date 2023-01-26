@@ -449,7 +449,7 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
 
             LevelableToolHelper.AddXP(player, itemstack, tTotalToolXPGain);
             if (canCollectXP && LevelableToolHelper.getLevel(itemstack) == 2) {
-                Achievements.POWERDRILL_MARKIII.triggerAchievement(player);
+                player.triggerAchievement(Achievements.POWERDRILL_MARKIII);
             }
 
             if (!GraviSuite.isSimulating()) {

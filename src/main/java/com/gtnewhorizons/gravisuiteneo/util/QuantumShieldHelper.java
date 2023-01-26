@@ -111,7 +111,7 @@ public class QuantumShieldHelper {
                             + EnumChatFormatting.GREEN
                             + StatCollector.translateToLocal("message.text.enabled"));
             notifyWorldShieldUp(player);
-            Achievements.QSHIELD.triggerAchievement(player);
+            player.triggerAchievement(Achievements.QSHIELD);
         }
     }
 

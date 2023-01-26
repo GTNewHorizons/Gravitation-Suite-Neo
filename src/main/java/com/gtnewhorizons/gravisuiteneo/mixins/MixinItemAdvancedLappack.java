@@ -64,7 +64,7 @@ public class MixinItemAdvancedLappack implements IItemCharger {
             CallbackInfoReturnable<ItemStack> cir,
             Integer toolMode) {
         if (itemStack.getItem() instanceof ItemEpicLappack) {
-            Achievements.EPIC_LAPPACK.triggerAchievement(player);
+            player.triggerAchievement(Achievements.EPIC_LAPPACK);
         }
     }
 

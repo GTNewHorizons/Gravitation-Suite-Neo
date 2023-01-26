@@ -178,10 +178,10 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
                 tDamageDealt += tFinalDamage;
             }
             if (tDamageDealt > 9000) {
-                Achievements.OVER9000.triggerAchievement(ownerEntity);
+                ownerEntity.triggerAchievement(Achievements.OVER9000);
             }
             if (tEntitiesHitDeadly > 100) {
-                Achievements.ULTRAKILL.triggerAchievement(ownerEntity);
+                ownerEntity.triggerAchievement(Achievements.ULTRAKILL);
             }
 
             final EntityPlasmaBall explosionBall = new EntityPlasmaBallMKII(this.worldObj, this, this.charge);

@@ -39,7 +39,7 @@ public class DamageSources {
 
             if (target == source) {
                 if (target instanceof EntityPlayer) {
-                    Achievements.VAPORIZE_SELF.triggerAchievement((EntityPlayer) target);
+                    ((EntityPlayer) target).triggerAchievement(Achievements.VAPORIZE_SELF);
                 }
 
                 if (customItemName == null) {
