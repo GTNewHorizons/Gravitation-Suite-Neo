@@ -30,7 +30,6 @@ public class Properties {
     public static void init(Configuration config) {
         Properties.config = config;
 
-        // TODO: property comments
         disableBasicRecipes = config.getBoolean("Disable Basic recipes", "Recipes settings", false, "");
         disableEpicLappackRecipe = config.getBoolean("Disable EpicLappack recipe", "Recipes settings", false, "");
         disableNanobotRecipe = config.getBoolean("Disable Nanobot recipe", "Recipes settings", false, "");
@@ -43,50 +42,35 @@ public class Properties {
         }
 
         AdvTweaks.init();
-
-        addCategoryComments();
         addPropertyComments();
     }
 
-    private static void addCategoryComments() {
-        // TODO: category comments
-        config.setCategoryComment(ADDITIONAL_TWEAKS, "");
-        config.setCategoryComment(ARMOR_PRESETS, "");
-        config.setCategoryComment(ELECTRIC_PRESETS, "");
-        config.setCategoryComment(HUD_SETTINGS, "");
-        config.setCategoryComment(RECIPES_SETTINGS, "");
-        config.setCategoryComment(RELOCATOR_SETTINGS, "");
-        config.setCategoryComment(SOUNDS_SETTINGS, "");
-        config.setCategoryComment(VAJRA_SETTINGS, "");
-    }
-
     private static void addPropertyComments() {
-        // TODO: property comments
-        setComment(HUD_SETTINGS, "Display hud", "");
-        setComment(HUD_SETTINGS, "hudPosition", "");
+        setComment(HUD_SETTINGS, "Display hud", "[default: true]");
+        setComment(HUD_SETTINGS, "hudPosition", "[range: 1 ~ 4, default: 1]");
 
-        setComment(RECIPES_SETTINGS, "Disable Advanced Chainsaw recipe", "");
-        setComment(RECIPES_SETTINGS, "Disable Advanced Dimond Drill recipe", "");
-        setComment(RECIPES_SETTINGS, "Disable Advanced Jetpack recipe", "");
-        setComment(RECIPES_SETTINGS, "Disable Advanced NanoChestPlate recipe", "");
-        setComment(RECIPES_SETTINGS, "Disable AdvancedLappack recipe", "");
-        setComment(RECIPES_SETTINGS, "Disable GraviChestPlate recipe", "");
-        setComment(RECIPES_SETTINGS, "Disable GraviTool recipe", "");
-        setComment(RECIPES_SETTINGS, "Disable Relocator recipe", "");
-        setComment(RECIPES_SETTINGS, "Disable UltimateLappack recipe", "");
-        setComment(RECIPES_SETTINGS, "Disable UltimateSolarHelmet recipe", "");
-        setComment(RECIPES_SETTINGS, "Disable Vajra recipe", "");
+        setComment(RECIPES_SETTINGS, "Disable Advanced Chainsaw recipe", "[default: false]");
+        setComment(RECIPES_SETTINGS, "Disable Advanced Dimond Drill recipe", "[default: false]");
+        setComment(RECIPES_SETTINGS, "Disable Advanced Jetpack recipe", "[default: false]");
+        setComment(RECIPES_SETTINGS, "Disable Advanced NanoChestPlate recipe", "[default: false]");
+        setComment(RECIPES_SETTINGS, "Disable AdvancedLappack recipe", "[default: false]");
+        setComment(RECIPES_SETTINGS, "Disable GraviChestPlate recipe", "[default: false]");
+        setComment(RECIPES_SETTINGS, "Disable GraviTool recipe", "[default: false]");
+        setComment(RECIPES_SETTINGS, "Disable Relocator recipe", "[default: false]");
+        setComment(RECIPES_SETTINGS, "Disable UltimateLappack recipe", "[default: false]");
+        setComment(RECIPES_SETTINGS, "Disable UltimateSolarHelmet recipe", "[default: false]");
+        setComment(RECIPES_SETTINGS, "Disable Vajra recipe", "[default: false]");
 
-        setComment(RELOCATOR_SETTINGS, "Disable portal mode", "");
-        setComment(RELOCATOR_SETTINGS, "Disable translocator mode", "");
-        setComment(RELOCATOR_SETTINGS, "relocatorEnergyPerDimesionTp", "");
-        setComment(RELOCATOR_SETTINGS, "relocatorEnergyPerPortal", "");
-        setComment(RELOCATOR_SETTINGS, "relocatorEnergyPerStandartTp", "");
-        setComment(RELOCATOR_SETTINGS, "relocatorEnergyPerTranslocator", "");
+        setComment(RELOCATOR_SETTINGS, "Disable portal mode", "[default: false]");
+        setComment(RELOCATOR_SETTINGS, "Disable translocator mode", "[default: false]");
+        setComment(RELOCATOR_SETTINGS, "relocatorEnergyPerDimesionTp", "[range: 0 ~ 2147483647, default: 1500000]");
+        setComment(RELOCATOR_SETTINGS, "relocatorEnergyPerPortal", "[range: 0 ~ 2147483647, default: 2500000]");
+        setComment(RELOCATOR_SETTINGS, "relocatorEnergyPerStandartTp", "[range: 0 ~ 2147483647, default: 1000000]");
+        setComment(RELOCATOR_SETTINGS, "relocatorEnergyPerTranslocator", "[range: 0 ~ 2147483647, default: 2000000]");
 
-        setComment(SOUNDS_SETTINGS, "Disable all sounds", "");
+        setComment(SOUNDS_SETTINGS, "Disable all sounds", "[default: false]");
 
-        setComment(VAJRA_SETTINGS, "Disable Vajra accurate mode", "");
+        setComment(VAJRA_SETTINGS, "Disable Vajra accurate mode", "[default: false]");
     }
 
     private static void setComment(String categoryKey, String propertyKey, String comment) {

@@ -52,25 +52,21 @@ public class ItemEpicLappack extends ItemUltimateLappack implements IElectricIte
     @Override
     public boolean onTick(EntityPlayer player, ItemStack itemstack) {
         super.onTick(player, itemstack);
-        try {
-            final Integer toolMode = readToolMode(itemstack);
-            if (GraviSuite.isSimulating() && toolMode == 1) {
-                if (RNG.nextInt(this.tickChance) == 0) {
-                    for (ItemStack is : player.inventory.mainInventory) {
-                        if (is == null) {
-                            continue;
-                        }
-                        if (is.getItem() instanceof IElectricItem && !(is.getItem() instanceof ItemAdvancedLappack)) {
-                            ((IItemCharger) this).doChargeItemStack(itemstack, is);
-                        }
-                        if (is.getItem() instanceof IEnergyContainerItem) {
-                            ((IItemCharger) this).doChargeItemStackRF(itemstack, is);
-                        }
+        final int toolMode = readToolMode(itemstack);
+        if (GraviSuite.isSimulating() && toolMode == 1) {
+            if (RNG.nextInt(this.tickChance) == 0) {
+                for (ItemStack is : player.inventory.mainInventory) {
+                    if (is == null) {
+                        continue;
+                    }
+                    if (is.getItem() instanceof IElectricItem && !(is.getItem() instanceof ItemAdvancedLappack)) {
+                        ((IItemCharger) this).doChargeItemStack(itemstack, is);
+                    }
+                    if (is.getItem() instanceof IEnergyContainerItem) {
+                        ((IItemCharger) this).doChargeItemStackRF(itemstack, is);
                     }
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return true;
     }

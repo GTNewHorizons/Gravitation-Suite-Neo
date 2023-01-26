@@ -22,6 +22,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
 
@@ -150,11 +151,13 @@ public class ItemPlasmaCell extends Item
 
         FluidStack fluid = ((IFluidContainerItem) GraviSuiteNeoRegistry.itemPlasmaCell).getFluid(stack);
         if (fluid != null) {
-            list.add(String.format("Contains: %s (%,d mb)", FluidHelper.getFluidName(fluid), fluid.amount));
-            list.add(String.format("Efficiency: %.2f %%", GraviSuiteNeoRegistry.getPlasmaEfficiency(fluid)));
+            list.add(StatCollector.translateToLocalFormatted(
+                    "message.plasmaCell.contains", FluidHelper.getFluidName(fluid), fluid.amount));
+            list.add(StatCollector.translateToLocalFormatted(
+                    "message.plasmaCell.efficiency", GraviSuiteNeoRegistry.getPlasmaEfficiency(fluid)));
         } else {
-            list.add("Contains: Nothing ");
-            list.add("Efficiency: 0.00 %");
+            list.add(StatCollector.translateToLocal("message.plasmaCell.nothing"));
+            list.add(StatCollector.translateToLocalFormatted("message.plasmaCell.efficiency", 0.0f));
         }
 
         return list;

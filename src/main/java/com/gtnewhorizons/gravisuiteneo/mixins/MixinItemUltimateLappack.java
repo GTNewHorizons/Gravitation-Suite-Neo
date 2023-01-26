@@ -14,23 +14,19 @@ public class MixinItemUltimateLappack extends MixinItemAdvancedLappack {
 
     @Override
     public boolean onTick(EntityPlayer player, ItemStack itemstack) {
-        try {
-            int toolMode = ItemAdvancedLappack.readToolMode(itemstack);
-            if (GraviSuite.isSimulating() && toolMode == 1) {
-                for (ItemStack is : player.inventory.armorInventory) {
-                    if (is == null) {
-                        continue;
-                    }
-                    if (is.getItem() instanceof IElectricItem) {
-                        this.doChargeItemStack(itemstack, is);
-                    }
-                    if (is.getItem() instanceof IEnergyContainerItem) {
-                        this.doChargeItemStackRF(itemstack, is);
-                    }
+        int toolMode = ItemAdvancedLappack.readToolMode(itemstack);
+        if (GraviSuite.isSimulating() && toolMode == 1) {
+            for (ItemStack is : player.inventory.armorInventory) {
+                if (is == null) {
+                    continue;
+                }
+                if (is.getItem() instanceof IElectricItem) {
+                    this.doChargeItemStack(itemstack, is);
+                }
+                if (is.getItem() instanceof IEnergyContainerItem) {
+                    this.doChargeItemStackRF(itemstack, is);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return true;
     }

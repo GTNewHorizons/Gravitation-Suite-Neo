@@ -69,7 +69,7 @@ public class MixinItemRelocator {
             EntityPlayer player, ItemStack itemStack, String tpName, CallbackInfo ci, TeleportPoint point) {
         ServerProxy.sendPlayerMessage(
                 player,
-                EnumChatFormatting.GOLD + StatCollector.translateToLocal("") + " " + EnumChatFormatting.GREEN
-                        + point.pointName);
+                EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.relocator.text.teleportingnow") + " "
+                        + EnumChatFormatting.GREEN + point.pointName);
     }
 }
