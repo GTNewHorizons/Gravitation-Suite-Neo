@@ -11,7 +11,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.config.Configuration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,6 +30,17 @@ import org.spongepowered.libraries.org.objectweb.asm.Opcodes;
 
 @Mixin(GraviSuite.class)
 public class MixinGraviSuite {
+
+    private static final Logger LOGGER = LogManager.getLogger("GraviSuite");
+
+    /**
+     * @author glowredman
+     * @reason Gravitation Suite Neo
+     */
+    @Overwrite(remap = false)
+    public static void addLog(String logString) {
+        LOGGER.info(logString);
+    }
 
     @Inject(
             at = @At(opcode = Opcodes.PUTSTATIC, remap = false, target = "logWrench:Z", value = "FIELD"),

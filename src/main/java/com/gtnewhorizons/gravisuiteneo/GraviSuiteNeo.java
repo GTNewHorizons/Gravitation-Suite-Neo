@@ -15,6 +15,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry.Type;
 import net.minecraftforge.common.MinecraftForge;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(
         acceptedMinecraftVersions = "[1.7.10]",
@@ -28,6 +30,8 @@ public class GraviSuiteNeo {
     public static final String MODID = "gravisuiteneo";
     public static final String MODNAME = "Gravitation Suite Neo";
     public static final String VERSION = "GRADLETOKEN_VERSION";
+
+    public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     @SidedProxy(
             clientSide = "com.gtnewhorizons.gravisuiteneo.proxy.ClientProxy",

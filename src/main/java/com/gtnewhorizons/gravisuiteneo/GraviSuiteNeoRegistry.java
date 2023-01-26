@@ -5,7 +5,6 @@ import com.gtnewhorizons.gravisuiteneo.items.ItemEpicLappack;
 import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaCell;
 import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaLauncher;
 import com.gtnewhorizons.gravisuiteneo.util.GregTechAPIHelper;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import gravisuite.GraviSuite;
@@ -95,12 +94,12 @@ public class GraviSuiteNeoRegistry {
         // Get the percentage-multiplier for our median value, then loop the fuels again and prepare a static list
         // For all available plasma fuels
         float plasmaMedianMultip = 100.0f / sum * fluids.size();
-        FMLLog.info("_mPlasmaMedianMultip: %f", plasmaMedianMultip);
+        GraviSuiteNeo.LOGGER.debug("Median Plasma Multiplier: {}", plasmaMedianMultip);
         for (Entry<Fluid, Integer> entry : fluids.entrySet()) {
             Fluid fluid = entry.getKey();
             float fuelValue = entry.getValue() * plasmaMedianMultip;
             fuelMap.put(fluid, fuelValue);
-            FMLLog.info("Added Fluid %s with Fuel Value %f", fluid.getLocalizedName(), fuelValue);
+            GraviSuiteNeo.LOGGER.debug("Added Fluid {} with Fuel Value {}", fluid.getLocalizedName(), fuelValue);
         }
     }
 }

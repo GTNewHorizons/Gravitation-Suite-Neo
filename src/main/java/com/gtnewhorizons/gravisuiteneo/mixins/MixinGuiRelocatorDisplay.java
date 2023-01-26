@@ -2,8 +2,6 @@ package com.gtnewhorizons.gravisuiteneo.mixins;
 
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.client.SelectedItemMKII;
-import cpw.mods.fml.common.FMLLog;
-import gravisuite.GraviSuite;
 import gravisuite.Helpers;
 import gravisuite.ItemRelocator;
 import gravisuite.ItemRelocator.TeleportPoint;
@@ -208,7 +206,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
 
             int realIDX = ((SelectedItemMKII) selectedItem).getRealIDX();
             if (realIDX >= tpList.size()) {
-                FMLLog.bigWarning("WARNING: IndexOutOfBounds catched while using Translocator");
+                GraviSuiteNeo.LOGGER.error("WARNING: Caught IndexOutOfBounds while using Translocator");
                 ServerProxy.sendPlayerMessage(
                         player, EnumChatFormatting.RED + "Used TP Point is invalid. Please remove and add again");
                 player.closeScreen();
@@ -274,7 +272,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
                 }
             }
         } catch (Exception e) {
-            GraviSuite.addLog("Error in draw relocatorGui foregroundLayer:" + e.toString());
+            GraviSuiteNeo.LOGGER.error("GuiRelocatorDisplay#drawGuiContainerForegroundLayer failed!", e);
         }
     }
 
@@ -370,7 +368,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
                     yStart + pageXofYTextY,
                     0xFFFFFF);
         } catch (Exception e) {
-            GraviSuite.addLog("Error in drawGuiContainerBackgroundLayer: " + e.toString());
+            GraviSuiteNeo.LOGGER.error("GuiRelocatorDisplay#drawGuiContainerBackgroundLayer failed!", e);
         }
     }
 

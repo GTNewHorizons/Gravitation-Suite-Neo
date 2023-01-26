@@ -1,10 +1,10 @@
 package com.gtnewhorizons.gravisuiteneo.client;
 
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.client.ICustomItemBars.BarAlignment;
 import com.gtnewhorizons.gravisuiteneo.util.ColorUtil;
 import com.gtnewhorizons.gravisuiteneo.util.RenderUtil;
 import com.gtnewhorizons.gravisuiteneo.util.vector.Vector4f;
-import cpw.mods.fml.common.FMLLog;
 import java.awt.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -103,7 +103,7 @@ public class RenderCustomItemBar implements IItemRenderer {
 
             // Failsafe to not draw "outside" our boundaries
             if (currentPosXY <= 0 || currentPosXY >= 15) {
-                FMLLog.warning("[CustomBarItemRenderer] Index violates boundary limits");
+                GraviSuiteNeo.LOGGER.warn("[CustomBarItemRenderer] Index violates boundary limits");
                 return;
             }
         }
