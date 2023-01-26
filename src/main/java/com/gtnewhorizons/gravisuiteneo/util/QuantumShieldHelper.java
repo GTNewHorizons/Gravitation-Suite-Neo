@@ -183,7 +183,8 @@ public class QuantumShieldHelper {
             if (nanobotsUsed) {
                 ElectricItem.manager.discharge(itemstack, DISCHARGE_MEDKIT, 4, true, false, false);
                 curePotions(itemstack, player, true);
-                player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":medkit", 1.25F, 1.0F);
+                // TODO: add medkit sound player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":medkit",
+                // 1.25F, 1.0F);
                 ServerProxy.sendPlayerMessage(
                         player,
                         EnumChatFormatting.GREEN
