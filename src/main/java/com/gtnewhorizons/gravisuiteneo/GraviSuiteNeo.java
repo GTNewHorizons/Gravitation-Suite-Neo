@@ -18,7 +18,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 @Mod(
         acceptedMinecraftVersions = "[1.7.10]",
-        dependencies = "required-after:GraviSuite@[1.7.10-2.0.3];required-after:IC2;after:gregtech",
+        dependencies =
+                "required-after:GraviSuite@[1.7.10-2.0.3];required-after:IC2;required-after:gtnhmixins;after:gregtech",
         modid = GraviSuiteNeo.MODID,
         name = GraviSuiteNeo.MODNAME,
         version = GraviSuiteNeo.VERSION)
