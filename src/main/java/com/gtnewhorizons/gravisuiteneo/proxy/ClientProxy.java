@@ -18,7 +18,7 @@ import org.lwjgl.input.Keyboard;
 
 public class ClientProxy extends CommonProxy {
 
-    public static final KeyBinding MEDICAL_KEY = new KeyBinding("GraviSuite MedKit", Keyboard.KEY_I, "GraviSuite");
+    public static final KeyBinding MEDICAL_KEY = new KeyBinding("GraviSuite MedKit", Keyboard.KEY_NONE, "GraviSuite");
 
     @Override
     public void registerRenderers() {
