@@ -37,6 +37,7 @@ public class GraviSuiteNeoMixins implements ILateMixinLoader {
             mixins.add("MixinGuiRelocatorDisplay");
             mixins.add("MixinItemSimpleItems");
             mixins.add("MixinKeyboard");
+            mixins.add("MixinKeyboardClient");
             mixins.add("MixinRenderPlasmaBall");
         }
 
