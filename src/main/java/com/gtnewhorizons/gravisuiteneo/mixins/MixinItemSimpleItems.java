@@ -1,15 +1,17 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
-import com.gtnewhorizon.mixinextras.injector.ModifyReturnValue;
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
-import gravisuite.ItemSimpleItems;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.gtnewhorizon.mixinextras.injector.ModifyReturnValue;
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
+import gravisuite.ItemSimpleItems;
 
 @Mixin(ItemSimpleItems.class)
 public class MixinItemSimpleItems {

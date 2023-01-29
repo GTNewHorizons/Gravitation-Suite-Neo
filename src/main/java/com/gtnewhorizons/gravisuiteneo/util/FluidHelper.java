@@ -21,8 +21,8 @@ public class FluidHelper {
         if (tLocalizedFluidName.equals(pFluid.getFluid().getUnlocalizedName())) {
             tLocalizedFluidName = pFluid.getFluid().getName();
             if (tLocalizedFluidName.equals(tLocalizedFluidName.toLowerCase())) {
-                tLocalizedFluidName =
-                        tLocalizedFluidName.substring(0, 1).toUpperCase() + tLocalizedFluidName.substring(1);
+                tLocalizedFluidName = tLocalizedFluidName.substring(0, 1).toUpperCase()
+                        + tLocalizedFluidName.substring(1);
             }
         }
 

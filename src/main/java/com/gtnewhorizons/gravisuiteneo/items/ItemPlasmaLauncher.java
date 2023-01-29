@@ -1,19 +1,8 @@
 package com.gtnewhorizons.gravisuiteneo.items;
 
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
-import com.gtnewhorizons.gravisuiteneo.client.ICustomItemBars;
-import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
-import com.gtnewhorizons.gravisuiteneo.common.Properties;
-import com.gtnewhorizons.gravisuiteneo.inventory.InventoryItem;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import gravisuite.EntityPlasmaBall;
-import gravisuite.GraviSuite;
-import gravisuite.ServerProxy;
-import ic2.api.item.ElectricItem;
 import java.awt.Color;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -22,6 +11,20 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
+import com.gtnewhorizons.gravisuiteneo.client.ICustomItemBars;
+import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
+import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.gtnewhorizons.gravisuiteneo.inventory.InventoryItem;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import gravisuite.EntityPlasmaBall;
+import gravisuite.GraviSuite;
+import gravisuite.ServerProxy;
+import ic2.api.item.ElectricItem;
 
 public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
 
@@ -97,7 +100,8 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
             player.swingItem();
         } else {
             ServerProxy.sendPlayerMessage(
-                    player, EnumChatFormatting.RED + StatCollector.translateToLocal("message.plasmaLauncher.noEnergy"));
+                    player,
+                    EnumChatFormatting.RED + StatCollector.translateToLocal("message.plasmaLauncher.noEnergy"));
         }
 
         return itemStackIn;
@@ -125,10 +129,7 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void addInformation(
-            ItemStack itemStack,
-            EntityPlayer player,
-            @SuppressWarnings("rawtypes") List tooltip,
+    public void addInformation(ItemStack itemStack, EntityPlayer player, @SuppressWarnings("rawtypes") List tooltip,
             boolean advancedTooltips) {
         if (this.hasAmmunition(itemStack)) {
             tooltip.addAll(ItemPlasmaCell.getToolTipInfo(this.getAmmunition(itemStack)));

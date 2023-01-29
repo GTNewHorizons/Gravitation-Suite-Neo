@@ -1,21 +1,10 @@
 package com.gtnewhorizons.gravisuiteneo.items;
 
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
-import com.gtnewhorizons.gravisuiteneo.client.ICustomItemBars;
-import com.gtnewhorizons.gravisuiteneo.common.Properties;
-import com.gtnewhorizons.gravisuiteneo.util.FluidHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import gravisuite.IItemTickListener;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
-import ic2.api.item.ElectricItem;
-import ic2.api.item.IElectricItem;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -25,6 +14,20 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
+
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
+import com.gtnewhorizons.gravisuiteneo.client.ICustomItemBars;
+import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.gtnewhorizons.gravisuiteneo.util.FluidHelper;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import gravisuite.IItemTickListener;
+import gregtech.api.util.GT_Recipe;
+import gregtech.api.util.GT_Utility;
+import ic2.api.item.ElectricItem;
+import ic2.api.item.IElectricItem;
 
 public class ItemPlasmaCell extends Item
         implements IElectricItem, IItemTickListener, ICustomItemBars, IFluidContainerItem {
@@ -141,8 +144,8 @@ public class ItemPlasmaCell extends Item
 
     @SuppressWarnings("unchecked")
     @Override
-    public void addInformation(
-            ItemStack stack, EntityPlayer player, @SuppressWarnings("rawtypes") List tooltip, boolean advancedTooltip) {
+    public void addInformation(ItemStack stack, EntityPlayer player, @SuppressWarnings("rawtypes") List tooltip,
+            boolean advancedTooltip) {
         tooltip.addAll(getToolTipInfo(stack));
     }
 
@@ -151,10 +154,15 @@ public class ItemPlasmaCell extends Item
 
         FluidStack fluid = ((IFluidContainerItem) GraviSuiteNeoRegistry.itemPlasmaCell).getFluid(stack);
         if (fluid != null) {
-            list.add(StatCollector.translateToLocalFormatted(
-                    "message.plasmaCell.contains", FluidHelper.getFluidName(fluid), fluid.amount));
-            list.add(StatCollector.translateToLocalFormatted(
-                    "message.plasmaCell.efficiency", GraviSuiteNeoRegistry.getPlasmaEfficiency(fluid)));
+            list.add(
+                    StatCollector.translateToLocalFormatted(
+                            "message.plasmaCell.contains",
+                            FluidHelper.getFluidName(fluid),
+                            fluid.amount));
+            list.add(
+                    StatCollector.translateToLocalFormatted(
+                            "message.plasmaCell.efficiency",
+                            GraviSuiteNeoRegistry.getPlasmaEfficiency(fluid)));
         } else {
             list.add(StatCollector.translateToLocal("message.plasmaCell.nothing"));
             list.add(StatCollector.translateToLocalFormatted("message.plasmaCell.efficiency", 0.0f));

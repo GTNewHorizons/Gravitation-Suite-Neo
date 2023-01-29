@@ -1,14 +1,12 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
-import com.gtnewhorizons.gravisuiteneo.common.Properties;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import gravisuite.ItemVajra;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,6 +14,12 @@ import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.gtnewhorizons.gravisuiteneo.common.Properties;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import gravisuite.ItemVajra;
 
 @Mixin(ItemVajra.class)
 public class MixinItemVajra {
@@ -44,12 +48,8 @@ public class MixinItemVajra {
     @Inject(
             at = @At(remap = false, target = "Ljava/util/List;add(Ljava/lang/Object;)Z", value = "INVOKE"),
             method = "addInformation")
-    private void gravisuiteneo$addSilktouchInformation(
-            ItemStack itemstack,
-            EntityPlayer player,
-            @SuppressWarnings("rawtypes") List tooltip,
-            boolean advancedTooltips,
-            CallbackInfo ci) {
+    private void gravisuiteneo$addSilktouchInformation(ItemStack itemstack, EntityPlayer player,
+            @SuppressWarnings("rawtypes") List tooltip, boolean advancedTooltips, CallbackInfo ci) {
         tooltip.add(EnumChatFormatting.AQUA + StatCollector.translateToLocal("message.vajra.clickRightForSilk"));
     }
 }

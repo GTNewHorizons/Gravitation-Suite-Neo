@@ -1,13 +1,11 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
-import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
-import gravisuite.EntityPlasmaBall;
-import gravisuite.Helpers;
-import gravisuite.client.RenderPlasmaBall;
 import java.awt.Color;
+
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.util.MathHelper;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,6 +16,12 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
+
+import gravisuite.EntityPlasmaBall;
+import gravisuite.Helpers;
+import gravisuite.client.RenderPlasmaBall;
 
 @Mixin(RenderPlasmaBall.class)
 public abstract class MixinRenderPlasmaBall extends Render {
@@ -37,38 +41,19 @@ public abstract class MixinRenderPlasmaBall extends Render {
     }
 
     @Inject(
-            at =
-                    @At(
-                            ordinal = 0,
-                            remap = false,
-                            shift = Shift.BEFORE,
-                            target = "Lorg/lwjgl/opengl/GL11;glPushMatrix()V",
-                            value = "INVOKE"),
+            at = @At(
+                    ordinal = 0,
+                    remap = false,
+                    shift = Shift.BEFORE,
+                    target = "Lorg/lwjgl/opengl/GL11;glPushMatrix()V",
+                    value = "INVOKE"),
             cancellable = true,
             locals = LocalCapture.CAPTURE_FAILEXCEPTION,
             method = "renderCore",
             remap = false)
-    private void gravisuiteneo$setColorOtherActionTypes(
-            EntityPlasmaBall entity,
-            double x,
-            double y,
-            double z,
-            float fq,
-            float pticks,
-            CallbackInfo ci,
-            int size1,
-            int size2,
-            float f1,
-            float f2,
-            float f3,
-            float f4,
-            float f5,
-            float scaleCore,
-            double posX,
-            double posY,
-            double posZ,
-            Tessellator tessellator,
-            Color color) {
+    private void gravisuiteneo$setColorOtherActionTypes(EntityPlasmaBall entity, double x, double y, double z, float fq,
+            float pticks, CallbackInfo ci, int size1, int size2, float f1, float f2, float f3, float f4, float f5,
+            float scaleCore, double posX, double posY, double posZ, Tessellator tessellator, Color color) {
         this.scaleCore = scaleCore;
 
         byte actionType = entity.getActionType();
@@ -103,13 +88,12 @@ public abstract class MixinRenderPlasmaBall extends Render {
     }
 
     @ModifyVariable(
-            at =
-                    @At(
-                            ordinal = 0,
-                            remap = false,
-                            shift = Shift.BEFORE,
-                            target = "Lorg/lwjgl/opengl/GL11;glPushMatrix()V",
-                            value = "INVOKE"),
+            at = @At(
+                    ordinal = 0,
+                    remap = false,
+                    shift = Shift.BEFORE,
+                    target = "Lorg/lwjgl/opengl/GL11;glPushMatrix()V",
+                    value = "INVOKE"),
             method = "renderCore",
             name = "scaleCore",
             remap = false)

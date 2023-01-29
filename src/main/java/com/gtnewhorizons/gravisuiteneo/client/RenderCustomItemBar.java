@@ -1,16 +1,19 @@
 package com.gtnewhorizons.gravisuiteneo.client;
 
+import java.awt.Color;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.IItemRenderer;
+
+import org.lwjgl.opengl.GL11;
+
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.client.ICustomItemBars.BarAlignment;
 import com.gtnewhorizons.gravisuiteneo.util.ColorUtil;
 import com.gtnewhorizons.gravisuiteneo.util.RenderUtil;
 import com.gtnewhorizons.gravisuiteneo.util.vector.Vector4f;
-import java.awt.Color;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.IItemRenderer;
-import org.lwjgl.opengl.GL11;
 
 public class RenderCustomItemBar implements IItemRenderer {
 
@@ -112,15 +115,8 @@ public class RenderCustomItemBar implements IItemRenderer {
     /**
      * Actually render a bar at position pY
      */
-    private void renderBar(
-            int xyStart,
-            double maxDamage,
-            double dispDamage,
-            Color colorFull,
-            Color colorEmpty,
-            int thickness,
-            boolean vertical,
-            boolean inverted) {
+    private void renderBar(int xyStart, double maxDamage, double dispDamage, Color colorFull, Color colorEmpty,
+            int thickness, boolean vertical, boolean inverted) {
         try {
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -175,8 +171,7 @@ public class RenderCustomItemBar implements IItemRenderer {
             // top<>bottom / right<>left
             RenderUtil.renderQuad2D(tBarX, tBarY, tBarZ, tBgBarWidth, tBgBarHeight, bgColor);
             RenderUtil.renderQuad2D(tBarX, tBarY, tBarZ, tFgBarWidth, tFgBarHeight, fgColor);
-        } catch (Exception ignored) {
-        } finally {
+        } catch (Exception ignored) {} finally {
             // Failsafe. Make sure we reset GL rendering
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glEnable(GL11.GL_LIGHTING);

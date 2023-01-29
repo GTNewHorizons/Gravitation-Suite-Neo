@@ -1,10 +1,12 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
-import gravisuite.Helpers;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+
+import gravisuite.Helpers;
 
 @Mixin(Helpers.class)
 public class MixinHelpers {

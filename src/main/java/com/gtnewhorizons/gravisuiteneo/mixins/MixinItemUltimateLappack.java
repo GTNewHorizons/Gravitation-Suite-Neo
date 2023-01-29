@@ -1,13 +1,15 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+
+import org.spongepowered.asm.mixin.Mixin;
+
 import cofh.api.energy.IEnergyContainerItem;
 import gravisuite.GraviSuite;
 import gravisuite.ItemAdvancedLappack;
 import gravisuite.ItemUltimateLappack;
 import ic2.api.item.IElectricItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(ItemUltimateLappack.class)
 public class MixinItemUltimateLappack extends MixinItemAdvancedLappack {

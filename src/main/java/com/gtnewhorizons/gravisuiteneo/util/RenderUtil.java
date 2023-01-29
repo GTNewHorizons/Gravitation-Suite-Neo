@@ -1,8 +1,10 @@
 package com.gtnewhorizons.gravisuiteneo.util;
 
-import com.gtnewhorizons.gravisuiteneo.util.vector.Vector4f;
 import net.minecraft.client.renderer.Tessellator;
+
 import org.lwjgl.opengl.GL11;
+
+import com.gtnewhorizons.gravisuiteneo.util.vector.Vector4f;
 
 public class RenderUtil {
 

@@ -1,12 +1,14 @@
 package com.gtnewhorizons.gravisuiteneo.common;
 
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
-import gravisuite.GraviSuite;
-import ic2.api.item.IC2Items;
-import ic2.api.recipe.Recipes;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
+
+import gravisuite.GraviSuite;
+import ic2.api.item.IC2Items;
+import ic2.api.recipe.Recipes;
 
 public class RecipeHandler {
 

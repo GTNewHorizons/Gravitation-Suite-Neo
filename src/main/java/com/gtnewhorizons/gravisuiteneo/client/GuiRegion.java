@@ -25,9 +25,8 @@ public class GuiRegion {
     }
 
     /**
-     * Check if given point is within the GUI Region.
-     * This method is basically a custom implementation of MC's GuiContainer-class function func_146978_c.
-     * But as it is protected... Yeah...
+     * Check if given point is within the GUI Region. This method is basically a custom implementation of MC's
+     * GuiContainer-class function func_146978_c. But as it is protected... Yeah...
      */
     public boolean isPointInRegion(Point point) {
         int x = point.x - this.ParentGuiLeft;

@@ -9,9 +9,7 @@ import net.minecraft.item.ItemStack;
 public class ContainerPlasmaLauncher extends Container {
 
     private final InventoryItem inventory;
-    private static final int INV_START = InventoryItem.INV_SIZE,
-            INV_END = INV_START + 26,
-            HOTBAR_START = INV_END + 1,
+    private static final int INV_START = InventoryItem.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1,
             HOTBAR_END = HOTBAR_START + 8;
 
     public ContainerPlasmaLauncher(InventoryPlayer inventoryPlayer, InventoryItem inventoryItem) {
@@ -32,9 +30,8 @@ public class ContainerPlasmaLauncher extends Container {
     }
 
     /**
-     * You should override this method to prevent the player from moving the stack that
-     * opened the inventory, otherwise if the player moves it, the inventory will not
-     * be able to save properly
+     * You should override this method to prevent the player from moving the stack that opened the inventory, otherwise
+     * if the player moves it, the inventory will not be able to save properly
      */
     @Override
     public ItemStack slotClick(int slot, int button, int flag, EntityPlayer player) {
@@ -109,8 +106,7 @@ public class ContainerPlasmaLauncher extends Container {
                     continue;
                 }
 
-                if (itemstack1 != null
-                        && itemstack1.getItem() == stack.getItem()
+                if (itemstack1 != null && itemstack1.getItem() == stack.getItem()
                         && (!stack.getHasSubtypes() || stack.getItemDamage() == itemstack1.getItemDamage())
                         && ItemStack.areItemStackTagsEqual(stack, itemstack1)) {
                     int l = itemstack1.stackSize + stack.stackSize;
@@ -152,7 +148,8 @@ public class ContainerPlasmaLauncher extends Container {
                         break;
                     } else {
                         this.putStackInSlot(
-                                k, new ItemStack(stack.getItem(), slot.getSlotStackLimit(), stack.getItemDamage()));
+                                k,
+                                new ItemStack(stack.getItem(), slot.getSlotStackLimit(), stack.getItemDamage()));
                         stack.stackSize -= slot.getSlotStackLimit();
                         this.inventory.markDirty();
                         flag1 = true;

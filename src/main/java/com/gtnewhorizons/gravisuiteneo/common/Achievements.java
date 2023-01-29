@@ -1,7 +1,5 @@
 package com.gtnewhorizons.gravisuiteneo.common;
 
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
-import gravisuite.GraviSuite;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -9,6 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.AchievementPage;
+
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
+import gravisuite.GraviSuite;
 
 public class Achievements {
 
@@ -31,36 +32,43 @@ public class Achievements {
 
         // Power Drill tree
         POWERDRILL = create("gravisuite.powerdrill_craft", GraviSuite.advDDrill, -2, -2);
-        POWERDRILL_MARKIII =
-                createSpecial("gravisuite.powerdrill_markIII", withEffect(GraviSuite.advDDrill), -2, 0, POWERDRILL);
+        POWERDRILL_MARKIII = createSpecial(
+                "gravisuite.powerdrill_markIII",
+                withEffect(GraviSuite.advDDrill),
+                -2,
+                0,
+                POWERDRILL);
 
         // Quantum Shield tree
         QSHIELD = create("gravisuite.qshield_enable", GraviSuite.graviChestPlate, 0, -2);
-        QSHIELD_PLASMAIMPACT =
-                createSpecial("gravisuite.qshield_plasmaimpact", GraviSuiteNeoRegistry.itemPlasmaCell, 0, 0, QSHIELD);
+        QSHIELD_PLASMAIMPACT = createSpecial(
+                "gravisuite.qshield_plasmaimpact",
+                GraviSuiteNeoRegistry.itemPlasmaCell,
+                0,
+                0,
+                QSHIELD);
 
         // Epic Lappack tree
         EPIC_LAPPACK = createSpecial("gravisuite.epic_lappack", GraviSuiteNeoRegistry.epicLappack, 2, -2);
     }
 
     public static void registerAchievementPage() {
-        AchievementPage.registerAchievementPage(new AchievementPage(
-                StatCollector.translateToLocal("gravisuite.achievementPage.name"),
-                PLASMAGUN,
-                OVER9000,
-                ULTRAKILL,
-                VAPORIZE_SELF,
-                POWERDRILL,
-                POWERDRILL_MARKIII,
-                QSHIELD,
-                QSHIELD_PLASMAIMPACT,
-                EPIC_LAPPACK));
+        AchievementPage.registerAchievementPage(
+                new AchievementPage(
+                        StatCollector.translateToLocal("gravisuite.achievementPage.name"),
+                        PLASMAGUN,
+                        OVER9000,
+                        ULTRAKILL,
+                        VAPORIZE_SELF,
+                        POWERDRILL,
+                        POWERDRILL_MARKIII,
+                        QSHIELD,
+                        QSHIELD_PLASMAIMPACT,
+                        EPIC_LAPPACK));
     }
 
     private static Achievement create(String name, Item item, int posX, int posY) {
-        return new Achievement(name, name, posX, posY, item, null)
-                .registerStat()
-                .initIndependentStat();
+        return new Achievement(name, name, posX, posY, item, null).registerStat().initIndependentStat();
     }
 
     private static Achievement create(String name, Item item, int posX, int posY, Achievement preReq) {
@@ -68,22 +76,15 @@ public class Achievements {
     }
 
     private static Achievement createSpecial(String name, Item item, int posX, int posY) {
-        return new Achievement(name, name, posX, posY, item, null)
-                .registerStat()
-                .initIndependentStat()
-                .setSpecial();
+        return new Achievement(name, name, posX, posY, item, null).registerStat().initIndependentStat().setSpecial();
     }
 
     private static Achievement createSpecial(String name, Item item, int posX, int posY, Achievement preReq) {
-        return new Achievement(name, name, posX, posY, item, preReq)
-                .registerStat()
-                .setSpecial();
+        return new Achievement(name, name, posX, posY, item, preReq).registerStat().setSpecial();
     }
 
     private static Achievement createSpecial(String name, ItemStack item, int posX, int posY, Achievement preReq) {
-        return new Achievement(name, name, posX, posY, item, preReq)
-                .registerStat()
-                .setSpecial();
+        return new Achievement(name, name, posX, posY, item, preReq).registerStat().setSpecial();
     }
 
     private static ItemStack withEffect(Item item) {

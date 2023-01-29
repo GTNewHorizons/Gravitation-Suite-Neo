@@ -1,9 +1,20 @@
 package com.gtnewhorizons.gravisuiteneo.items;
 
+import java.util.Random;
+
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ISpecialArmor;
+
 import cofh.api.energy.IEnergyContainerItem;
+
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gravisuite.GraviSuite;
@@ -11,13 +22,6 @@ import gravisuite.ItemAdvancedLappack;
 import gravisuite.ItemUltimateLappack;
 import ic2.api.item.IElectricItem;
 import ic2.api.item.IMetalArmor;
-import java.util.Random;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.ISpecialArmor;
 
 public class ItemEpicLappack extends ItemUltimateLappack implements IElectricItem, IMetalArmor, ISpecialArmor {
 

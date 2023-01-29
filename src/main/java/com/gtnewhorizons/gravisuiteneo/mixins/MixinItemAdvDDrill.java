@@ -1,17 +1,8 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
-import com.gtnewhorizons.gravisuiteneo.common.Achievements;
-import com.gtnewhorizons.gravisuiteneo.common.Properties;
-import com.gtnewhorizons.gravisuiteneo.util.LevelableToolHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import gravisuite.GraviSuite;
-import gravisuite.Helpers;
-import gravisuite.ItemAdvDDrill;
-import gravisuite.ServerProxy;
-import ic2.api.item.ElectricItem;
 import java.util.List;
 import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -26,6 +17,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -38,6 +30,18 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import com.gtnewhorizons.gravisuiteneo.common.Achievements;
+import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.gtnewhorizons.gravisuiteneo.util.LevelableToolHelper;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import gravisuite.GraviSuite;
+import gravisuite.Helpers;
+import gravisuite.ItemAdvDDrill;
+import gravisuite.ServerProxy;
+import ic2.api.item.ElectricItem;
 
 @Mixin(ItemAdvDDrill.class)
 public abstract class MixinItemAdvDDrill extends ItemTool {
@@ -84,90 +88,54 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
     }
 
     @Inject(
-            at =
-                    @At(
-                            remap = false,
-                            target =
-                                    "Lgravisuite/ItemAdvDDrill;readToolMode(Lnet/minecraft/item/ItemStack;)Ljava/lang/Integer;",
-                            value = "INVOKE"),
+            at = @At(
+                    remap = false,
+                    target = "Lgravisuite/ItemAdvDDrill;readToolMode(Lnet/minecraft/item/ItemStack;)Ljava/lang/Integer;",
+                    value = "INVOKE"),
             cancellable = true,
             method = "onBlockDestroyed")
-    private void gravisuiteneo$onBlockDestroyedExitEarly(
-            ItemStack itemstack,
-            World world,
-            Block block,
-            int xPos,
-            int yPos,
-            int zPos,
-            EntityLivingBase entityliving,
-            CallbackInfoReturnable<Boolean> cir) {
+    private void gravisuiteneo$onBlockDestroyedExitEarly(ItemStack itemstack, World world, Block block, int xPos,
+            int yPos, int zPos, EntityLivingBase entityliving, CallbackInfoReturnable<Boolean> cir) {
         if (!(entityliving instanceof EntityPlayer)) {
             cir.setReturnValue(false);
         }
     }
 
     @Inject(
-            at =
-                    @At(
-                            ordinal = 0,
-                            remap = false,
-                            target =
-                                    "Lic2/api/item/IElectricItemManager;use(Lnet/minecraft/item/ItemStack;DLnet/minecraft/entity/EntityLivingBase;)Z",
-                            value = "INVOKE"),
+            at = @At(
+                    ordinal = 0,
+                    remap = false,
+                    target = "Lic2/api/item/IElectricItemManager;use(Lnet/minecraft/item/ItemStack;DLnet/minecraft/entity/EntityLivingBase;)Z",
+                    value = "INVOKE"),
             method = "onBlockDestroyed")
-    private void gravisuiteneo$addXpMode0(
-            ItemStack itemstack,
-            World world,
-            Block block,
-            int xPos,
-            int yPos,
-            int zPos,
-            EntityLivingBase entityliving,
-            CallbackInfoReturnable<Boolean> cir) {
+    private void gravisuiteneo$addXpMode0(ItemStack itemstack, World world, Block block, int xPos, int yPos, int zPos,
+            EntityLivingBase entityliving, CallbackInfoReturnable<Boolean> cir) {
         LevelableToolHelper.AddXP((EntityPlayer) entityliving, itemstack, 1);
     }
 
     @Inject(
-            at =
-                    @At(
-                            ordinal = 1,
-                            remap = false,
-                            target =
-                                    "Lic2/api/item/IElectricItemManager;use(Lnet/minecraft/item/ItemStack;DLnet/minecraft/entity/EntityLivingBase;)Z",
-                            value = "INVOKE"),
+            at = @At(
+                    ordinal = 1,
+                    remap = false,
+                    target = "Lic2/api/item/IElectricItemManager;use(Lnet/minecraft/item/ItemStack;DLnet/minecraft/entity/EntityLivingBase;)Z",
+                    value = "INVOKE"),
             method = "onBlockDestroyed")
-    private void gravisuiteneo$addXpMode1(
-            ItemStack itemstack,
-            World world,
-            Block block,
-            int xPos,
-            int yPos,
-            int zPos,
-            EntityLivingBase entityliving,
-            CallbackInfoReturnable<Boolean> cir) {
+    private void gravisuiteneo$addXpMode1(ItemStack itemstack, World world, Block block, int xPos, int yPos, int zPos,
+            EntityLivingBase entityliving, CallbackInfoReturnable<Boolean> cir) {
         if (GraviSuite.random.nextInt(2) == 0) {
             LevelableToolHelper.AddXP((EntityPlayer) entityliving, itemstack, 1);
         }
     }
 
     @Inject(
-            at =
-                    @At(
-                            ordinal = 2,
-                            remap = false,
-                            target =
-                                    "Lic2/api/item/IElectricItemManager;use(Lnet/minecraft/item/ItemStack;DLnet/minecraft/entity/EntityLivingBase;)Z",
-                            value = "INVOKE"),
+            at = @At(
+                    ordinal = 2,
+                    remap = false,
+                    target = "Lic2/api/item/IElectricItemManager;use(Lnet/minecraft/item/ItemStack;DLnet/minecraft/entity/EntityLivingBase;)Z",
+                    value = "INVOKE"),
             method = "onBlockDestroyed")
-    private void gravisuiteneo$addXpMode2(
-            ItemStack itemstack,
-            World world,
-            Block block,
-            int xPos,
-            int yPos,
-            int zPos,
-            EntityLivingBase entityliving,
-            CallbackInfoReturnable<Boolean> cir) {
+    private void gravisuiteneo$addXpMode2(ItemStack itemstack, World world, Block block, int xPos, int yPos, int zPos,
+            EntityLivingBase entityliving, CallbackInfoReturnable<Boolean> cir) {
         if (GraviSuite.random.nextInt(4) == 0) {
             LevelableToolHelper.AddXP((EntityPlayer) entityliving, itemstack, 1);
         }
@@ -252,20 +220,14 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
 
     @SuppressWarnings("unchecked")
     @Inject(
-            at =
-                    @At(
-                            remap = false,
-                            target =
-                                    "Lgravisuite/ItemAdvDDrill;readToolMode(Lnet/minecraft/item/ItemStack;)Ljava/lang/Integer;",
-                            value = "INVOKE"),
+            at = @At(
+                    remap = false,
+                    target = "Lgravisuite/ItemAdvDDrill;readToolMode(Lnet/minecraft/item/ItemStack;)Ljava/lang/Integer;",
+                    value = "INVOKE"),
             method = "addInformation")
     @SideOnly(Side.CLIENT)
-    private void gravisuiteneo$addXPInformation(
-            ItemStack itemstack,
-            EntityPlayer player,
-            @SuppressWarnings("rawtypes") List tooltip,
-            boolean advancedTooltip,
-            CallbackInfo ci) {
+    private void gravisuiteneo$addXPInformation(ItemStack itemstack, EntityPlayer player,
+            @SuppressWarnings("rawtypes") List tooltip, boolean advancedTooltip, CallbackInfo ci) {
         if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
             return;
         }
@@ -274,12 +236,21 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
         int currentLevel = LevelableToolHelper.getLevel(itemstack);
 
         if (currentLevel < 2) {
-            tooltip.add(EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.xp.youhavecollected") + ": "
-                    + EnumChatFormatting.WHITE + currentTotalXP);
-            tooltip.add(EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.xp.nextLevelUp") + ": "
-                    + EnumChatFormatting.WHITE + LevelableToolHelper.getXPForLevel(currentLevel + 1));
-            tooltip.add(EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.xp.toolLevel") + ": "
-                    + EnumChatFormatting.WHITE + currentLevel);
+            tooltip.add(
+                    EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.xp.youhavecollected")
+                            + ": "
+                            + EnumChatFormatting.WHITE
+                            + currentTotalXP);
+            tooltip.add(
+                    EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.xp.nextLevelUp")
+                            + ": "
+                            + EnumChatFormatting.WHITE
+                            + LevelableToolHelper.getXPForLevel(currentLevel + 1));
+            tooltip.add(
+                    EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.xp.toolLevel")
+                            + ": "
+                            + EnumChatFormatting.WHITE
+                            + currentLevel);
         } else {
             tooltip.add(EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.xp.maxLevelReached"));
         }
@@ -288,23 +259,22 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
     @SuppressWarnings("unchecked")
     @Inject(at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, method = "addInformation")
     @SideOnly(Side.CLIENT)
-    private void gravisuiteneo$addOtherModeInformation(
-            ItemStack itemstack,
-            EntityPlayer player,
-            @SuppressWarnings("rawtypes") List tooltip,
-            boolean advancedTooltips,
-            CallbackInfo ci,
-            Integer toolMode) {
+    private void gravisuiteneo$addOtherModeInformation(ItemStack itemstack, EntityPlayer player,
+            @SuppressWarnings("rawtypes") List tooltip, boolean advancedTooltips, CallbackInfo ci, Integer toolMode) {
         if (toolMode == 4) {
-            tooltip.add(EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.text.mode") + ": "
-                    + EnumChatFormatting.WHITE
-                    + StatCollector.translateToLocal("message.advDDrill.mode.areYouSerious"));
+            tooltip.add(
+                    EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.text.mode")
+                            + ": "
+                            + EnumChatFormatting.WHITE
+                            + StatCollector.translateToLocal("message.advDDrill.mode.areYouSerious"));
             return;
         }
         if (toolMode == 5) {
-            tooltip.add(EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.text.mode") + ": "
-                    + EnumChatFormatting.WHITE
-                    + StatCollector.translateToLocal("message.advDDrill.mode.worldShatterer"));
+            tooltip.add(
+                    EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.text.mode")
+                            + ": "
+                            + EnumChatFormatting.WHITE
+                            + StatCollector.translateToLocal("message.advDDrill.mode.worldShatterer"));
         }
     }
 
@@ -384,11 +354,10 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
                 tFinalEnergyPerOperation = this.worldShatterer;
             }
 
-            /*Neat idea, but annoying as hell...
-             * if (ElectricItem.manager.canUse(stack, tFinalEnergyPerOperation * 10))
-            {
-                PlayRandomDrillSound(player);
-            }*/
+            /*
+             * Neat idea, but annoying as hell... if (ElectricItem.manager.canUse(stack, tFinalEnergyPerOperation * 10))
+             * { PlayRandomDrillSound(player); }
+             */
 
             final int fortune = EnchantmentHelper.getFortuneModifier(player);
             for (int xPos = X - xRange; xPos <= X + xRange; xPos++) {
@@ -400,8 +369,7 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
 
                             final boolean canHarvest = this.canHarvestBlock(block, itemstack);
 
-                            final float localHardness = localBlock == null
-                                    ? Float.MAX_VALUE
+                            final float localHardness = localBlock == null ? Float.MAX_VALUE
                                     : localBlock.getBlockHardness(world, xPos, yPos, zPos);
                             if (canHarvest) {
                                 if (localBlock != null && localHardness >= 0.0F) {
@@ -410,7 +378,11 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
                                             if (!player.capabilities.isCreativeMode) {
                                                 if (localBlock.removedByPlayer(world, player, xPos, yPos, zPos, true)) {
                                                     localBlock.onBlockDestroyedByPlayer(
-                                                            world, xPos, yPos, zPos, localMeta);
+                                                            world,
+                                                            xPos,
+                                                            yPos,
+                                                            zPos,
+                                                            localMeta);
                                                 }
 
                                                 final int exp = localBlock.getExpDrop(world, localMeta, fortune);
@@ -427,7 +399,13 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
 
                                                 if (blockHardness > 0.0F) {
                                                     this.onBlockDestroyed(
-                                                            itemstack, world, localBlock, xPos, yPos, zPos, player);
+                                                            itemstack,
+                                                            world,
+                                                            localBlock,
+                                                            xPos,
+                                                            yPos,
+                                                            zPos,
+                                                            player);
                                                 }
 
                                                 world.func_147479_m(X, Y, Z);

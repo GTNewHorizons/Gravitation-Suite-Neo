@@ -1,6 +1,5 @@
 package com.gtnewhorizons.gravisuiteneo.client;
 
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityFX;
@@ -11,7 +10,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
+
 import org.lwjgl.opengl.GL11;
+
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 
 public class FXQuantumShield extends EntityFX {
 
@@ -34,12 +36,15 @@ public class FXQuantumShield extends EntityFX {
         SHIELD_TEXTURE_POWER_UP = new ResourceLocation[numFrames];
         SHIELD_TEXTURE_POWER_DOWN = new ResourceLocation[numFrames];
         for (int i = 0; i < numFrames; i++) {
-            SHIELD_TEXTURE_HIT[i] =
-                    new ResourceLocation(GraviSuiteNeo.MODID, "textures/models/qshield/hit/quantumShield" + i + ".png");
-            SHIELD_TEXTURE_POWER_UP[i] =
-                    new ResourceLocation(GraviSuiteNeo.MODID, "textures/models/qshield/up/quantumShield" + i + ".png");
+            SHIELD_TEXTURE_HIT[i] = new ResourceLocation(
+                    GraviSuiteNeo.MODID,
+                    "textures/models/qshield/hit/quantumShield" + i + ".png");
+            SHIELD_TEXTURE_POWER_UP[i] = new ResourceLocation(
+                    GraviSuiteNeo.MODID,
+                    "textures/models/qshield/up/quantumShield" + i + ".png");
             SHIELD_TEXTURE_POWER_DOWN[i] = new ResourceLocation(
-                    GraviSuiteNeo.MODID, "textures/models/qshield/down/quantumShield" + i + ".png");
+                    GraviSuiteNeo.MODID,
+                    "textures/models/qshield/down/quantumShield" + i + ".png");
         }
     }
 
@@ -47,16 +52,8 @@ public class FXQuantumShield extends EntityFX {
     private final Entity target;
     private IModelCustom model;
 
-    public FXQuantumShield(
-            World world,
-            double posX,
-            double posY,
-            double posZ,
-            Entity target,
-            int age,
-            float yaw,
-            float pitch,
-            EShieldMode mode) {
+    public FXQuantumShield(World world, double posX, double posY, double posZ, Entity target, int age, float yaw,
+            float pitch, EShieldMode mode) {
         super(world, posX, posY, posZ, 0.0D, 0.0D, 0.0D);
 
         this.particleRed = 1.0F;
@@ -97,14 +94,8 @@ public class FXQuantumShield extends EntityFX {
     }
 
     @Override
-    public void renderParticle(
-            Tessellator tessellator,
-            float p_70539_2_,
-            float p_70539_3_,
-            float p_70539_4_,
-            float p_70539_5_,
-            float p_70539_6_,
-            float p_70539_7_) {
+    public void renderParticle(Tessellator tessellator, float p_70539_2_, float p_70539_3_, float p_70539_4_,
+            float p_70539_5_, float p_70539_6_, float p_70539_7_) {
         tessellator.draw();
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_CULL_FACE);

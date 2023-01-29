@@ -1,16 +1,8 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
-import com.gtnewhorizons.gravisuiteneo.client.SelectedItemMKII;
-import gravisuite.Helpers;
-import gravisuite.ItemRelocator;
-import gravisuite.ItemRelocator.TeleportPoint;
-import gravisuite.ServerProxy;
-import gravisuite.client.GuiRelocatorDisplay;
-import gravisuite.client.GuiRelocatorDisplay.SelectedItem;
-import gravisuite.network.PacketManagePoints;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.settings.GameSettings;
@@ -19,11 +11,23 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.DimensionManager;
+
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
+import com.gtnewhorizons.gravisuiteneo.client.SelectedItemMKII;
+
+import gravisuite.Helpers;
+import gravisuite.ItemRelocator;
+import gravisuite.ItemRelocator.TeleportPoint;
+import gravisuite.ServerProxy;
+import gravisuite.client.GuiRelocatorDisplay;
+import gravisuite.client.GuiRelocatorDisplay.SelectedItem;
+import gravisuite.network.PacketManagePoints;
 
 @Mixin(GuiRelocatorDisplay.class)
 public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
@@ -133,6 +137,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
 
     /**
      * Get the current selected index from the Dislocator; According to the mouse position
+     * 
      * @author Namikon, glowredman
      * @reason Gravitation Suite Neo
      */
@@ -196,8 +201,8 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
         } else {
 
             // Load TP-Destinations from our ItemStack
-            List<TeleportPoint> tpList = new ArrayList<>(ItemRelocator.loadTeleportPoints(
-                    Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem()));
+            List<TeleportPoint> tpList = new ArrayList<>(
+                    ItemRelocator.loadTeleportPoints(Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem()));
             // Get the current selected Item that has been clicked; If any
             SelectedItem selectedItem = this.getSelected(tpList);
             if (selectedItem == null) {
@@ -208,7 +213,8 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
             if (realIDX >= tpList.size()) {
                 GraviSuiteNeo.LOGGER.error("WARNING: Caught IndexOutOfBounds while using Translocator");
                 ServerProxy.sendPlayerMessage(
-                        player, EnumChatFormatting.RED + "Used TP Point is invalid. Please remove and add again");
+                        player,
+                        EnumChatFormatting.RED + "Used TP Point is invalid. Please remove and add again");
                 player.closeScreen();
                 return;
             }
@@ -239,8 +245,8 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
         int xStart = (this.width - this.xSize) / 2;
         int yStart = (this.height - this.ySize) / 2;
         try {
-            List<TeleportPoint> tpList = new ArrayList<>(ItemRelocator.loadTeleportPoints(
-                    Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem()));
+            List<TeleportPoint> tpList = new ArrayList<>(
+                    ItemRelocator.loadTeleportPoints(Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem()));
             this.maxOffset = (int) Math.floor((tpList.size() - 1) / 10);
 
             if (tpList.size() > 0) {
@@ -261,8 +267,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
                         && (selectedItem = this.getSelected(tpList)) != null) {
                     List<String> toolTipData = new ArrayList<>();
                     TeleportPoint tmpPoint = tpList.get(((SelectedItemMKII) selectedItem).getRealIDX());
-                    toolTipData.add("Dimension: "
-                            + DimensionManager.getProvider(tmpPoint.dimID).getDimensionName());
+                    toolTipData.add("Dimension: " + DimensionManager.getProvider(tmpPoint.dimID).getDimensionName());
                     toolTipData.add("Height: " + (int) tmpPoint.y);
                     toolTipData.add("X: " + (int) tmpPoint.x);
                     toolTipData.add("Y: " + (int) tmpPoint.z);
@@ -294,8 +299,8 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
             this.drawTexturedModalRect(xStart, yStart, 0, 0, this.xSize, this.ySize);
             GL11.glDisable(GL11.GL_BLEND);
 
-            ArrayList<TeleportPoint> tpList = new ArrayList<>(ItemRelocator.loadTeleportPoints(
-                    Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem()));
+            ArrayList<TeleportPoint> tpList = new ArrayList<>(
+                    ItemRelocator.loadTeleportPoints(Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem()));
 
             if (this.prevButtonAvailable()) {
                 this.drawTexturedModalRect(xStart + prevButtonX, yStart + prevButtonY, 0, 182, 9, 9);
@@ -340,8 +345,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
                     if (!selectedItem.delFlag) {
                         this.drawTexturedModalRect(
                                 xStart + this.firstItemBGX,
-                                yStart
-                                        + this.firstItemBGY
+                                yStart + this.firstItemBGY
                                         + (((SelectedItemMKII) selectedItem).guiIDX - 1) * this.itemInterval,
                                 this.itemBGselX,
                                 this.itemBGselY,
@@ -350,8 +354,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
                     } else {
                         this.drawTexturedModalRect(
                                 xStart + this.firstItemBGX,
-                                yStart
-                                        + this.firstItemBGY
+                                yStart + this.firstItemBGY
                                         + (((SelectedItemMKII) selectedItem).guiIDX - 1) * this.itemInterval,
                                 this.itemBGdelX,
                                 this.itemBGdelY,

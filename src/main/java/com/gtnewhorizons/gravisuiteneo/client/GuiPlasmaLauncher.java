@@ -1,18 +1,21 @@
 package com.gtnewhorizons.gravisuiteneo.client;
 
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
-import com.gtnewhorizons.gravisuiteneo.inventory.ContainerPlasmaLauncher;
-import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaLauncher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
+
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
+import com.gtnewhorizons.gravisuiteneo.inventory.ContainerPlasmaLauncher;
+import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaLauncher;
 
 public class GuiPlasmaLauncher extends GuiContainer {
 
-    private static final ResourceLocation TEXTURE_GUI =
-            new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/PlasmaGunGUI.png");
+    private static final ResourceLocation TEXTURE_GUI = new ResourceLocation(
+            GraviSuiteNeo.MODID,
+            "textures/gui/PlasmaGunGUI.png");
 
     public static ItemStack getCurrentItem() {
         return Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem();

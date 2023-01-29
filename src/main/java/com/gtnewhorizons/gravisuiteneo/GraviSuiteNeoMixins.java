@@ -1,11 +1,12 @@
 package com.gtnewhorizons.gravisuiteneo;
 
-import com.gtnewhorizon.gtnhmixins.ILateMixinLoader;
-import com.gtnewhorizon.gtnhmixins.LateMixin;
-import cpw.mods.fml.common.FMLCommonHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import com.gtnewhorizon.gtnhmixins.ILateMixinLoader;
+import com.gtnewhorizon.gtnhmixins.LateMixin;
+import cpw.mods.fml.common.FMLCommonHandler;
 
 @LateMixin
 public class GraviSuiteNeoMixins implements ILateMixinLoader {

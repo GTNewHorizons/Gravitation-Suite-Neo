@@ -1,17 +1,20 @@
 package com.gtnewhorizons.gravisuiteneo.common;
 
-import com.gtnewhorizons.gravisuiteneo.client.FXQuantumShield;
-import cpw.mods.fml.client.FMLClientHandler;
-import gravisuite.network.IPacket;
-import gravisuite.network.PacketHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
+
+import com.gtnewhorizons.gravisuiteneo.client.FXQuantumShield;
+
+import cpw.mods.fml.client.FMLClientHandler;
+import gravisuite.network.IPacket;
+import gravisuite.network.PacketHandler;
 
 public class PacketQuantumShield extends IPacket {
 
@@ -75,39 +78,111 @@ public class PacketQuantumShield extends IPacket {
                 yaw = 0.0F;
             }
             FXQuantumShield qs = new FXQuantumShield(
-                    tMC.theWorld, p.posX, p.posY, p.posZ, p, 8, yaw, pitch, FXQuantumShield.EShieldMode.IMPACT);
+                    tMC.theWorld,
+                    p.posX,
+                    p.posY,
+                    p.posZ,
+                    p,
+                    8,
+                    yaw,
+                    pitch,
+                    FXQuantumShield.EShieldMode.IMPACT);
 
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(qs);
         } else if (this.target == -1) {
             FXQuantumShield qs = new FXQuantumShield(
-                    tMC.theWorld, p.posX, p.posY, p.posZ, p, 8, 0.0F, 90.0F, FXQuantumShield.EShieldMode.IMPACT);
+                    tMC.theWorld,
+                    p.posX,
+                    p.posY,
+                    p.posZ,
+                    p,
+                    8,
+                    0.0F,
+                    90.0F,
+                    FXQuantumShield.EShieldMode.IMPACT);
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(qs);
             qs = new FXQuantumShield(
-                    tMC.theWorld, p.posX, p.posY, p.posZ, p, 8, 0.0F, 270.0F, FXQuantumShield.EShieldMode.IMPACT);
+                    tMC.theWorld,
+                    p.posX,
+                    p.posY,
+                    p.posZ,
+                    p,
+                    8,
+                    0.0F,
+                    270.0F,
+                    FXQuantumShield.EShieldMode.IMPACT);
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(qs);
         } else if (this.target == -2) {
             FXQuantumShield qs = new FXQuantumShield(
-                    tMC.theWorld, p.posX, p.posY, p.posZ, p, 8, 0.0F, 270.0F, FXQuantumShield.EShieldMode.IMPACT);
+                    tMC.theWorld,
+                    p.posX,
+                    p.posY,
+                    p.posZ,
+                    p,
+                    8,
+                    0.0F,
+                    270.0F,
+                    FXQuantumShield.EShieldMode.IMPACT);
 
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(qs);
         } else if (this.target == -3) {
             FXQuantumShield qs = new FXQuantumShield(
-                    tMC.theWorld, p.posX, p.posY, p.posZ, p, 8, 0.0F, 90.0F, FXQuantumShield.EShieldMode.IMPACT);
+                    tMC.theWorld,
+                    p.posX,
+                    p.posY,
+                    p.posZ,
+                    p,
+                    8,
+                    0.0F,
+                    90.0F,
+                    FXQuantumShield.EShieldMode.IMPACT);
 
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(qs);
         } else if (this.target == -4) {
             FXQuantumShield qs = new FXQuantumShield(
-                    tMC.theWorld, p.posX, p.posY, p.posZ, p, 8, 0.0F, 90.0F, FXQuantumShield.EShieldMode.POWER_UP);
+                    tMC.theWorld,
+                    p.posX,
+                    p.posY,
+                    p.posZ,
+                    p,
+                    8,
+                    0.0F,
+                    90.0F,
+                    FXQuantumShield.EShieldMode.POWER_UP);
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(qs);
             qs = new FXQuantumShield(
-                    tMC.theWorld, p.posX, p.posY, p.posZ, p, 8, 0.0F, 270.0F, FXQuantumShield.EShieldMode.POWER_UP);
+                    tMC.theWorld,
+                    p.posX,
+                    p.posY,
+                    p.posZ,
+                    p,
+                    8,
+                    0.0F,
+                    270.0F,
+                    FXQuantumShield.EShieldMode.POWER_UP);
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(qs);
         } else if (this.target == -5) {
             FXQuantumShield qs = new FXQuantumShield(
-                    tMC.theWorld, p.posX, p.posY, p.posZ, p, 8, 0.0F, 90.0F, FXQuantumShield.EShieldMode.POWER_DOWN);
+                    tMC.theWorld,
+                    p.posX,
+                    p.posY,
+                    p.posZ,
+                    p,
+                    8,
+                    0.0F,
+                    90.0F,
+                    FXQuantumShield.EShieldMode.POWER_DOWN);
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(qs);
             qs = new FXQuantumShield(
-                    tMC.theWorld, p.posX, p.posY, p.posZ, p, 8, 0.0F, 270.0F, FXQuantumShield.EShieldMode.POWER_DOWN);
+                    tMC.theWorld,
+                    p.posX,
+                    p.posY,
+                    p.posZ,
+                    p,
+                    8,
+                    0.0F,
+                    270.0F,
+                    FXQuantumShield.EShieldMode.POWER_DOWN);
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(qs);
         }
     }

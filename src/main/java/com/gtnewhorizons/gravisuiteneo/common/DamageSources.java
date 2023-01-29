@@ -46,15 +46,22 @@ public class DamageSources {
                     return new ChatComponentTranslation("death.attack.plazma_player.self", target.func_145748_c_());
                 }
                 return new ChatComponentTranslation(
-                        "death.attack.plazma.self.item", target.func_145748_c_(), customItemName);
+                        "death.attack.plazma.self.item",
+                        target.func_145748_c_(),
+                        customItemName);
             }
 
             if (customItemName == null) {
                 return new ChatComponentTranslation(
-                        "death.attack.plazma", target.func_145748_c_(), source.func_145748_c_());
+                        "death.attack.plazma",
+                        target.func_145748_c_(),
+                        source.func_145748_c_());
             }
             return new ChatComponentTranslation(
-                    "death.attack.plazma.item", target.func_145748_c_(), source.func_145748_c_(), customItemName);
+                    "death.attack.plazma.item",
+                    target.func_145748_c_(),
+                    source.func_145748_c_(),
+                    customItemName);
         }
     }
 }

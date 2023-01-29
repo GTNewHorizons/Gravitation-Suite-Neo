@@ -1,21 +1,24 @@
 package com.gtnewhorizons.gravisuiteneo;
 
-import com.gtnewhorizons.gravisuiteneo.common.Properties;
-import com.gtnewhorizons.gravisuiteneo.items.ItemEpicLappack;
-import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaCell;
-import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaLauncher;
-import com.gtnewhorizons.gravisuiteneo.util.GregTechAPIHelper;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.GameRegistry;
-import gravisuite.GraviSuite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
+import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.gtnewhorizons.gravisuiteneo.items.ItemEpicLappack;
+import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaCell;
+import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaLauncher;
+import com.gtnewhorizons.gravisuiteneo.util.GregTechAPIHelper;
+
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.GameRegistry;
+import gravisuite.GraviSuite;
 
 public class GraviSuiteNeoRegistry {
 

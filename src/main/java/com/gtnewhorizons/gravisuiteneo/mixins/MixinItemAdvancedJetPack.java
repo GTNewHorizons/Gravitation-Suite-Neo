@@ -1,9 +1,10 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
-import com.gtnewhorizons.gravisuiteneo.common.Properties;
-import gravisuite.ItemAdvancedJetPack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+
+import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import gravisuite.ItemAdvancedJetPack;
 
 @Mixin(ItemAdvancedJetPack.class)
 public class MixinItemAdvancedJetPack {

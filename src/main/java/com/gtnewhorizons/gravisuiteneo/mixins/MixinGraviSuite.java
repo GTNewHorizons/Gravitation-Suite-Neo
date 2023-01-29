@@ -1,16 +1,10 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
-import com.gtnewhorizon.mixinextras.injector.WrapWithCondition;
-import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
-import com.gtnewhorizons.gravisuiteneo.common.Properties;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import gravisuite.EntityPlasmaBall;
-import gravisuite.GraviSuite;
-import ic2.api.recipe.ICraftingRecipeManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.config.Configuration;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,6 +21,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import org.spongepowered.libraries.org.objectweb.asm.Opcodes;
+
+import com.gtnewhorizon.mixinextras.injector.WrapWithCondition;
+import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
+import com.gtnewhorizons.gravisuiteneo.common.Properties;
+
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import gravisuite.EntityPlasmaBall;
+import gravisuite.GraviSuite;
+import ic2.api.recipe.ICraftingRecipeManager;
 
 @Mixin(GraviSuite.class)
 public class MixinGraviSuite {
@@ -52,12 +55,10 @@ public class MixinGraviSuite {
     }
 
     @ModifyArgs(
-            at =
-                    @At(
-                            remap = false,
-                            target =
-                                    "Lgravisuite/ItemUltimateLappack;<init>(Lnet/minecraft/item/ItemArmor$ArmorMaterial;IIIII)V",
-                            value = "INVOKE"),
+            at = @At(
+                    remap = false,
+                    target = "Lgravisuite/ItemUltimateLappack;<init>(Lnet/minecraft/item/ItemArmor$ArmorMaterial;IIIII)V",
+                    value = "INVOKE"),
             method = "preInit",
             remap = false)
     private void gravisuiteneo$setUltimateLappackArgs(Args args) {
@@ -67,12 +68,10 @@ public class MixinGraviSuite {
     }
 
     @ModifyArgs(
-            at =
-                    @At(
-                            remap = false,
-                            target =
-                                    "Lgravisuite/ItemAdvancedLappack;<init>(Lnet/minecraft/item/ItemArmor$ArmorMaterial;IIIII)V",
-                            value = "INVOKE"),
+            at = @At(
+                    remap = false,
+                    target = "Lgravisuite/ItemAdvancedLappack;<init>(Lnet/minecraft/item/ItemArmor$ArmorMaterial;IIIII)V",
+                    value = "INVOKE"),
             method = "preInit",
             remap = false)
     private void gravisuiteneo$setAdvLapPackArgs(Args args) {
@@ -82,28 +81,22 @@ public class MixinGraviSuite {
     }
 
     @Redirect(
-            at =
-                    @At(
-                            remap = false,
-                            target =
-                                    "Lcpw/mods/fml/common/registry/GameRegistry;registerItem(Lnet/minecraft/item/Item;Ljava/lang/String;)V",
-                            value = "INVOKE"),
+            at = @At(
+                    remap = false,
+                    target = "Lcpw/mods/fml/common/registry/GameRegistry;registerItem(Lnet/minecraft/item/Item;Ljava/lang/String;)V",
+                    value = "INVOKE"),
             method = "preInit",
             remap = false,
-            slice =
-                    @Slice(
-                            from =
-                                    @At(
-                                            opcode = Opcodes.PUTSTATIC,
-                                            remap = false,
-                                            target = "Lgravisuite/GraviSuite;sonicLauncher:Lnet/minecraft/item/Item;",
-                                            value = "FIELD"),
-                            to =
-                                    @At(
-                                            remap = false,
-                                            target =
-                                                    "Lgravisuite/GraviSuite;registerEntity(Ljava/lang/Class;Ljava/lang/String;)V",
-                                            value = "INVOKE")))
+            slice = @Slice(
+                    from = @At(
+                            opcode = Opcodes.PUTSTATIC,
+                            remap = false,
+                            target = "Lgravisuite/GraviSuite;sonicLauncher:Lnet/minecraft/item/Item;",
+                            value = "FIELD"),
+                    to = @At(
+                            remap = false,
+                            target = "Lgravisuite/GraviSuite;registerEntity(Ljava/lang/Class;Ljava/lang/String;)V",
+                            value = "INVOKE")))
     private void gravisuiteneo$preventSonicLauncherRegistration(Item item, String name) {
         // NO-OP
     }
@@ -114,12 +107,10 @@ public class MixinGraviSuite {
     }
 
     @WrapWithCondition(
-            at =
-                    @At(
-                            remap = false,
-                            target =
-                                    "Lcpw/mods/fml/common/registry/GameRegistry;addRecipe(Lnet/minecraft/item/ItemStack;[Ljava/lang/Object;)V",
-                            value = "INVOKE"),
+            at = @At(
+                    remap = false,
+                    target = "Lcpw/mods/fml/common/registry/GameRegistry;addRecipe(Lnet/minecraft/item/ItemStack;[Ljava/lang/Object;)V",
+                    value = "INVOKE"),
             method = "afterModsLoaded",
             remap = false)
     private boolean gravisuiteneo$enableBasicRecipes(ItemStack output, Object... params) {
@@ -127,17 +118,15 @@ public class MixinGraviSuite {
     }
 
     @WrapWithCondition(
-            at =
-                    @At(
-                            ordinal = 0,
-                            remap = false,
-                            target =
-                                    "Lic2/api/recipe/ICraftingRecipeManager;addRecipe(Lnet/minecraft/item/ItemStack;[Ljava/lang/Object;)V",
-                            value = "INVOKE"),
+            at = @At(
+                    ordinal = 0,
+                    remap = false,
+                    target = "Lic2/api/recipe/ICraftingRecipeManager;addRecipe(Lnet/minecraft/item/ItemStack;[Ljava/lang/Object;)V",
+                    value = "INVOKE"),
             method = "afterModsLoaded",
             remap = false)
-    private boolean gravisuiteneo$enableBasicRecipes(
-            ICraftingRecipeManager instance, ItemStack output, Object... input) {
+    private boolean gravisuiteneo$enableBasicRecipes(ICraftingRecipeManager instance, ItemStack output,
+            Object... input) {
         return !Properties.disableBasicRecipes;
     }
 
@@ -146,8 +135,8 @@ public class MixinGraviSuite {
             locals = LocalCapture.CAPTURE_FAILEXCEPTION,
             method = "getOrCreateNbtData",
             remap = false)
-    private static void gravisuiteneo$createToolNBT(
-            ItemStack itemstack, CallbackInfoReturnable<NBTTagCompound> cir, NBTTagCompound nbttagcompound) {
+    private static void gravisuiteneo$createToolNBT(ItemStack itemstack, CallbackInfoReturnable<NBTTagCompound> cir,
+            NBTTagCompound nbttagcompound) {
         nbttagcompound.setDouble("toolXP", 0.0);
         nbttagcompound.setInteger("toolMode", 0);
     }

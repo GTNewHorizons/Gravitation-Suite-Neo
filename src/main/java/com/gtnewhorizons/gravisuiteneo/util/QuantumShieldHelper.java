@@ -1,22 +1,12 @@
 package com.gtnewhorizons.gravisuiteneo.util;
 
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
-import com.gtnewhorizons.gravisuiteneo.common.Achievements;
-import com.gtnewhorizons.gravisuiteneo.common.PacketQuantumShield;
-import com.gtnewhorizons.gravisuiteneo.common.Properties;
-import cpw.mods.fml.common.registry.GameRegistry;
-import gravisuite.GraviSuite;
-import gravisuite.ItemGraviChestPlate;
-import gravisuite.ItemSimpleItems;
-import gravisuite.ServerProxy;
-import ic2.api.item.ElectricItem;
-import ic2.core.item.armor.ItemArmorQuantumSuit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,7 +15,21 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+
 import org.apache.commons.lang3.tuple.Pair;
+
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
+import com.gtnewhorizons.gravisuiteneo.common.Achievements;
+import com.gtnewhorizons.gravisuiteneo.common.PacketQuantumShield;
+import com.gtnewhorizons.gravisuiteneo.common.Properties;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import gravisuite.GraviSuite;
+import gravisuite.ItemGraviChestPlate;
+import gravisuite.ItemSimpleItems;
+import gravisuite.ServerProxy;
+import ic2.api.item.ElectricItem;
+import ic2.core.item.armor.ItemArmorQuantumSuit;
 
 public class QuantumShieldHelper {
 
@@ -46,8 +50,7 @@ public class QuantumShieldHelper {
         ItemStack leggings = player.getEquipmentInSlot(2);
         ItemStack boots = player.getEquipmentInSlot(1);
 
-        return chest != null
-                && chest.getItem() instanceof ItemGraviChestPlate
+        return chest != null && chest.getItem() instanceof ItemGraviChestPlate
                 && helmet != null
                 && checkHelmetItem(helmet.getItem())
                 && leggings != null
@@ -95,8 +98,7 @@ public class QuantumShieldHelper {
             saveShieldMode(itemstack, false);
             ServerProxy.sendPlayerMessage(
                     player,
-                    EnumChatFormatting.YELLOW
-                            + StatCollector.translateToLocal("message.graviChestPlate.shieldMode")
+                    EnumChatFormatting.YELLOW + StatCollector.translateToLocal("message.graviChestPlate.shieldMode")
                             + " "
                             + EnumChatFormatting.RED
                             + StatCollector.translateToLocal("message.text.disabled"));
@@ -105,8 +107,7 @@ public class QuantumShieldHelper {
             saveShieldMode(itemstack, true);
             ServerProxy.sendPlayerMessage(
                     player,
-                    EnumChatFormatting.YELLOW
-                            + StatCollector.translateToLocal("message.graviChestPlate.shieldMode")
+                    EnumChatFormatting.YELLOW + StatCollector.translateToLocal("message.graviChestPlate.shieldMode")
                             + " "
                             + EnumChatFormatting.GREEN
                             + StatCollector.translateToLocal("message.text.enabled"));

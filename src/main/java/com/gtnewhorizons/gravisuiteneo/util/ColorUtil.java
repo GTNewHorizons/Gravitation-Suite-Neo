@@ -1,9 +1,11 @@
 package com.gtnewhorizons.gravisuiteneo.util;
 
+import java.awt.Color;
+
+import org.lwjgl.opengl.GL11;
+
 import com.gtnewhorizons.gravisuiteneo.util.vector.Vector3f;
 import com.gtnewhorizons.gravisuiteneo.util.vector.Vector4f;
-import java.awt.Color;
-import org.lwjgl.opengl.GL11;
 
 public class ColorUtil {
 

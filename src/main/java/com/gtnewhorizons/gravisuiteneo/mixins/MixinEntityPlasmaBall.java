@@ -1,10 +1,12 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
-import gravisuite.EntityPlasmaBall;
-import gravisuite.ItemRelocator.TeleportPoint;
 import net.minecraft.entity.EntityLivingBase;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
+
+import gravisuite.EntityPlasmaBall;
+import gravisuite.ItemRelocator.TeleportPoint;
 
 @Mixin(EntityPlasmaBall.class)
 public interface MixinEntityPlasmaBall {

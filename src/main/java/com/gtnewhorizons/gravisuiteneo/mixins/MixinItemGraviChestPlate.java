@@ -1,25 +1,29 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
-import com.gtnewhorizon.mixinextras.injector.ModifyExpressionValue;
-import com.gtnewhorizons.gravisuiteneo.common.Properties;
-import com.gtnewhorizons.gravisuiteneo.util.QuantumShieldHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import gravisuite.ItemGraviChestPlate;
-import gravisuite.ServerProxy;
-import ic2.api.item.ElectricItem;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.libraries.org.objectweb.asm.Opcodes;
+
+import com.gtnewhorizon.mixinextras.injector.ModifyExpressionValue;
+import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.gtnewhorizons.gravisuiteneo.util.QuantumShieldHelper;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import gravisuite.ItemGraviChestPlate;
+import gravisuite.ServerProxy;
+import ic2.api.item.ElectricItem;
 
 @Mixin(ItemGraviChestPlate.class)
 public class MixinItemGraviChestPlate {
@@ -29,8 +33,8 @@ public class MixinItemGraviChestPlate {
             cancellable = true,
             method = "onArmorTick",
             remap = false)
-    private void gravisuiteneo$handleShieldAndNanobots(
-            World worldObj, EntityPlayer player, ItemStack itemStack, CallbackInfo ci) {
+    private void gravisuiteneo$handleShieldAndNanobots(World worldObj, EntityPlayer player, ItemStack itemStack,
+            CallbackInfo ci) {
         if (!QuantumShieldHelper.readShieldMode(itemStack)) return;
 
         if (!QuantumShieldHelper.hasValidShieldEquipment(player)) {
@@ -64,8 +68,8 @@ public class MixinItemGraviChestPlate {
             at = @At(target = "Lnet/minecraft/entity/player/EntityPlayer;isBurning()Z", value = "INVOKE", remap = true),
             method = "onArmorTick",
             remap = false)
-    private boolean gravisuiteneo$checkCanExtinguish(
-            boolean original, World worldObj, EntityPlayer player, ItemStack itemStack) {
+    private boolean gravisuiteneo$checkCanExtinguish(boolean original, World worldObj, EntityPlayer player,
+            ItemStack itemStack) {
         if (original && ElectricItem.manager.canUse(itemStack, QuantumShieldHelper.DISCHARGE_EXTINGUISH)) {
             ElectricItem.manager.discharge(itemStack, QuantumShieldHelper.DISCHARGE_EXTINGUISH, 4, true, false, false);
             return true;
@@ -81,20 +85,18 @@ public class MixinItemGraviChestPlate {
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     @Inject(at = @At("TAIL"), method = "addInformation")
-    private void gravisuiteneo$addShieldInformation(
-            ItemStack itemStack,
-            EntityPlayer player,
-            @SuppressWarnings("rawtypes") List tooltip,
-            boolean advancedTooltips,
-            CallbackInfo ci) {
+    private void gravisuiteneo$addShieldInformation(ItemStack itemStack, EntityPlayer player,
+            @SuppressWarnings("rawtypes") List tooltip, boolean advancedTooltips, CallbackInfo ci) {
         String shieldStatus;
         if (QuantumShieldHelper.readShieldMode(itemStack)) {
             shieldStatus = EnumChatFormatting.GREEN + StatCollector.translateToLocal("message.text.on");
         } else {
             shieldStatus = EnumChatFormatting.RED + StatCollector.translateToLocal("message.text.off");
         }
-        tooltip.add(EnumChatFormatting.AQUA + StatCollector.translateToLocal("message.graviChestPlate.shieldMode")
-                + ": " + shieldStatus);
+        tooltip.add(
+                EnumChatFormatting.AQUA + StatCollector.translateToLocal("message.graviChestPlate.shieldMode")
+                        + ": "
+                        + shieldStatus);
     }
 
     /**

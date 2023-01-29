@@ -1,6 +1,7 @@
 package com.gtnewhorizons.gravisuiteneo.common;
 
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
+
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import gravisuite.GraviSuite;
 import gravisuite.ItemAdvChainsaw;
@@ -171,9 +172,15 @@ public class GraviSuiteTweaker {
                 Properties.ElectricPresets.Vajra.energyPerOperation,
                 "energyPerOperation");
         ReflectionHelper.setPrivateValue(
-                ItemVajra.class, (ItemVajra) GraviSuite.vajra, Properties.ElectricPresets.Vajra.maxCharge, "maxCharge");
+                ItemVajra.class,
+                (ItemVajra) GraviSuite.vajra,
+                Properties.ElectricPresets.Vajra.maxCharge,
+                "maxCharge");
         ReflectionHelper.setPrivateValue(
-                ItemVajra.class, (ItemVajra) GraviSuite.vajra, Properties.ElectricPresets.Vajra.tier, "tier");
+                ItemVajra.class,
+                (ItemVajra) GraviSuite.vajra,
+                Properties.ElectricPresets.Vajra.tier,
+                "tier");
         ReflectionHelper.setPrivateValue(
                 ItemVajra.class,
                 (ItemVajra) GraviSuite.vajra,

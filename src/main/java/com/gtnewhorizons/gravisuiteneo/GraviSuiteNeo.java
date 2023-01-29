@@ -1,10 +1,16 @@
 package com.gtnewhorizons.gravisuiteneo;
 
+import net.minecraftforge.common.MinecraftForge;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.gtnewhorizons.gravisuiteneo.common.Achievements;
 import com.gtnewhorizons.gravisuiteneo.common.EventHandler;
 import com.gtnewhorizons.gravisuiteneo.common.GraviSuiteTweaker;
 import com.gtnewhorizons.gravisuiteneo.common.RecipeHandler;
 import com.gtnewhorizons.gravisuiteneo.proxy.CommonProxy;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -14,14 +20,10 @@ import cpw.mods.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry.Type;
-import net.minecraftforge.common.MinecraftForge;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Mod(
         acceptedMinecraftVersions = "[1.7.10]",
-        dependencies =
-                "required-after:GraviSuite@[1.7.10-2.0.3];required-after:IC2;required-after:gtnhmixins;after:gregtech",
+        dependencies = "required-after:GraviSuite@[1.7.10-2.0.3];required-after:IC2;required-after:gtnhmixins;after:gregtech",
         modid = GraviSuiteNeo.MODID,
         name = GraviSuiteNeo.MODNAME,
         version = GraviSuiteNeo.VERSION)

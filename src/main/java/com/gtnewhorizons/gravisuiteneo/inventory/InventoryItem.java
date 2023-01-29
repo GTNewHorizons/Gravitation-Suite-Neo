@@ -1,12 +1,13 @@
 package com.gtnewhorizons.gravisuiteneo.inventory;
 
-import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaCell;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
+
+import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaCell;
 
 public class InventoryItem implements IInventory {
 
@@ -119,9 +120,8 @@ public class InventoryItem implements IInventory {
     public void closeInventory() {}
 
     /**
-     * This method doesn't seem to do what it claims to do, as
-     * items can still be left-clicked and placed in the inventory
-     * even when this returns false
+     * This method doesn't seem to do what it claims to do, as items can still be left-clicked and placed in the
+     * inventory even when this returns false
      */
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {

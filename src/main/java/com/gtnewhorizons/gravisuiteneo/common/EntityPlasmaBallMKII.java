@@ -1,17 +1,7 @@
 package com.gtnewhorizons.gravisuiteneo.common;
 
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
-import com.gtnewhorizons.gravisuiteneo.mixins.MixinEntityPlasmaBall;
-import gravisuite.BlockRelocatorPortal;
-import gravisuite.EntityPlasmaBall;
-import gravisuite.GraviSuite;
-import gravisuite.Helpers;
-import gravisuite.ItemRelocator;
-import gravisuite.ItemRelocator.TeleportPoint;
-import gravisuite.ServerProxy;
-import gravisuite.TileEntityRelocatorPortal;
-import ic2.api.item.ElectricItem;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,6 +15,19 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
+import com.gtnewhorizons.gravisuiteneo.mixins.MixinEntityPlasmaBall;
+
+import gravisuite.BlockRelocatorPortal;
+import gravisuite.EntityPlasmaBall;
+import gravisuite.GraviSuite;
+import gravisuite.Helpers;
+import gravisuite.ItemRelocator;
+import gravisuite.ItemRelocator.TeleportPoint;
+import gravisuite.ServerProxy;
+import gravisuite.TileEntityRelocatorPortal;
+import ic2.api.item.ElectricItem;
 
 public class EntityPlasmaBallMKII extends EntityPlasmaBall {
 
@@ -62,8 +65,8 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
 
     private void changeEntitySpeed(float newSpeed) {
         // Get the current length/speed of the vector
-        double magnitude =
-                Math.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+        double magnitude = Math
+                .sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
 
         // Get the unit vector of the motion vector (length/speed of 1)
         this.motionX /= magnitude;
@@ -95,8 +98,7 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (!this.worldObj.isRemote
-                && this.finalTicksForDestruction > -1
+        if (!this.worldObj.isRemote && this.finalTicksForDestruction > -1
                 && this.ticksExisted >= this.finalTicksForDestruction) {
             this.setDead();
         }
@@ -187,7 +189,12 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
             final EntityPlasmaBall explosionBall = new EntityPlasmaBallMKII(this.worldObj, this, this.charge);
             if (!this.worldObj.isRemote) {
                 this.worldObj.playSoundEffect(
-                        mop.blockX, mop.blockY, mop.blockZ, GraviSuiteNeo.MODID + ":plasmaImpact", 1.25F, 1.0F);
+                        mop.blockX,
+                        mop.blockY,
+                        mop.blockZ,
+                        GraviSuiteNeo.MODID + ":plasmaImpact",
+                        1.25F,
+                        1.0F);
                 this.worldObj.spawnEntityInWorld(explosionBall);
                 // setVelocity(0.0D, 0.0D, 0.0D);
                 // actionType = 3;
@@ -212,12 +219,10 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
                         } else if (GraviSuite.isSimulating()) {
                             ServerProxy.sendPlayerMessage(
                                     player,
-                                    ((MixinEntityPlasmaBall) this)
-                                                    .getOwnerEntity()
-                                                    .getCommandSenderName() + " "
+                                    ((MixinEntityPlasmaBall) this).getOwnerEntity().getCommandSenderName() + " "
                                             + StatCollector.translateToLocal("message.relocator.text.messageToTarget"));
-                            ElectricItem.manager.discharge(
-                                    itemstack, dischargeArmorValue, Integer.MAX_VALUE, true, false, false);
+                            ElectricItem.manager
+                                    .discharge(itemstack, dischargeArmorValue, Integer.MAX_VALUE, true, false, false);
                         }
                     } else {
                         Helpers.teleportEntity(mop.entityHit, targetTpPoint);
@@ -259,11 +264,11 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
                     TeleportPoint targetTpPoint = ((MixinEntityPlasmaBall) this).getTargetTpPoint();
                     final WorldServer targetServer = minecraftserver.worldServerForDimension(targetTpPoint.dimID);
 
-                    targetServer.theChunkProviderServer.loadChunk(
-                            (int) targetTpPoint.x >> 4, (int) targetTpPoint.z >> 4);
+                    targetServer.theChunkProviderServer
+                            .loadChunk((int) targetTpPoint.x >> 4, (int) targetTpPoint.z >> 4);
 
-                    final Block block =
-                            targetServer.getBlock((int) targetTpPoint.x, (int) targetTpPoint.y, (int) targetTpPoint.z);
+                    final Block block = targetServer
+                            .getBlock((int) targetTpPoint.x, (int) targetTpPoint.y, (int) targetTpPoint.z);
 
                     if (!(block instanceof BlockRelocatorPortal)) {
                         targetServer.setBlock(
@@ -272,10 +277,12 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
                                 (int) targetTpPoint.z,
                                 GraviSuite.blockRelocatorPortal);
                         targetServer.markBlockForUpdate(
-                                (int) targetTpPoint.x, (int) targetTpPoint.y, (int) targetTpPoint.z);
+                                (int) targetTpPoint.x,
+                                (int) targetTpPoint.y,
+                                (int) targetTpPoint.z);
                     }
-                    final TileEntity tileEntity = targetServer.getTileEntity(
-                            (int) targetTpPoint.x, (int) targetTpPoint.y, (int) targetTpPoint.z);
+                    final TileEntity tileEntity = targetServer
+                            .getTileEntity((int) targetTpPoint.x, (int) targetTpPoint.y, (int) targetTpPoint.z);
 
                     if (tileEntity instanceof TileEntityRelocatorPortal) {
                         final ItemRelocator.TeleportPoint tmpPoint = new ItemRelocator.TeleportPoint();
@@ -289,8 +296,7 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
                     if (tileEntity instanceof TileEntityRelocatorPortal) {
                         ((TileEntityRelocatorPortal) currentTileEntity).setParentPortal(targetTpPoint);
                     }
-                } catch (final Exception ignored) {
-                }
+                } catch (final Exception ignored) {}
             }
         }
         if (!this.worldObj.isRemote) {

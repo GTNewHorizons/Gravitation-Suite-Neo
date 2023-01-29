@@ -1,9 +1,10 @@
 package com.gtnewhorizons.gravisuiteneo.inventory;
 
-import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaCell;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
+import com.gtnewhorizons.gravisuiteneo.items.ItemPlasmaCell;
 
 public class SlotPlasmaAmmo extends Slot {
 

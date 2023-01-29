@@ -1,11 +1,12 @@
 package com.gtnewhorizons.gravisuiteneo.client;
 
 import java.awt.Color;
+
 import net.minecraft.item.ItemStack;
 
 /**
- * An Interface to give your Item one ore more fancy looking status-bars.
- * You need to disable the vanilla durability bar! Make sure to Override showDurabilityBar() and return false
+ * An Interface to give your Item one ore more fancy looking status-bars. You need to disable the vanilla durability
+ * bar! Make sure to Override showDurabilityBar() and return false
  */
 public interface ICustomItemBars {
 
@@ -52,7 +53,8 @@ public interface ICustomItemBars {
     double getMaxValue(ItemStack itemStack, int barIndex);
 
     /**
-     * @return The Value for the bar to be displayed. You can return -1 here to disable the bar (No black background bar will be drawn for this bar index)
+     * @return The Value for the bar to be displayed. You can return -1 here to disable the bar (No black background bar
+     *         will be drawn for this bar index)
      */
     double getValueForBar(ItemStack itemStack, int barIndex);
 

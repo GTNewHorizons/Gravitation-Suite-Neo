@@ -1,16 +1,5 @@
 package com.gtnewhorizons.gravisuiteneo.common;
 
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
-import com.gtnewhorizons.gravisuiteneo.common.DamageSources.EntityDamageSourcePlazma;
-import com.gtnewhorizons.gravisuiteneo.util.QuantumShieldHelper;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
-import gravisuite.GraviSuite;
-import gravisuite.ItemGraviChestPlate;
-import gravisuite.ServerProxy;
-import ic2.api.item.ElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,6 +10,19 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
+import com.gtnewhorizons.gravisuiteneo.common.DamageSources.EntityDamageSourcePlazma;
+import com.gtnewhorizons.gravisuiteneo.util.QuantumShieldHelper;
+
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import gravisuite.GraviSuite;
+import gravisuite.ItemGraviChestPlate;
+import gravisuite.ServerProxy;
+import ic2.api.item.ElectricItem;
 
 public class EventHandler {
 
@@ -53,8 +55,7 @@ public class EventHandler {
         EntityPlayer player = (EntityPlayer) event.entity;
         ItemStack chest = player.getEquipmentInSlot(3);
 
-        if (chest == null
-                || !(chest.getItem() instanceof ItemGraviChestPlate)
+        if (chest == null || !(chest.getItem() instanceof ItemGraviChestPlate)
                 || !GraviSuite.getOrCreateNbtData(chest).getBoolean("isShieldActive")
                 || !QuantumShieldHelper.hasValidShieldEquipment(player)) {
             return;
@@ -73,12 +74,12 @@ public class EventHandler {
 
             // *bonk* the shield around the player
             PacketQuantumShield.issue(player.getEntityId(), -1);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
     }
 
     /**
-     * Give player complete invulnerability to all sorts of damage; As long as he can maintain enough power for the shield
+     * Give player complete invulnerability to all sorts of damage; As long as he can maintain enough power for the
+     * shield
      */
     @SubscribeEvent
     public void onLivingHurtEvent(LivingHurtEvent event) {
@@ -90,8 +91,7 @@ public class EventHandler {
         ItemStack chest = player.getEquipmentInSlot(3);
         double energyRequired = event.ammount * 1500.0;
 
-        if (chest == null
-                || !(chest.getItem() instanceof ItemGraviChestPlate)
+        if (chest == null || !(chest.getItem() instanceof ItemGraviChestPlate)
                 || !GraviSuite.getOrCreateNbtData(chest).getBoolean("isShieldActive")) {
             return;
         }
@@ -121,8 +121,8 @@ public class EventHandler {
             player.triggerAchievement(Achievements.QSHIELD_PLASMAIMPACT);
         }
         // Drain half the amount of energy to absorb the damage, as we're already draining ~20kEU/s
-        ElectricItem.manager.discharge(
-                chest, energyRequired, Properties.ElectricPresets.GraviChestPlate.tier, true, false, false);
+        ElectricItem.manager
+                .discharge(chest, energyRequired, Properties.ElectricPresets.GraviChestPlate.tier, true, false, false);
         player.hurtResistantTime = 20;
         player.hurtTime = 0;
         event.ammount = 0;

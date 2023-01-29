@@ -1,16 +1,8 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
-import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
-import com.gtnewhorizons.gravisuiteneo.common.Properties;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import gravisuite.ItemAdvChainsaw;
-import gravisuite.ServerProxy;
-import gravisuite.keyboard.Keyboard;
-import ic2.api.item.ElectricItem;
 import java.util.List;
 import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +13,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,6 +23,17 @@ import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
+import com.gtnewhorizons.gravisuiteneo.common.Properties;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import gravisuite.ItemAdvChainsaw;
+import gravisuite.ServerProxy;
+import gravisuite.keyboard.Keyboard;
+import ic2.api.item.ElectricItem;
 
 @Mixin(ItemAdvChainsaw.class)
 public abstract class MixinItemAdvChainsaw extends ItemTool {
@@ -86,22 +90,20 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
     }
 
     @Inject(
-            at =
-                    @At(
-                            remap = false,
-                            target =
-                                    "Lnet/minecraftforge/common/IShearable;onSheared(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/IBlockAccess;IIII)Ljava/util/ArrayList;",
-                            value = "INVOKE"),
+            at = @At(
+                    remap = false,
+                    target = "Lnet/minecraftforge/common/IShearable;onSheared(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/IBlockAccess;IIII)Ljava/util/ArrayList;",
+                    value = "INVOKE"),
             method = "onBlockStartBreak",
             remap = false)
-    private void gravisuiteneo$playChainsawSound(
-            ItemStack itemstack, int x, int y, int z, EntityPlayer player, CallbackInfoReturnable<Boolean> cir) {
+    private void gravisuiteneo$playChainsawSound(ItemStack itemstack, int x, int y, int z, EntityPlayer player,
+            CallbackInfoReturnable<Boolean> cir) {
         player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":chainsaw", 1.25f, 1.0f);
     }
 
     @Inject(at = @At(ordinal = 1, value = "RETURN"), method = "onBlockStartBreak", remap = false)
-    private void gravisuiteneo$handleTreeToolMode(
-            ItemStack itemstack, int x, int y, int z, EntityPlayer player, CallbackInfoReturnable<Boolean> cir) {
+    private void gravisuiteneo$handleTreeToolMode(ItemStack itemstack, int x, int y, int z, EntityPlayer player,
+            CallbackInfoReturnable<Boolean> cir) {
         if (ItemAdvChainsaw.readToolMode(itemstack) != 2) {
             return;
         }
@@ -167,8 +169,8 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
     @SuppressWarnings("unchecked")
     @Overwrite
     @SideOnly(Side.CLIENT)
-    public void addInformation(
-            ItemStack item, EntityPlayer player, @SuppressWarnings("rawtypes") List tooltip, boolean advancedTooltips) {
+    public void addInformation(ItemStack item, EntityPlayer player, @SuppressWarnings("rawtypes") List tooltip,
+            boolean advancedTooltips) {
         final Integer toolMode = ItemAdvChainsaw.readToolMode(item);
         StringBuilder line = new StringBuilder();
         line.append(EnumChatFormatting.GOLD);
@@ -189,18 +191,8 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
      * This code is (c) by Tinkers construct
      */
     @Unique
-    private void breakTree(
-            World world,
-            int x,
-            int y,
-            int z,
-            int xStart,
-            int yStart,
-            int zStart,
-            ItemStack stack,
-            Block block,
-            int meta,
-            EntityPlayer player) {
+    private void breakTree(World world, int x, int y, int z, int xStart, int yStart, int zStart, ItemStack stack,
+            Block block, int meta, EntityPlayer player) {
         for (int xPos = x - 1; xPos <= x + 1; xPos++) {
             for (int yPos = y; yPos <= y + 1; yPos++) {
                 for (int zPos = z - 1; zPos <= z + 1; zPos++) {
@@ -224,7 +216,16 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
                             if (9 * xDist * xDist + yDist * yDist + 9 * zDist * zDist < 2500) {
                                 if (cancelHarvest) {
                                     this.breakTree(
-                                            world, xPos, yPos, zPos, xStart, yStart, zStart, stack, block, meta,
+                                            world,
+                                            xPos,
+                                            yPos,
+                                            zPos,
+                                            xStart,
+                                            yStart,
+                                            zStart,
+                                            stack,
+                                            block,
+                                            meta,
                                             player);
                                 } else {
                                     if (localMeta % 4 == meta % 4) {
@@ -236,7 +237,16 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
                                         world.setBlockToAir(xPos, yPos, zPos);
                                         if (!world.isRemote) {
                                             this.breakTree(
-                                                    world, xPos, yPos, zPos, xStart, yStart, zStart, stack, block, meta,
+                                                    world,
+                                                    xPos,
+                                                    yPos,
+                                                    zPos,
+                                                    xStart,
+                                                    yStart,
+                                                    zStart,
+                                                    stack,
+                                                    block,
+                                                    meta,
                                                     player);
                                         }
                                     }
@@ -250,7 +260,7 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
     }
 
     /**
-     *  This code is (c) by Tinkers construct
+     * This code is (c) by Tinkers construct
      */
     @Unique
     private boolean detectTree(World world, int x, int y, int z, Block wood) {
@@ -282,8 +292,8 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
         return numLeaves > 3;
     }
 
-    private MixinItemAdvChainsaw(
-            float p_i45333_1_, ToolMaterial p_i45333_2_, @SuppressWarnings("rawtypes") Set p_i45333_3_) {
+    private MixinItemAdvChainsaw(float p_i45333_1_, ToolMaterial p_i45333_2_,
+            @SuppressWarnings("rawtypes") Set p_i45333_3_) {
         super(p_i45333_1_, p_i45333_2_, p_i45333_3_);
     }
 }

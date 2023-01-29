@@ -1,11 +1,13 @@
 package com.gtnewhorizons.gravisuiteneo.common;
 
-import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.stream.Collectors;
+
 import net.minecraftforge.common.config.Configuration;
+
+import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 
 public class Properties {
 
@@ -78,6 +80,7 @@ public class Properties {
     }
 
     public enum ArmorPresets {
+
         AdvJetPack(0.0),
         AdvLapPack(0.0),
         AdvNanoChestPlate(0.36),
@@ -93,18 +96,18 @@ public class Properties {
             final String category = ARMOR_PRESETS + Configuration.CATEGORY_SPLITTER + this.name();
 
             this.absorptionRatio = config.get(
-                            category,
-                            "absorptionRatio",
-                            this.absorptionRatio,
-                            "How much damage this armor pieve can absorb [range: 0.0 ~ 1.0, default: "
-                                    + this.absorptionRatio + "]",
-                            0.0,
-                            1.0)
-                    .getDouble();
+                    category,
+                    "absorptionRatio",
+                    this.absorptionRatio,
+                    "How much damage this armor pieve can absorb [range: 0.0 ~ 1.0, default: " + this.absorptionRatio
+                            + "]",
+                    0.0,
+                    1.0).getDouble();
         }
     }
 
     public enum ElectricPresets {
+
         AdvJetPack(3000000, 3, 3000, 12),
         AdvChainsaw(1000000, 2, 500, 100),
         AdvDrill(10000000, 4, 100000, 3333),
@@ -225,47 +228,35 @@ public class Properties {
             advChainsawAdditionalMineableBlocks = config.getStringList(
                     "AdvChainsawAdditionalMineableBlocks",
                     ADDITIONAL_TWEAKS,
-                    new String[] {
-                        "minecraft:leaves",
-                        "minecraft:wool",
-                        "minecraft:melon_block",
-                        "minecraft:cactus",
-                        "minecraft:snow",
-                        "IC2:blockRubLeaves"
-                    },
+                    new String[] { "minecraft:leaves", "minecraft:wool", "minecraft:melon_block", "minecraft:cactus",
+                            "minecraft:snow", "IC2:blockRubLeaves" },
                     "List of blocks the Advanced Chainsaw should be able to break. (Note: The Advanced Chainsaw can also break the same blocks as Diamond Axe and Diamond Sword)");
 
             allowedShieldHelmets = Arrays.stream(
-                            config.getStringList(
-                                    "AllowedShieldHelmets",
-                                    ADDITIONAL_TWEAKS,
-                                    new String[] {
-                                        "AdvancedSolarPanel:hybrid_solar_helmet",
-                                        "AdvancedSolarPanel:ultimate_solar_helmet",
-                                        "EMT:QuantumGogglesRevealing",
-                                        "EMT:SolarHelmetRevealing"
-                                    },
-                                    "These items can be used in place of the Quantum Helmet and still allow the usage of the Quantum Shield"))
-                    .map(UniqueIdentifier::new)
-                    .collect(Collectors.toCollection(HashSet::new));
+                    config.getStringList(
+                            "AllowedShieldHelmets",
+                            ADDITIONAL_TWEAKS,
+                            new String[] { "AdvancedSolarPanel:hybrid_solar_helmet",
+                                    "AdvancedSolarPanel:ultimate_solar_helmet", "EMT:QuantumGogglesRevealing",
+                                    "EMT:SolarHelmetRevealing" },
+                            "These items can be used in place of the Quantum Helmet and still allow the usage of the Quantum Shield"))
+                    .map(UniqueIdentifier::new).collect(Collectors.toCollection(HashSet::new));
 
             allowedShieldLeggins = Arrays.stream(
-                            config.getStringList(
-                                    "AllowedShieldLeggins",
-                                    ADDITIONAL_TWEAKS,
-                                    new String[0],
-                                    "These items can be used in place of the Quantum Leggins and still allow the usage of the Quantum Shield"))
-                    .map(UniqueIdentifier::new)
-                    .collect(Collectors.toCollection(HashSet::new));
+                    config.getStringList(
+                            "AllowedShieldLeggins",
+                            ADDITIONAL_TWEAKS,
+                            new String[0],
+                            "These items can be used in place of the Quantum Leggins and still allow the usage of the Quantum Shield"))
+                    .map(UniqueIdentifier::new).collect(Collectors.toCollection(HashSet::new));
 
             allowedShieldBoots = Arrays.stream(
-                            config.getStringList(
-                                    "AllowedShieldBoots",
-                                    ADDITIONAL_TWEAKS,
-                                    new String[] {"EMT:QuantumBootsTraveller"},
-                                    "These items can be used in place of the Quantum Boots and still allow the usage of the Quantum Shield"))
-                    .map(UniqueIdentifier::new)
-                    .collect(Collectors.toCollection(HashSet::new));
+                    config.getStringList(
+                            "AllowedShieldBoots",
+                            ADDITIONAL_TWEAKS,
+                            new String[] { "EMT:QuantumBootsTraveller" },
+                            "These items can be used in place of the Quantum Boots and still allow the usage of the Quantum Shield"))
+                    .map(UniqueIdentifier::new).collect(Collectors.toCollection(HashSet::new));
         }
     }
 }
