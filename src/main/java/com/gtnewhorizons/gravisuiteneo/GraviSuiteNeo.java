@@ -42,13 +42,9 @@ public class GraviSuiteNeo {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        // register stuff
         GraviSuiteNeoRegistry.register();
         proxy.registerRenderers();
         proxy.registerKeys();
-
-        // tweak stuff
-        GraviSuiteTweaker.tweak();
     }
 
     @Mod.EventHandler
@@ -56,6 +52,7 @@ public class GraviSuiteNeo {
         EventHandler eventHandler = new EventHandler();
         FMLCommonHandler.instance().bus().register(eventHandler);
         MinecraftForge.EVENT_BUS.register(eventHandler);
+        GraviSuiteTweaker.tweak();
     }
 
     @Mod.EventHandler

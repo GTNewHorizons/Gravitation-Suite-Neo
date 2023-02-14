@@ -1,6 +1,5 @@
 package com.gtnewhorizons.gravisuiteneo.mixins;
 
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,6 +18,6 @@ public class MixinHelpers {
     @Deprecated
     @Overwrite(remap = false)
     public static String formatMessage(String inputString) {
-        return EnumChatFormatting.getTextWithoutFormattingCodes(StatCollector.translateToLocal(inputString));
+        return StatCollector.translateToLocal(inputString);
     }
 }
