@@ -22,6 +22,7 @@ public class MixinKeyboard {
                     args = "array=get",
                     opcode = Opcodes.GETFIELD,
                     ordinal = 1,
+                    remap = true,
                     target = "Lnet/minecraft/entity/player/InventoryPlayer;armorInventory:[Lnet/minecraft/item/ItemStack;",
                     value = "FIELD"),
             method = "processKeyPressed",

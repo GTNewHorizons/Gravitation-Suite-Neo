@@ -131,7 +131,10 @@ public class MixinGraviSuite {
     }
 
     @Inject(
-            at = @At(target = "Lnet/minecraft/nbt/NBTTagCompound;setInteger(Ljava/lang/String;I)V", value = "INVOKE"),
+            at = @At(
+                    remap = true,
+                    target = "Lnet/minecraft/nbt/NBTTagCompound;setInteger(Ljava/lang/String;I)V",
+                    value = "INVOKE"),
             locals = LocalCapture.CAPTURE_FAILEXCEPTION,
             method = "getOrCreateNbtData",
             remap = false)
