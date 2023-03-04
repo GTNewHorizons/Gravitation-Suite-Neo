@@ -224,8 +224,14 @@ public class Properties {
                     999,
                     "The chance each tick that the epic lappack will scan a players inventory for chargeable items. 1 means it will scan every tick and thus charge a lot quicker. 20 is about each second");
 
-            xpGainFactor = config.getInt("xpGainFactor", ADDITIONAL_TWEAKS, 10000, 1, 150000000, "Base XP factor for levelable tools. Needed XP for the next level is xpGainFactor*(currentLevel + 1)^2");
-            
+            xpGainFactor = config.getInt(
+                    "xpGainFactor",
+                    ADDITIONAL_TWEAKS,
+                    10000,
+                    1,
+                    150000000,
+                    "Base XP factor for levelable tools. Needed XP for the next level is xpGainFactor*(currentLevel + 1)^2");
+
             plasmaLauncherFluids = config.getStringList(
                     "PlasmaLauncherFluids",
                     ADDITIONAL_TWEAKS,

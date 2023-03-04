@@ -268,7 +268,9 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
                         && (selectedItem = this.getSelected(tpList)) != null) {
                     List<String> toolTipData = new ArrayList<>();
                     TeleportPoint tmpPoint = tpList.get(((SelectedItemMKII) selectedItem).getRealIDX());
-                    toolTipData.add(StatCollector.translateToLocal("message.relocator.text.dim") + ": " + DimensionManager.getProvider(tmpPoint.dimID).getDimensionName());
+                    toolTipData.add(
+                            StatCollector.translateToLocal("message.relocator.text.dim") + ": "
+                                    + DimensionManager.getProvider(tmpPoint.dimID).getDimensionName());
                     toolTipData.add("X: " + (int) tmpPoint.x);
                     toolTipData.add("Y: " + (int) tmpPoint.y);
                     toolTipData.add("Z: " + (int) tmpPoint.z);
