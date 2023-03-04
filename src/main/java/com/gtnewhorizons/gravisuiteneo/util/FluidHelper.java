@@ -1,21 +1,22 @@
 package com.gtnewhorizons.gravisuiteneo.util;
 
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 
 public class FluidHelper {
 
     public static String getFluidName(FluidStack pFluid) {
         if (pFluid == null || pFluid.getFluid() == null) {
-            return "Error.1";
+            return StatCollector.translateToLocal("fluid.null");
         }
 
         String tLocalizedFluidName = pFluid.getFluid().getLocalizedName(pFluid);
         if (tLocalizedFluidName == null) {
-            return "Error.2";
+            return StatCollector.translateToLocal("fluid.name.null");
         }
 
         if (tLocalizedFluidName.equals("")) {
-            tLocalizedFluidName = "Unknown Fluid";
+            tLocalizedFluidName = StatCollector.translateToLocal("fluid.name.empty");
         }
 
         if (tLocalizedFluidName.equals(pFluid.getFluid().getUnlocalizedName())) {
