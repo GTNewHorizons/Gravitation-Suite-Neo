@@ -30,16 +30,16 @@ public class DamageSources {
         public IChatComponent func_151519_b(EntityLivingBase target) {
             Entity source = this.getEntity();
             IChatComponent customItemName = null;
-            if (source instanceof EntityLivingBase) {
-                ItemStack heldItem = ((EntityLivingBase) source).getHeldItem();
+            if (source instanceof EntityLivingBase livingEntity) {
+                ItemStack heldItem = livingEntity.getHeldItem();
                 if (heldItem != null && heldItem.hasDisplayName()) {
                     customItemName = heldItem.func_151000_E();
                 }
             }
 
             if (target == source) {
-                if (target instanceof EntityPlayer) {
-                    ((EntityPlayer) target).triggerAchievement(Achievements.VAPORIZE_SELF);
+                if (target instanceof EntityPlayer player) {
+                    player.triggerAchievement(Achievements.VAPORIZE_SELF);
                 }
 
                 if (customItemName == null) {
