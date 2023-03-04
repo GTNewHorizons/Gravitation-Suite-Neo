@@ -209,8 +209,7 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
         if (mop.entityHit != null) {
             if (actionType == 0) {
                 TeleportPoint targetTpPoint = ((MixinEntityPlasmaBall) this).getTargetTpPoint();
-                if (mop.entityHit instanceof EntityPlayer) {
-                    final EntityPlayer player = (EntityPlayer) mop.entityHit;
+                if (mop.entityHit instanceof EntityPlayer player) {
                     final ItemStack itemstack = player.inventory.armorInventory[2];
                     if (itemstack != null && itemstack.getItem() == GraviSuite.graviChestPlate) {
                         double dischargeArmorValue = ((MixinEntityPlasmaBall) this).getDischargeArmorValue();
@@ -284,17 +283,17 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
                     final TileEntity tileEntity = targetServer
                             .getTileEntity((int) targetTpPoint.x, (int) targetTpPoint.y, (int) targetTpPoint.z);
 
-                    if (tileEntity instanceof TileEntityRelocatorPortal) {
+                    if (tileEntity instanceof TileEntityRelocatorPortal portal) {
                         final ItemRelocator.TeleportPoint tmpPoint = new ItemRelocator.TeleportPoint();
                         tmpPoint.dimID = this.worldObj.provider.dimensionId;
                         tmpPoint.x = curPosX;
                         tmpPoint.y = curPosY;
                         tmpPoint.z = curPosZ;
-                        ((TileEntityRelocatorPortal) tileEntity).setParentPortal(tmpPoint);
+                        portal.setParentPortal(tmpPoint);
                     }
                     final TileEntity currentTileEntity = this.worldObj.getTileEntity(curPosX, curPosY, curPosZ);
-                    if (tileEntity instanceof TileEntityRelocatorPortal) {
-                        ((TileEntityRelocatorPortal) currentTileEntity).setParentPortal(targetTpPoint);
+                    if (currentTileEntity instanceof TileEntityRelocatorPortal currentPortal) {
+                        currentPortal.setParentPortal(targetTpPoint);
                     }
                 } catch (final Exception ignored) {}
             }

@@ -168,6 +168,7 @@ public class Properties {
 
         private static int maxMiningLevel;
         private static int epicLappackChargeTickChance;
+        private static int xpGainFactor;
         private static String[] plasmaLauncherFluids;
         private static String[] advChainsawAdditionalMineableBlocks;
         private static Collection<UniqueIdentifier> allowedShieldHelmets;
@@ -180,6 +181,10 @@ public class Properties {
 
         public static int getEpicLappackChargeTickChance() {
             return epicLappackChargeTickChance;
+        }
+
+        public static int getXpGainFactor() {
+            return xpGainFactor;
         }
 
         public static String[] getPlasmaLauncherFluids() {
@@ -218,6 +223,14 @@ public class Properties {
                     1,
                     999,
                     "The chance each tick that the epic lappack will scan a players inventory for chargeable items. 1 means it will scan every tick and thus charge a lot quicker. 20 is about each second");
+
+            xpGainFactor = config.getInt(
+                    "xpGainFactor",
+                    ADDITIONAL_TWEAKS,
+                    10000,
+                    1,
+                    150000000,
+                    "Base XP factor for levelable tools. Needed XP for the next level is xpGainFactor*(currentLevel + 1)^2");
 
             plasmaLauncherFluids = config.getStringList(
                     "PlasmaLauncherFluids",

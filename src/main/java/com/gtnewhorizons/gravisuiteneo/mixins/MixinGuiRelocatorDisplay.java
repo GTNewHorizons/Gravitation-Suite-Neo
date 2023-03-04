@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.DimensionManager;
 
 import org.lwjgl.opengl.GL11;
@@ -214,7 +215,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
                 GraviSuiteNeo.LOGGER.error("WARNING: Caught IndexOutOfBounds while using Translocator");
                 ServerProxy.sendPlayerMessage(
                         player,
-                        EnumChatFormatting.RED + "Used TP Point is invalid. Please remove and add again");
+                        EnumChatFormatting.RED + StatCollector.translateToLocal("message.relocator.text.invalid"));
                 player.closeScreen();
                 return;
             }
@@ -267,10 +268,12 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
                         && (selectedItem = this.getSelected(tpList)) != null) {
                     List<String> toolTipData = new ArrayList<>();
                     TeleportPoint tmpPoint = tpList.get(((SelectedItemMKII) selectedItem).getRealIDX());
-                    toolTipData.add("Dimension: " + DimensionManager.getProvider(tmpPoint.dimID).getDimensionName());
-                    toolTipData.add("Height: " + (int) tmpPoint.y);
+                    toolTipData.add(
+                            StatCollector.translateToLocal("message.relocator.text.dim") + ": "
+                                    + DimensionManager.getProvider(tmpPoint.dimID).getDimensionName());
                     toolTipData.add("X: " + (int) tmpPoint.x);
-                    toolTipData.add("Y: " + (int) tmpPoint.z);
+                    toolTipData.add("Y: " + (int) tmpPoint.y);
+                    toolTipData.add("Z: " + (int) tmpPoint.z);
                     int realMouseX = this.mouseX - xStart;
                     int realMouseY = this.mouseY - yStart;
                     Helpers.renderTooltip(realMouseX - 2, realMouseY, toolTipData);

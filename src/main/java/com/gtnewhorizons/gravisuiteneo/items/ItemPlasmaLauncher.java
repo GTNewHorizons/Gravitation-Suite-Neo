@@ -134,7 +134,7 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
         if (this.hasAmmunition(itemStack)) {
             tooltip.addAll(ItemPlasmaCell.getToolTipInfo(this.getAmmunition(itemStack)));
         } else {
-            tooltip.add("No PlasmaCell loaded or PlasmaCell depleted");
+            tooltip.add(StatCollector.translateToLocal("message.plasmaLauncher.depleted"));
         }
     }
 

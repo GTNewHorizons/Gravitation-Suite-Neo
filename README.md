@@ -13,5 +13,5 @@ Addon mod for [Gravitation Suite](https://forum.industrial-craft.net/thread/6915
 - Added creative tab
 - Reworked Plasma Cannon (WIP)
 - Made all Lappacks able to charge RF items
-- Made a many things configurable
+- Made many things configurable
 - Various fixes

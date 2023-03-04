@@ -31,7 +31,7 @@ public class GraviSuiteNeo {
 
     public static final String MODID = "gravisuiteneo";
     public static final String MODNAME = "Gravitation Suite Neo";
-    public static final String VERSION = "GRADLETOKEN_VERSION";
+    public static final String VERSION = Tags.VERSION;
 
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 

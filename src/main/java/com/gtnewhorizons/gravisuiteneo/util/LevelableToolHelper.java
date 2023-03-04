@@ -6,12 +6,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 
+import com.gtnewhorizons.gravisuiteneo.common.Properties;
+
 import gravisuite.GraviSuite;
 import gravisuite.ServerProxy;
 
 public class LevelableToolHelper {
-
-    private static final int xpGainFactor = 100000;
 
     public static void AddXP(EntityPlayer player, ItemStack itemStack, int amount) {
         double currentXP = readToolXP(itemStack);
@@ -32,7 +32,7 @@ public class LevelableToolHelper {
     }
 
     public static int getLevel(double xpValue) {
-        return (int) Math.floor(Math.sqrt(xpValue / xpGainFactor));
+        return (int) Math.floor(Math.sqrt(xpValue / Properties.AdvTweaks.getXpGainFactor()));
     }
 
     public static int getLevel(ItemStack itemStack) {
@@ -44,7 +44,7 @@ public class LevelableToolHelper {
     }
 
     public static int getXPForLevel(int level) {
-        return xpGainFactor * level * level;
+        return Properties.AdvTweaks.getXpGainFactor() * level * level;
     }
 
     public static double readToolXP(ItemStack itemStack) {

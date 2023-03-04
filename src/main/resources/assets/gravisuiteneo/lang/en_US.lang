@@ -13,16 +13,18 @@ message.advChainsaw.mode.shear=Shears
 message.advChainsaw.mode.treecapitator=Treecapitator
 message.advDDrill.mode.areYouSerious=Are you serious?
 message.advDDrill.mode.worldShatterer=World shatterer
+message.advDDrill.noEnergy=Not enough energy to complete this operation!
 message.xp.youhavecollected=Total ToolXP
 message.xp.toolLevel=ToolLevel
 message.xp.nextLevelUp=Next Level at
 message.xp.levelup=You feel more confident using your Tool (+1 Level)
 message.xp.maxLevelReached=Tool has reached its maximum upgrade Level
-message.vajra.silkTouchDisabled=Can't change tool mode ! Accurate mode disabled in config file !
+message.vajra.silkTouchDisabled=Can't change tool mode! Accurate mode disabled in config file!
 message.vajra.clickRightForSilk=Right-click to harvest block in accurate mode
 message.plasmaLauncher.noEnergy=Not enough energy
 message.plasmaLauncher.recharging=Plasma-Field is recharging, please wait...
 message.plasmaLauncher.noPlasmaCellFound=No charged Plasma-Cell found
+message.plasmaLauncher.depleted=No PlasmaCell loaded or PlasmaCell depleted
 message.plasmaCell.contains=Contains: %1$s (%2$,dmB)
 message.plasmaCell.nothing=Contains: Nothing
 message.plasmaCell.efficiency=Efficiency: %1$f%%
@@ -39,6 +41,12 @@ message.graviChestPlate.MedkitNoNanoBots=No Nanobots found; Injection failed
 message.graviChestPlate.MedkitInjected=Nanobots injected
 message.relocator.text.defaultPointSet=Default teleport point set to
 message.relocator.text.teleportingnow=Teleport initiated
+message.relocator.text.dim=Dimension
+message.relocator.text.invalid=Used TP Point is invalid. Please remove and add again
+
+fluid.null=Error.1
+fluid.name.null=Error.2
+fluid.name.empty=Unknown Fluid
 
 block.RelocatorPortal.name.name=RelocatorPortal
 

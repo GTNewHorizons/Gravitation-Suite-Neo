@@ -435,7 +435,7 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
             }
 
             if (lowPower) {
-                ServerProxy.sendPlayerMessage(player, "Not enough energy to complete this operation !");
+                ServerProxy.sendPlayerMessage(player, StatCollector.translateToLocal("message.advDDrill.noEnergy"));
                 return false;
             }
             return true;
