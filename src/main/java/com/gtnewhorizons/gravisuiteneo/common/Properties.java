@@ -169,6 +169,7 @@ public class Properties {
         private static int maxMiningLevel;
         private static int epicLappackChargeTickChance;
         private static int xpGainFactor;
+        private static double hoverModeFallSpeed;
         private static String[] plasmaLauncherFluids;
         private static String[] advChainsawAdditionalMineableBlocks;
         private static Collection<UniqueIdentifier> allowedShieldHelmets;
@@ -185,6 +186,10 @@ public class Properties {
 
         public static int getXpGainFactor() {
             return xpGainFactor;
+        }
+
+        public static double getHoverModeFallSpeed() {
+            return hoverModeFallSpeed;
         }
 
         public static String[] getPlasmaLauncherFluids() {
@@ -231,6 +236,14 @@ public class Properties {
                     1,
                     150000000,
                     "Base XP factor for levelable tools. Needed XP for the next level is xpGainFactor*(currentLevel + 1)^2");
+
+            hoverModeFallSpeed = config.getFloat(
+                    "hoverModeFallSpeed",
+                    ADDITIONAL_TWEAKS,
+                    0.0f,
+                    0.0f,
+                    1.0f,
+                    "Max speed at which the player falls when wearing an Advanced Jetpack using hover-mode (GS default is 0.03)");
 
             plasmaLauncherFluids = config.getStringList(
                     "PlasmaLauncherFluids",
