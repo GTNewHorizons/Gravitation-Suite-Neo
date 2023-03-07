@@ -1,8 +1,10 @@
 package com.gtnewhorizons.gravisuiteneo;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -54,6 +56,13 @@ public class GraviSuiteNeoRegistry {
             initFuelmap();
         }
         return fuelMap.getOrDefault(plasmaStack.getFluid(), 0.0f);
+    }
+
+    public static Set<Fluid> getRegisteredFuels() {
+        if (fuelMap == null) {
+            initFuelmap();
+        }
+        return Collections.unmodifiableSet(fuelMap.keySet());
     }
 
     /**
