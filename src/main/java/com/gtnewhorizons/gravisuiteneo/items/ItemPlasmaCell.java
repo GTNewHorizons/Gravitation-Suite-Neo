@@ -2,7 +2,6 @@ package com.gtnewhorizons.gravisuiteneo.items;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
 
@@ -24,8 +24,6 @@ import com.gtnewhorizons.gravisuiteneo.util.FluidHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gravisuite.IItemTickListener;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
 import ic2.api.item.ElectricItem;
 import ic2.api.item.IElectricItem;
 
@@ -230,19 +228,11 @@ public class ItemPlasmaCell extends Item
         final ItemStack fullStack = new ItemStack(this, 1, this.getMaxDamage());
         subItems.add(fullStack);
 
-        Collection<GT_Recipe> tRecipeList = GT_Recipe.GT_Recipe_Map.sPlasmaFuels.mRecipeList;
-        FluidStack tPlasmaStack;
-        if (tRecipeList != null) {
-            for (GT_Recipe tFuel : tRecipeList) {
-                if ((tPlasmaStack = GT_Utility.getFluidForFilledItem(tFuel.getRepresentativeInput(0), true)) != null) {
-                    ItemStack tempStack = new ItemStack(this, 1, this.getMaxDamage());
-                    ElectricItem.manager.charge(tempStack, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
-                    FluidStack tFS = tPlasmaStack.copy();
-                    tFS.amount = CAPACITY;
-                    this.fill(tempStack, tFS, true);
-                    subItems.add(tempStack);
-                }
-            }
+        for (Fluid fluid : GraviSuiteNeoRegistry.getRegisteredFuels()) {
+            final ItemStack tempStack = new ItemStack(this, 1, this.getMaxDamage());
+            ElectricItem.manager.charge(tempStack, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
+            this.fill(tempStack, new FluidStack(fluid, CAPACITY), true);
+            subItems.add(tempStack);
         }
     }
 
