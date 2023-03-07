@@ -59,6 +59,9 @@ public class GraviSuiteNeoRegistry {
     }
 
     public static Set<Fluid> getRegisteredFuels() {
+        if (fuelMap == null) {
+            initFuelmap();
+        }
         return Collections.unmodifiableSet(fuelMap.keySet());
     }
 
