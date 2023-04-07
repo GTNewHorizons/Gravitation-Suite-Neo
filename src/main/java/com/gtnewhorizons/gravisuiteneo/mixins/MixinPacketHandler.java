@@ -26,7 +26,7 @@ public class MixinPacketHandler {
             remap = false)
     private void gravisuiteneo$handleQuantumShieldPacket(InputStream is, EntityPlayer player, CallbackInfo ci,
             DataInputStream data, int packetId) throws IOException {
-        if (packetId == 4) {
+        if (packetId == 3) {
             PacketQuantumShield packetQShield = new PacketQuantumShield();
             packetQShield.readData(data);
             packetQShield.execute(player);
