@@ -12,13 +12,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import cofh.api.energy.IEnergyContainerItem;
-
 import com.gtnewhorizons.gravisuiteneo.common.Achievements;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import com.gtnewhorizons.gravisuiteneo.items.IItemCharger;
 import com.gtnewhorizons.gravisuiteneo.items.ItemEpicLappack;
 
+import cofh.api.energy.IEnergyContainerItem;
 import gravisuite.GraviSuite;
 import gravisuite.ItemAdvancedLappack;
 import ic2.api.item.ElectricItem;

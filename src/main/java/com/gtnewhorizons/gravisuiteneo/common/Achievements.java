@@ -9,6 +9,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.AchievementPage;
 
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
+
 import gravisuite.GraviSuite;
 
 public class Achievements {
