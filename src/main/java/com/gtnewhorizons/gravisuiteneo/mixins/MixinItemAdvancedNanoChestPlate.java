@@ -4,6 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
+
 import gravisuite.ItemAdvancedNanoChestPlate;
 
 @Mixin(ItemAdvancedNanoChestPlate.class)
