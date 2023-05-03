@@ -8,12 +8,12 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import org.spongepowered.asm.lib.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.libraries.org.objectweb.asm.Opcodes;
 
 import com.gtnewhorizon.mixinextras.injector.ModifyExpressionValue;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
