@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.util.LevelableToolHelper;
+
 import gravisuite.ItemAdvDDrill;
 
 public class GuiAdvDrill extends GuiContainer {

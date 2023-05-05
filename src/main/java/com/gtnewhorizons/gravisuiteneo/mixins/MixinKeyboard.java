@@ -3,11 +3,11 @@ package com.gtnewhorizons.gravisuiteneo.mixins;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
+import org.spongepowered.asm.lib.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.libraries.org.objectweb.asm.Opcodes;
 
 import com.gtnewhorizons.gravisuiteneo.util.QuantumShieldHelper;
 
