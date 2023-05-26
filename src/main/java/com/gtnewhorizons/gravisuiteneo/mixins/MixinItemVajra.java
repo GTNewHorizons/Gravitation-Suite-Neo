@@ -11,7 +11,11 @@ import net.minecraft.world.World;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -63,14 +67,14 @@ public class MixinItemVajra {
                     value = "INVOKE",
                     ordinal = 0,
                     target = "Lnet/minecraft/block/Block;onBlockHarvested(Lnet/minecraft/world/World;IIIILnet/minecraft/entity/player/EntityPlayer;)V"))
-    private void onBlockHarvestToNoOp(Block block, World world, int x, int y, int z, int meta, EntityPlayer player) {
+    private void gravisuiteneo$onBlockHarvestToNoOp(Block block, World world, int x, int y, int z, int meta, EntityPlayer player) {
         return;
     }
 
     @Redirect(
             method = "onItemUse",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;setBlockToAir(III)Z"))
-    private boolean setBlockToAirToNoOp(World world, int x, int y, int z) {
+    private boolean gravisuiteneo$setBlockToAirToNoOp(World world, int x, int y, int z) {
         return true;
     }
 
@@ -80,22 +84,22 @@ public class MixinItemVajra {
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/block/Block;harvestBlock(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/EntityPlayer;IIII)V"))
-    private void fixCallOrder(Block block, World world, EntityPlayer player, int x, int y, int z, int meta) {
+    private void gravisuiteneo$fixCallOrder(Block block, World world, EntityPlayer player, int x, int y, int z, int meta) {
         block.onBlockHarvested(world, x, y, z, meta, player);
         world.setBlockToAir(x, y, z);
         block.harvestBlock(world, player, x, y, z, meta);
     }
 
     // This one makes sure that if we're mining a block that canSilkHarvest it still gets set to air, since we yeeted
-    // the original setBlockToAir call above
+    // the original setBlockToAir call above. This injects at the end of the if(canSilkHarvest) block, at the assignment
+    // dropFlag = true
     @Inject(
             method = "onItemUse",
             at = @At(
                     value = "INVOKE",
-                    shift = At.Shift.AFTER,
                     ordinal = 1,
                     target = "Ljava/lang/Boolean;valueOf(Z)Ljava/lang/Boolean;"))
-    private void setToAir(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int side, float hitX,
+    private void gravisuiteneo$setToAir(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int side, float hitX,
             float hitY, float hitZ, CallbackInfoReturnable<Boolean> cir) {
         world.setBlockToAir(x, y, z);
     }
