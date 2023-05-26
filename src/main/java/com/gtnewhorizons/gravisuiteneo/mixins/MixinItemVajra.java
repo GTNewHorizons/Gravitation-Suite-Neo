@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 
@@ -52,20 +53,23 @@ public class MixinItemVajra {
         tooltip.add(EnumChatFormatting.AQUA + StatCollector.translateToLocal("message.vajra.clickRightForSilk"));
     }
 
-    // the bottom redirect handles everything, so there is no need for these calls to do anything.
+    // The vajra onItemUse has two branches for figuring out what a block drops
+    // depending on whether or not the block canSilkHarvest. Then the branches come back together and set the block
+    // to air.
+    // the fixCallOrder redirect handles everything, so there is no need for these calls to do anything.
     @Redirect(
             method = "onItemUse",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/block/Block;onBlockHarvested(Lnet/minecraft/world/World;IIIILnet/minecraft/entity/player/EntityPlayer;)V",
-                    ordinal = 1))
+                    ordinal = 0,
+                    target = "Lnet/minecraft/block/Block;onBlockHarvested(Lnet/minecraft/world/World;IIIILnet/minecraft/entity/player/EntityPlayer;)V"))
     private void onBlockHarvestToNoOp(Block block, World world, int x, int y, int z, int meta, EntityPlayer player) {
         return;
     }
 
     @Redirect(
             method = "onItemUse",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;setBlockToAir(III)Z", ordinal = 1))
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;setBlockToAir(III)Z"))
     private boolean setBlockToAirToNoOp(World world, int x, int y, int z) {
         return true;
     }
@@ -82,4 +86,17 @@ public class MixinItemVajra {
         block.harvestBlock(world, player, x, y, z, meta);
     }
 
+    // This one makes sure that if we're mining a block that canSilkHarvest it still gets set to air, since we yeeted
+    // the original setBlockToAir call above
+    @Inject(
+            method = "onItemUse",
+            at = @At(
+                    value = "INVOKE",
+                    shift = At.Shift.AFTER,
+                    ordinal = 1,
+                    target = "Ljava/lang/Boolean;valueOf(Z)Ljava/lang/Boolean;"))
+    private void setToAir(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int side, float hitX,
+            float hitY, float hitZ, CallbackInfoReturnable<Boolean> cir) {
+        world.setBlockToAir(x, y, z);
+    }
 }
