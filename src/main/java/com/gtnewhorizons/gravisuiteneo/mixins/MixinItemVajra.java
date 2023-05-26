@@ -67,7 +67,8 @@ public class MixinItemVajra {
                     value = "INVOKE",
                     ordinal = 0,
                     target = "Lnet/minecraft/block/Block;onBlockHarvested(Lnet/minecraft/world/World;IIIILnet/minecraft/entity/player/EntityPlayer;)V"))
-    private void gravisuiteneo$onBlockHarvestToNoOp(Block block, World world, int x, int y, int z, int meta, EntityPlayer player) {
+    private void gravisuiteneo$onBlockHarvestToNoOp(Block block, World world, int x, int y, int z, int meta,
+            EntityPlayer player) {
         return;
     }
 
@@ -84,7 +85,8 @@ public class MixinItemVajra {
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/block/Block;harvestBlock(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/EntityPlayer;IIII)V"))
-    private void gravisuiteneo$fixCallOrder(Block block, World world, EntityPlayer player, int x, int y, int z, int meta) {
+    private void gravisuiteneo$fixCallOrder(Block block, World world, EntityPlayer player, int x, int y, int z,
+            int meta) {
         block.onBlockHarvested(world, x, y, z, meta, player);
         world.setBlockToAir(x, y, z);
         block.harvestBlock(world, player, x, y, z, meta);
@@ -95,12 +97,9 @@ public class MixinItemVajra {
     // dropFlag = true
     @Inject(
             method = "onItemUse",
-            at = @At(
-                    value = "INVOKE",
-                    ordinal = 1,
-                    target = "Ljava/lang/Boolean;valueOf(Z)Ljava/lang/Boolean;"))
-    private void gravisuiteneo$setToAir(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int side, float hitX,
-            float hitY, float hitZ, CallbackInfoReturnable<Boolean> cir) {
+            at = @At(value = "INVOKE", ordinal = 1, target = "Ljava/lang/Boolean;valueOf(Z)Ljava/lang/Boolean;"))
+    private void gravisuiteneo$setToAir(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int side,
+            float hitX, float hitY, float hitZ, CallbackInfoReturnable<Boolean> cir) {
         world.setBlockToAir(x, y, z);
     }
 }
