@@ -32,13 +32,13 @@ public class GraviSuiteNeoMixins implements ILateMixinLoader {
         mixins.add("MixinItemUltimateLappack");
         mixins.add("MixinItemVajra");
         mixins.add("MixinPacketHandler");
+        mixins.add("MixinKeyboard");
 
         if (FMLCommonHandler.instance().getSide().isClient()) {
             mixins.add("MixinClientProxy");
             mixins.add("MixinGuiHandler");
             mixins.add("MixinGuiRelocatorDisplay");
             mixins.add("MixinItemSimpleItems");
-            mixins.add("MixinKeyboard");
             mixins.add("MixinKeyboardClient");
             mixins.add("MixinRenderPlasmaBall");
         }
