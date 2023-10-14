@@ -19,8 +19,6 @@ import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import com.gtnewhorizons.gravisuiteneo.inventory.InventoryItem;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import gravisuite.EntityPlasmaBall;
 import gravisuite.GraviSuite;
 import gravisuite.ServerProxy;
@@ -138,7 +136,6 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public EnumRarity getRarity(ItemStack p_77613_1_) {
         return EnumRarity.epic;
     }

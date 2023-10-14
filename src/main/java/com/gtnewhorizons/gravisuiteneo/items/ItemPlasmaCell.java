@@ -21,8 +21,6 @@ import com.gtnewhorizons.gravisuiteneo.client.ICustomItemBars;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import com.gtnewhorizons.gravisuiteneo.util.FluidHelper;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import gravisuite.IItemTickListener;
 import ic2.api.item.ElectricItem;
 import ic2.api.item.IElectricItem;
@@ -182,7 +180,6 @@ public class ItemPlasmaCell extends Item
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public EnumRarity getRarity(ItemStack p_77613_1_) {
         return EnumRarity.uncommon;
     }
@@ -218,7 +215,6 @@ public class ItemPlasmaCell extends Item
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs creativeTab, List<ItemStack> subItems) {
         final ItemStack stack = new ItemStack(this, 1);
         ElectricItem.manager.charge(stack, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
