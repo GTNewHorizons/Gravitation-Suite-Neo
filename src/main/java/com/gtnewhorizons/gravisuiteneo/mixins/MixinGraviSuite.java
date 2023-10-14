@@ -22,9 +22,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-import com.gtnewhorizon.mixinextras.injector.WrapWithCondition;
 import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.llamalad7.mixinextras.injector.WrapWithCondition;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import gravisuite.EntityPlasmaBall;

@@ -218,7 +218,6 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
         return itemStackIn;
     }
 
-    @SuppressWarnings("unchecked")
     @Inject(
             at = @At(
                     remap = false,
@@ -226,8 +225,8 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
                     value = "INVOKE"),
             method = "addInformation")
     @SideOnly(Side.CLIENT)
-    private void gravisuiteneo$addXPInformation(ItemStack itemstack, EntityPlayer player,
-            @SuppressWarnings("rawtypes") List tooltip, boolean advancedTooltip, CallbackInfo ci) {
+    private void gravisuiteneo$addXPInformation(ItemStack itemstack, EntityPlayer player, List<String> tooltip,
+            boolean advancedTooltip, CallbackInfo ci) {
         if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
             return;
         }
@@ -256,11 +255,10 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Inject(at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, method = "addInformation")
     @SideOnly(Side.CLIENT)
-    private void gravisuiteneo$addOtherModeInformation(ItemStack itemstack, EntityPlayer player,
-            @SuppressWarnings("rawtypes") List tooltip, boolean advancedTooltips, CallbackInfo ci, Integer toolMode) {
+    private void gravisuiteneo$addOtherModeInformation(ItemStack itemstack, EntityPlayer player, List<String> tooltip,
+            boolean advancedTooltips, CallbackInfo ci, Integer toolMode) {
         if (toolMode == 4) {
             tooltip.add(
                     EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.text.mode")
@@ -486,7 +484,7 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
         LevelableToolHelper.saveToolXP(pItemStack, LevelableToolHelper.getXPForLevel(Math.min(2, pLevel)));
     }
 
-    private MixinItemAdvDDrill(float p_i45333_1_, ToolMaterial p_i45333_2_, Set<?> p_i45333_3_) {
+    private MixinItemAdvDDrill(float p_i45333_1_, ToolMaterial p_i45333_2_, Set<Block> p_i45333_3_) {
         super(p_i45333_1_, p_i45333_2_, p_i45333_3_);
     }
 }

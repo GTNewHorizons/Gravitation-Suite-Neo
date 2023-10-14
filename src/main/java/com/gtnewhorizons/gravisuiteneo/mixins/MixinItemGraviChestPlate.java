@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.gtnewhorizon.mixinextras.injector.ModifyExpressionValue;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import com.gtnewhorizons.gravisuiteneo.util.QuantumShieldHelper;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -82,11 +82,10 @@ public class MixinItemGraviChestPlate {
         QuantumShieldHelper.curePotions(itemStack, player, false);
     }
 
-    @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     @Inject(at = @At("TAIL"), method = "addInformation")
-    private void gravisuiteneo$addShieldInformation(ItemStack itemStack, EntityPlayer player,
-            @SuppressWarnings("rawtypes") List tooltip, boolean advancedTooltips, CallbackInfo ci) {
+    private void gravisuiteneo$addShieldInformation(ItemStack itemStack, EntityPlayer player, List<String> tooltip,
+            boolean advancedTooltips, CallbackInfo ci) {
         String shieldStatus;
         if (QuantumShieldHelper.readShieldMode(itemStack)) {
             shieldStatus = EnumChatFormatting.GREEN + StatCollector.translateToLocal("message.text.on");

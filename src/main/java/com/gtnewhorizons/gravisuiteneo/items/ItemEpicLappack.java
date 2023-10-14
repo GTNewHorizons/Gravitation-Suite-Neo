@@ -47,7 +47,6 @@ public class ItemEpicLappack extends ItemUltimateLappack implements IElectricIte
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
         return GraviSuiteNeo.MODID + ":textures/armor/armor_epic_lappack.png";
     }
@@ -75,7 +74,6 @@ public class ItemEpicLappack extends ItemUltimateLappack implements IElectricIte
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public EnumRarity getRarity(ItemStack var1) {
         return EnumRarity.epic;
     }
