@@ -127,9 +127,8 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
         return this.getAmmunition(itemStack) != null;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player, @SuppressWarnings("rawtypes") List tooltip,
+    public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> tooltip,
             boolean advancedTooltips) {
         if (this.hasAmmunition(itemStack)) {
             tooltip.addAll(ItemPlasmaCell.getToolTipInfo(this.getAmmunition(itemStack)));

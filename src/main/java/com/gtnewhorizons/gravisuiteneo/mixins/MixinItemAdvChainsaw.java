@@ -41,9 +41,8 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
     @Shadow(remap = false)
     private int energyPerOperation;
 
-    @SuppressWarnings("rawtypes")
     @Shadow(remap = false)
-    public Set mineableBlocks;
+    public Set<Block> mineableBlocks;
 
     @Shadow(remap = false)
     public abstract void saveToolMode(ItemStack itemstack, Integer toolMode);
@@ -52,7 +51,6 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
      * @author Namikon, glowredman
      * @reason Gravitation Suite Neo
      */
-    @SuppressWarnings("unchecked")
     @Overwrite(remap = false)
     public void init() {
         for (String blockName : Properties.AdvTweaks.getAdvChainsawAdditionalMineableBlocks()) {
@@ -166,12 +164,10 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
      * @author Namikon, glowredman
      * @reason Gravitation Suite Neo
      */
-    @SuppressWarnings("unchecked")
     @Overwrite
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack item, EntityPlayer player, @SuppressWarnings("rawtypes") List tooltip,
-            boolean advancedTooltips) {
-        final Integer toolMode = ItemAdvChainsaw.readToolMode(item);
+    public void addInformation(ItemStack item, EntityPlayer player, List<String> tooltip, boolean advancedTooltips) {
+        final int toolMode = ItemAdvChainsaw.readToolMode(item);
         StringBuilder line = new StringBuilder();
         line.append(EnumChatFormatting.GOLD);
         line.append(StatCollector.translateToLocal("message.text.mode"));
@@ -292,8 +288,7 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
         return numLeaves > 3;
     }
 
-    private MixinItemAdvChainsaw(float p_i45333_1_, ToolMaterial p_i45333_2_,
-            @SuppressWarnings("rawtypes") Set p_i45333_3_) {
+    private MixinItemAdvChainsaw(float p_i45333_1_, ToolMaterial p_i45333_2_, Set<Block> p_i45333_3_) {
         super(p_i45333_1_, p_i45333_2_, p_i45333_3_);
     }
 }

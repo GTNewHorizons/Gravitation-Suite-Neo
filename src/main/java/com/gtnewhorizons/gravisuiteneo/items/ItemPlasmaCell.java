@@ -140,10 +140,8 @@ public class ItemPlasmaCell extends Item
      * IFluidContainerItem end
      */
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, @SuppressWarnings("rawtypes") List tooltip,
-            boolean advancedTooltip) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advancedTooltip) {
         tooltip.addAll(getToolTipInfo(stack));
     }
 
@@ -219,10 +217,9 @@ public class ItemPlasmaCell extends Item
         return this;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs creativeTab, @SuppressWarnings("rawtypes") List subItems) {
+    public void getSubItems(Item item, CreativeTabs creativeTab, List<ItemStack> subItems) {
         final ItemStack stack = new ItemStack(this, 1);
         ElectricItem.manager.charge(stack, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
         final ItemStack fullStack = new ItemStack(this, 1, this.getMaxDamage());

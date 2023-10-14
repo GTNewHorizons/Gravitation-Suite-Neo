@@ -125,7 +125,6 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
         return 6.0 * plasmaEfficiency;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void onImpact(MovingObjectPosition mop) {
         if (this.finalTicksForDestruction != -1) {

@@ -229,7 +229,6 @@ public class QuantumShieldHelper {
 
         if (medkitCure) {
             // A generic approach to remove *ANY* negative potion effect that is declared as such
-            @SuppressWarnings("unchecked")
             Iterator<PotionEffect> iterator = player.getActivePotionEffects().iterator();
 
             List<Integer> toRemove = new ArrayList<>();
