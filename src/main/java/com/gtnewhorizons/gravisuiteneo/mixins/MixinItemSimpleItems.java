@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.gtnewhorizon.mixinextras.injector.ModifyReturnValue;
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 
 import gravisuite.ItemSimpleItems;
 
