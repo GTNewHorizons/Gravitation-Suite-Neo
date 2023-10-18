@@ -87,8 +87,10 @@ public class MixinItemVajra {
     private void gravisuiteneo$fixCallOrder(Block block, World world, EntityPlayer player, int x, int y, int z,
             int meta) {
         block.onBlockHarvested(world, x, y, z, meta, player);
-        world.setBlockToAir(x, y, z);
-        block.harvestBlock(world, player, x, y, z, meta);
+        if (block.removedByPlayer(world, player, x, y, z, true)) {
+            block.onBlockDestroyedByPlayer(world, x, y, z, meta);
+            block.harvestBlock(world, player, x, y, z, meta);
+        }
     }
 
     // This one makes sure that if we're mining a block that canSilkHarvest it still gets set to air, since we yeeted
