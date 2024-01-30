@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
@@ -22,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -111,12 +111,12 @@ public class MixinItemVajra {
     // but should be safe as far as I know.
     @ModifyExpressionValue(
             method = "onItemUse",
-            at = @At(value = "FIELD", target = "Lnet/minecraft/init/Blocks;bedrock:Lnet/minecraft/block/Block;"))
-    private Block gravisuiteneo$checkHardness(Block block, ItemStack stack, EntityPlayer player, World world, int x,
-            int y, int z, int side, float j, float k, float l) {
-        if (world.getBlock(x, y, z).getBlockHardness(world, x, y, z) == -1.0F) {
-            return world.getBlock(x, y, z);
-        }
-        return Blocks.bedrock;
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/Block;canHarvestBlock(Lnet/minecraft/entity/player/EntityPlayer;I)Z"))
+    private boolean gravisuiteneo$checkHardness(boolean canHarvest, ItemStack stack, EntityPlayer player, World world,
+            int x, int y, int z, int side, float j, float k, float l, @Local(ordinal = 0) Block targetBlock) {
+        return targetBlock.getBlockHardness(world, x, y, z) != -1.0F && canHarvest;
+
     }
 }
