@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -73,13 +72,6 @@ public class MixinItemVajra {
         return;
     }
 
-    @Redirect(
-            method = "onItemUse",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;setBlockToAir(III)Z"))
-    private boolean gravisuiteneo$setBlockToAirToNoOp(World world, int x, int y, int z) {
-        return true;
-    }
-
     // harvestBlock would be called first by the vajra, so we redirect to the proper chain of calls
     @Redirect(
             method = "onItemUse",
@@ -93,17 +85,6 @@ public class MixinItemVajra {
             block.onBlockDestroyedByPlayer(world, x, y, z, meta);
             block.harvestBlock(world, player, x, y, z, meta);
         }
-    }
-
-    // This one makes sure that if we're mining a block that canSilkHarvest it still gets set to air, since we yeeted
-    // the original setBlockToAir call above. This injects at the end of the if(canSilkHarvest) block, at the assignment
-    // dropFlag = true
-    @Inject(
-            method = "onItemUse",
-            at = @At(value = "INVOKE", ordinal = 1, target = "Ljava/lang/Boolean;valueOf(Z)Ljava/lang/Boolean;"))
-    private void gravisuiteneo$setToAir(ItemStack is, EntityPlayer player, World world, int x, int y, int z, int side,
-            float hitX, float hitY, float hitZ, CallbackInfoReturnable<Boolean> cir) {
-        world.setBlockToAir(x, y, z);
     }
 
     // This mixin deals with the case that the hardness of a block is -1 (unbreakable) this should fix any exploits
