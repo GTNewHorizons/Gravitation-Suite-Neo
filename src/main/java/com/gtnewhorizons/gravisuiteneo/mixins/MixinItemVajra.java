@@ -19,6 +19,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -83,5 +85,19 @@ public class MixinItemVajra {
             block.onBlockDestroyedByPlayer(world, x, y, z, meta);
             block.harvestBlock(world, player, x, y, z, meta);
         }
+    }
+
+    // This mixin deals with the case that the hardness of a block is -1 (unbreakable) this should fix any exploits
+    // relating to vajra using silktouch mode to break unbreakable blocks. This is maybe not the best way to do this,
+    // but should be safe as far as I know.
+    @ModifyExpressionValue(
+            method = "onItemUse",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/Block;canHarvestBlock(Lnet/minecraft/entity/player/EntityPlayer;I)Z"))
+    private boolean gravisuiteneo$checkHardness(boolean canHarvest, ItemStack stack, EntityPlayer player, World world,
+            int x, int y, int z, int side, float j, float k, float l, @Local(ordinal = 0) Block targetBlock) {
+        return targetBlock.getBlockHardness(world, x, y, z) != -1.0F && canHarvest;
+
     }
 }
