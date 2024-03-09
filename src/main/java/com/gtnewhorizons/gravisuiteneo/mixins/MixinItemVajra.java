@@ -94,7 +94,8 @@ public class MixinItemVajra {
             method = "onItemUse",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/block/Block;canHarvestBlock(Lnet/minecraft/entity/player/EntityPlayer;I)Z"))
+                    target = "Lnet/minecraft/block/Block;canHarvestBlock(Lnet/minecraft/entity/player/EntityPlayer;I)Z",
+                    remap = false))
     private boolean gravisuiteneo$checkHardness(boolean canHarvest, ItemStack stack, EntityPlayer player, World world,
             int x, int y, int z, int side, float j, float k, float l, @Local(ordinal = 0) Block targetBlock) {
         return targetBlock.getBlockHardness(world, x, y, z) != -1.0F && canHarvest;
