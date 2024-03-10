@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -89,9 +90,10 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
 
     @Inject(
             at = @At(
-                    remap = false,
-                    target = "Lnet/minecraftforge/common/IShearable;onSheared(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/IBlockAccess;IIII)Ljava/util/ArrayList;",
-                    value = "INVOKE"),
+                    ordinal = 2,
+                    opcode = Opcodes.GETFIELD,
+                    target = "Lnet/minecraft/entity/player/EntityPlayer;worldObj:Lnet/minecraft/world/World;",
+                    value = "FIELD"),
             method = "onBlockStartBreak",
             remap = false)
     private void gravisuiteneo$playChainsawSound(ItemStack itemstack, int x, int y, int z, EntityPlayer player,

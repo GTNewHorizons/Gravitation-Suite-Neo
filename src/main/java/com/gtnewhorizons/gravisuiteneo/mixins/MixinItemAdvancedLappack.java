@@ -51,11 +51,7 @@ public class MixinItemAdvancedLappack implements IItemCharger {
     }
 
     @Inject(
-            at = @At(
-                    ordinal = 1,
-                    remap = false,
-                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
-                    value = "INVOKE"),
+            at = @At(ordinal = 1, remap = false, target = "java/lang/StringBuilder", value = "NEW"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             method = "onItemRightClick")
     private void gravisuiteneo$triggerAchievement(ItemStack itemStack, World world, EntityPlayer player,
