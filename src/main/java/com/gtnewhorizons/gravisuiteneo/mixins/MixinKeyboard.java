@@ -49,11 +49,10 @@ public class MixinKeyboard {
 
     @Inject(
             at = @At(
-                    args = "array=get",
                     opcode = Opcodes.GETFIELD,
                     ordinal = 1,
                     remap = true,
-                    target = "Lnet/minecraft/entity/player/InventoryPlayer;armorInventory:[Lnet/minecraft/item/ItemStack;",
+                    target = "Lnet/minecraft/entity/player/EntityPlayer;inventory:Lnet/minecraft/entity/player/InventoryPlayer;",
                     value = "FIELD"),
             method = "processKeyPressed",
             remap = false)
