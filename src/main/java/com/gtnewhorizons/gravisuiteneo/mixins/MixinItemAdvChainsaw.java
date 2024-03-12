@@ -27,6 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -83,9 +84,13 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
         return 0.0f;
     }
 
-    @ModifyConstant(constant = @Constant(intValue = 0, ordinal = 0), method = "onEntityInteract", remap = false)
+    @ModifyExpressionValue(
+            at = @At(remap = false, target = "Ljava/lang/Integer;intValue()I", value = "INVOKE"),
+            method = "onEntityInteract",
+            remap = false)
     private int gravisuiteneo$getShearMode(int original) {
-        return 1;
+        // expects 0 for shear mode but it is mode 1
+        return original - 1;
     }
 
     @Inject(
@@ -101,7 +106,7 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
         player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":chainsaw", 1.25f, 1.0f);
     }
 
-    @Inject(at = @At(ordinal = 1, value = "RETURN"), method = "onBlockStartBreak", remap = false)
+    @Inject(at = @At(ordinal = 1, value = "RETURN"), cancellable = true, method = "onBlockStartBreak", remap = false)
     private void gravisuiteneo$handleTreeToolMode(ItemStack itemstack, int x, int y, int z, EntityPlayer player,
             CallbackInfoReturnable<Boolean> cir) {
         if (ItemAdvChainsaw.readToolMode(itemstack) != 2) {
