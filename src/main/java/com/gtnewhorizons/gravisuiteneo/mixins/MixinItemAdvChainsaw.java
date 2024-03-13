@@ -97,6 +97,7 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
             at = @At(
                     ordinal = 2,
                     opcode = Opcodes.GETFIELD,
+                    remap = true,
                     target = "Lnet/minecraft/entity/player/EntityPlayer;worldObj:Lnet/minecraft/world/World;",
                     value = "FIELD"),
             method = "onBlockStartBreak",
