@@ -19,6 +19,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import org.lwjgl.input.Keyboard;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -103,42 +104,14 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
 
     @Inject(
             at = @At(
-                    ordinal = 0,
+                    opcode = Opcodes.GETSTATIC,
                     remap = false,
-                    target = "Lic2/api/item/IElectricItemManager;use(Lnet/minecraft/item/ItemStack;DLnet/minecraft/entity/EntityLivingBase;)Z",
-                    value = "INVOKE"),
+                    target = "Lic2/api/item/ElectricItem;manager:Lic2/api/item/IElectricItemManager;",
+                    value = "FIELD"),
             method = "onBlockDestroyed")
-    private void gravisuiteneo$addXpMode0(ItemStack itemstack, World world, Block block, int xPos, int yPos, int zPos,
+    private void gravisuiteneo$addXpMode(ItemStack itemstack, World world, Block block, int xPos, int yPos, int zPos,
             EntityLivingBase entityliving, CallbackInfoReturnable<Boolean> cir) {
         LevelableToolHelper.AddXP((EntityPlayer) entityliving, itemstack, 1);
-    }
-
-    @Inject(
-            at = @At(
-                    ordinal = 1,
-                    remap = false,
-                    target = "Lic2/api/item/IElectricItemManager;use(Lnet/minecraft/item/ItemStack;DLnet/minecraft/entity/EntityLivingBase;)Z",
-                    value = "INVOKE"),
-            method = "onBlockDestroyed")
-    private void gravisuiteneo$addXpMode1(ItemStack itemstack, World world, Block block, int xPos, int yPos, int zPos,
-            EntityLivingBase entityliving, CallbackInfoReturnable<Boolean> cir) {
-        if (GraviSuite.random.nextInt(2) == 0) {
-            LevelableToolHelper.AddXP((EntityPlayer) entityliving, itemstack, 1);
-        }
-    }
-
-    @Inject(
-            at = @At(
-                    ordinal = 2,
-                    remap = false,
-                    target = "Lic2/api/item/IElectricItemManager;use(Lnet/minecraft/item/ItemStack;DLnet/minecraft/entity/EntityLivingBase;)Z",
-                    value = "INVOKE"),
-            method = "onBlockDestroyed")
-    private void gravisuiteneo$addXpMode2(ItemStack itemstack, World world, Block block, int xPos, int yPos, int zPos,
-            EntityLivingBase entityliving, CallbackInfoReturnable<Boolean> cir) {
-        if (GraviSuite.random.nextInt(4) == 0) {
-            LevelableToolHelper.AddXP((EntityPlayer) entityliving, itemstack, 1);
-        }
     }
 
     @ModifyConstant(constant = @Constant(intValue = 3), method = "readToolMode", remap = false)
