@@ -49,9 +49,7 @@ public class MixinItemVajra {
     }
 
     @SideOnly(Side.CLIENT)
-    @Inject(
-            at = @At(remap = false, target = "Ljava/util/List;add(Ljava/lang/Object;)Z", value = "INVOKE"),
-            method = "addInformation")
+    @Inject(at = @At(remap = false, target = "java/lang/StringBuilder", value = "NEW"), method = "addInformation")
     private void gravisuiteneo$addSilktouchInformation(ItemStack itemstack, EntityPlayer player, List<String> tooltip,
             boolean advancedTooltips, CallbackInfo ci) {
         tooltip.add(EnumChatFormatting.AQUA + StatCollector.translateToLocal("message.vajra.clickRightForSilk"));
@@ -94,7 +92,8 @@ public class MixinItemVajra {
             method = "onItemUse",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/block/Block;canHarvestBlock(Lnet/minecraft/entity/player/EntityPlayer;I)Z"))
+                    target = "Lnet/minecraft/block/Block;canHarvestBlock(Lnet/minecraft/entity/player/EntityPlayer;I)Z",
+                    remap = false))
     private boolean gravisuiteneo$checkHardness(boolean canHarvest, ItemStack stack, EntityPlayer player, World world,
             int x, int y, int z, int side, float j, float k, float l, @Local(ordinal = 0) Block targetBlock) {
         return targetBlock.getBlockHardness(world, x, y, z) != -1.0F && canHarvest;
