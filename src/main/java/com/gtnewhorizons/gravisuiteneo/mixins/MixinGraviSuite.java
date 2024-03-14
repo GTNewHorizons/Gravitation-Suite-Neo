@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -104,6 +105,46 @@ public class MixinGraviSuite {
     @ModifyConstant(constant = @Constant(classValue = EntityPlasmaBall.class), method = "preInit", remap = false)
     private Class<?> gravisuiteneo$getEntityPlasmaBallClass(Class<?> original) {
         return EntityPlasmaBallMKII.class;
+    }
+
+    @ModifyExpressionValue(
+            at = { @At(
+                    ordinal = 0,
+                    remap = false,
+                    slice = "A",
+                    target = "Lic2/api/item/IC2Items;getItem(Ljava/lang/String;)Lnet/minecraft/item/ItemStack;",
+                    value = "INVOKE"),
+                    @At(
+                            ordinal = 1,
+                            remap = false,
+                            slice = "A",
+                            target = "Lic2/api/item/IC2Items;getItem(Ljava/lang/String;)Lnet/minecraft/item/ItemStack;",
+                            value = "INVOKE"),
+                    @At(
+                            ordinal = 3,
+                            remap = false,
+                            slice = "B",
+                            target = "Lic2/api/item/IC2Items;getItem(Ljava/lang/String;)Lnet/minecraft/item/ItemStack;",
+                            value = "INVOKE") },
+            method = "afterModsLoaded",
+            remap = false,
+            slice = { @Slice(
+                    from = @At(
+                            ordinal = 1,
+                            remap = false,
+                            target = "Lcpw/mods/fml/common/registry/GameRegistry;addRecipe(Lnet/minecraft/item/ItemStack;[Ljava/lang/Object;)V",
+                            value = "INVOKE"),
+                    id = "A"),
+                    @Slice(
+                            from = @At(
+                                    opcode = Opcodes.GETSTATIC,
+                                    remap = false,
+                                    target = "Lgravisuite/GraviSuite;disableAdvJetpackRecipe:Z",
+                                    value = "FIELD"),
+                            id = "B") })
+    private ItemStack gravisuiteneo$fixDamage(ItemStack original) {
+        // Must be a new ItemStack so the field in Ic2Items is not modified
+        return new ItemStack(original.getItem(), 1, 1);
     }
 
     @WrapWithCondition(
