@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import com.gtnewhorizons.gravisuiteneo.common.PacketQuantumShield;
+import com.gtnewhorizons.gravisuiteneo.common.PacketSortingPoints;
 
 import gravisuite.network.PacketHandler;
 
@@ -31,6 +32,11 @@ public class MixinPacketHandler {
             PacketQuantumShield packetQShield = new PacketQuantumShield();
             packetQShield.readData(data);
             packetQShield.execute(player);
+            ci.cancel();
+        } else if (packetId == 4) {
+            PacketSortingPoints packetSorting = new PacketSortingPoints();
+            packetSorting.readData(data);
+            packetSorting.execute(player);
             ci.cancel();
         }
     }
