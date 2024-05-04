@@ -18,15 +18,17 @@ import gravisuite.network.PacketHandler;
 
 public class PacketSortingPoints extends IPacket {
 
-    public int packetID = 4;
     public byte dst;
     public String pointName;
 
+    @Override
     public void readData(DataInputStream data) throws IOException {
         this.dst = data.readByte();
         this.pointName = data.readUTF();
+        this.packetID = 4;
     }
 
+    @Override
     public void writeData(DataOutputStream data) throws IOException {}
 
     public static void issue(EntityPlayer player, byte dst, String pointName) {
@@ -41,10 +43,6 @@ public class PacketSortingPoints extends IPacket {
         } catch (IOException var5) {
             throw new RuntimeException(var5);
         }
-    }
-
-    public int getPacketID() {
-        return this.packetID;
     }
 
     public static void movePoint(EntityPlayer player, byte dst, String pointName) {
@@ -68,6 +66,7 @@ public class PacketSortingPoints extends IPacket {
         }
     }
 
+    @Override
     public void execute(EntityPlayer player) {
         movePoint(player, this.dst, this.pointName);
     }

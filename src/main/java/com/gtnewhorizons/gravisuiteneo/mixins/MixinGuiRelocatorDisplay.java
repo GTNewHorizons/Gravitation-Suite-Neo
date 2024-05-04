@@ -41,6 +41,15 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
     private int maxOffset = 0;
 
     @Unique
+    private int clickHandled = 0;
+
+    @Unique
+    private String mouseDownPointName = null;
+
+    @Unique
+    private String sortablePointName = null;
+
+    @Unique
     private static int pageXofYTextX = 23;
 
     @Unique
@@ -133,12 +142,6 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
     @Shadow(remap = false)
     private int itemBGdelY;
 
-    private int clickHandled = 0;
-
-    private String mouseDownPointName = null;
-
-    private String sortablePointName = null;
-
     static {
         tex = new ResourceLocation(GraviSuiteNeo.MODID, "textures/gui/relocator_display2.png");
     }
@@ -155,6 +158,10 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
     }
 
     public SelectedItemMKII getSelectedMKII(List<TeleportPoint> tpList) {
+        if (tpList == null || tpList.isEmpty()) {
+            return null;
+        }
+
         SelectedItemMKII tmpSel = new SelectedItemMKII();
         int itemsCount = tpList.size();
 
@@ -191,6 +198,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
         return null;
     }
 
+    @Override
     public void handleMouseInput() {
         super.handleMouseInput();
         int shift = Mouse.getEventDWheel();
@@ -202,6 +210,7 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
         }
     }
 
+    @Override
     public void mouseMovedOrUp(int mousex, int mousey, int button) {
         if (button >= 0 && (clickHandled & 1 << button) != 0) {
             clickHandled &= ~(1 << button);
@@ -224,10 +233,8 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
 
     protected void onMouseDown(int mousex, int mousey, int button) {
         EntityPlayer player = this.mc.thePlayer;
-
-        List<TeleportPoint> tpList = new ArrayList<>(
-                ItemRelocator.loadTeleportPoints(player.inventory.getCurrentItem()));
-        SelectedItemMKII selectedItem = (SelectedItemMKII) this.getSelectedMKII(tpList);
+        List<TeleportPoint> tpList = ItemRelocator.loadTeleportPoints(player.inventory.getCurrentItem());
+        SelectedItemMKII selectedItem = this.getSelectedMKII(tpList);
 
         if (selectedItem != null) {
             this.mouseDownPointName = tpList.get(selectedItem.getRealIDX()).pointName;
@@ -251,8 +258,11 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
 
             EntityPlayer player = this.mc.thePlayer;
             // Load TP-Destinations from our ItemStack
-            List<TeleportPoint> tpList = new ArrayList<>(
-                    ItemRelocator.loadTeleportPoints(player.inventory.getCurrentItem()));
+            List<TeleportPoint> tpList = ItemRelocator.loadTeleportPoints(player.inventory.getCurrentItem());
+            if (tpList == null) {
+                return;
+            }
+
             // Get the current selected Item that has been clicked; If any
             SelectedItemMKII selectedItem = this.getSelectedMKII(tpList);
             if (selectedItem == null) {
@@ -290,14 +300,14 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
 
     }
 
+    @Override
     public void mouseClickMove(int mousex, int mousey, int button, long heldTime) {
         EntityPlayer player = this.mc.thePlayer;
-        List<TeleportPoint> tpList = new ArrayList<>(
-                ItemRelocator.loadTeleportPoints(player.inventory.getCurrentItem()));
+        List<TeleportPoint> tpList = ItemRelocator.loadTeleportPoints(player.inventory.getCurrentItem());
         SelectedItemMKII selectedItem = this.getSelectedMKII(tpList);
         int realIDX = selectedItem != null ? selectedItem.getRealIDX() : -1;
 
-        if (button != 0 || realIDX == -1 || this.mouseDownPointName == null) {
+        if (button != 0 || tpList == null || realIDX == -1 || this.mouseDownPointName == null) {
             super.mouseClickMove(mousex, mousey, button, heldTime);
             return;
         }
@@ -342,11 +352,11 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
         int xStart = (this.width - this.xSize) / 2;
         int yStart = (this.height - this.ySize) / 2;
         try {
-            List<TeleportPoint> tpList = new ArrayList<>(
-                    ItemRelocator.loadTeleportPoints(this.mc.thePlayer.inventory.getCurrentItem()));
-            this.maxOffset = (int) Math.floor((tpList.size() - 1) / 10);
+            List<TeleportPoint> tpList = ItemRelocator.loadTeleportPoints(this.mc.thePlayer.inventory.getCurrentItem());
+            this.maxOffset = 0;
 
-            if (tpList.size() > 0) {
+            if (tpList != null && !tpList.isEmpty()) {
+                this.maxOffset = (int) Math.floor((tpList.size() - 1) / 10);
                 SelectedItemMKII selectedItem = this.getSelectedMKII(tpList);
                 int realIDX = selectedItem != null ? selectedItem.getRealIDX() : -2;
 
