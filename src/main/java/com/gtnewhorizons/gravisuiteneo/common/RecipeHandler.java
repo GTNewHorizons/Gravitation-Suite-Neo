@@ -13,6 +13,11 @@ import ic2.api.recipe.Recipes;
 public class RecipeHandler {
 
     public static void registerRecipes() {
+
+        if (Loader.isModLoaded("dreamcraft")) {
+            return;
+        }
+
         if (!Properties.disableNanobotRecipe) {
             Recipes.advRecipes.addRecipe(
                     new ItemStack(GraviSuite.instance.itemSimpleItem, 4, 7),
