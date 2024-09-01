@@ -6,6 +6,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
 
+import cpw.mods.fml.common.Loader;
 import gravisuite.GraviSuite;
 import ic2.api.item.IC2Items;
 import ic2.api.recipe.Recipes;
