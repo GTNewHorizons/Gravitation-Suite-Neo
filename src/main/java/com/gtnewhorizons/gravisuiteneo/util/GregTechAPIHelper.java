@@ -9,8 +9,8 @@ import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.Pair;
 
 import gregtech.api.recipe.RecipeMaps;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTUtility;
 
 public class GregTechAPIHelper {
 
@@ -20,7 +20,7 @@ public class GregTechAPIHelper {
                 .collect(Collectors.toMap(p -> p.getLeft().getFluid(), Pair::getRight));
     }
 
-    private static Pair<FluidStack, Integer> getFluidAndValue(GT_Recipe recipe) {
-        return Pair.of(GT_Utility.getFluidForFilledItem(recipe.getRepresentativeInput(0), true), recipe.mSpecialValue);
+    private static Pair<FluidStack, Integer> getFluidAndValue(GTRecipe recipe) {
+        return Pair.of(GTUtility.getFluidForFilledItem(recipe.getRepresentativeInput(0), true), recipe.mSpecialValue);
     }
 }
