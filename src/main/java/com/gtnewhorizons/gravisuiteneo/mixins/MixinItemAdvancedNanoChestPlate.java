@@ -17,7 +17,7 @@ import gravisuite.ItemAdvancedJetPack;
 import gravisuite.ItemAdvancedNanoChestPlate;
 import ic2.api.item.ElectricItem;
 
-@Mixin(ItemAdvancedNanoChestPlate.class)
+@Mixin(value = ItemAdvancedNanoChestPlate.class, remap = false)
 public class MixinItemAdvancedNanoChestPlate extends ItemAdvancedJetPack {
 
     @Shadow
@@ -38,7 +38,7 @@ public class MixinItemAdvancedNanoChestPlate extends ItemAdvancedJetPack {
      * @author Namikon, glowredman
      * @reason Gravitation Suite Neo
      */
-    @Overwrite(remap = false)
+    @Overwrite
     public double getDamageAbsorptionRatio() {
         return Properties.ArmorPresets.AdvNanoChestPlate.absorptionRatio;
     }
@@ -47,7 +47,7 @@ public class MixinItemAdvancedNanoChestPlate extends ItemAdvancedJetPack {
      * @author Namikon, glowredman
      * @reason Gravitation Suite Neo
      */
-    @Overwrite(remap = false)
+    @Overwrite
     private double getBaseAbsorptionRatio() {
         return 1.0;
     }
@@ -59,7 +59,7 @@ public class MixinItemAdvancedNanoChestPlate extends ItemAdvancedJetPack {
      *         Motivated by <a href="https://github.com/GTNewHorizons/GT-New-Horizons-Modpack/issues/15529">Issue
      *         #15529</a>.
      */
-    @Inject(method = "onArmorTick", at = @At("HEAD"), cancellable = true, remap = false)
+    @Inject(method = "onArmorTick", at = @At("HEAD"), cancellable = true)
     void onArmorTickLenient(World worldObj, EntityPlayer player, ItemStack itemStack, CallbackInfo ci) {
         super.onArmorTick(worldObj, player, itemStack);
         byte currentTick = ticker;
