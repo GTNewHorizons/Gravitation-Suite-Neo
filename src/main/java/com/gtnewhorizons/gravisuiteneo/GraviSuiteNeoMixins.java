@@ -27,6 +27,7 @@ public class GraviSuiteNeoMixins implements ILateMixinLoader {
         mixins.add("MixinItemAdvancedLappack");
         mixins.add("MixinItemAdvChainsaw");
         mixins.add("MixinItemAdvDDrill");
+        mixins.add("MixinItemAdvancedNanoChestPlate");
         mixins.add("MixinItemGraviChestPlate");
         mixins.add("MixinItemRelocator");
         mixins.add("MixinItemUltimateLappack");
