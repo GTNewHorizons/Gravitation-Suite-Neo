@@ -99,8 +99,6 @@ public class GraviSuiteNeoRegistry {
         }
         if (sum == 0) {
             return;
-        } else {
-            fluids.size();
         }
 
         // Get the percentage-multiplier for our median value, then loop the fuels again and prepare a static list

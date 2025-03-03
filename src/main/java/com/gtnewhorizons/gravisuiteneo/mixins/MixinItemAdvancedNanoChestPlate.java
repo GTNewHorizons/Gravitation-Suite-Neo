@@ -66,7 +66,7 @@ public class MixinItemAdvancedNanoChestPlate extends ItemAdvancedJetPack {
         ticker = (byte) (currentTick + 1);
         if (currentTick % tickRate == 0 && player.isBurning()
                 && ElectricItem.manager.canUse(itemStack, energyForExtinguish)) {
-            ItemAdvancedNanoChestPlate.use(itemStack, energyForExtinguish);
+            ItemAdvancedJetPack.use(itemStack, energyForExtinguish);
             player.extinguish();
         }
         ci.cancel();
