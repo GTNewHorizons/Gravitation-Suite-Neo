@@ -139,7 +139,7 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
     @Overwrite
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
         if (Keyboard.isModeKeyDown(player)) {
-            Integer toolMode = ItemAdvChainsaw.readToolMode(itemStack);
+            int toolMode = ItemAdvChainsaw.readToolMode(itemStack);
 
             toolMode++;
             if (toolMode > 2) {

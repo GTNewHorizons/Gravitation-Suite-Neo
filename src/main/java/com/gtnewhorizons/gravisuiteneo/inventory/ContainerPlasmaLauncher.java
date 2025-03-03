@@ -55,7 +55,7 @@ public class ContainerPlasmaLauncher extends Container {
     @Override
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int index) {
         ItemStack itemstack = null;
-        Slot slot = (Slot) this.inventorySlots.get(index);
+        Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
@@ -98,7 +98,7 @@ public class ContainerPlasmaLauncher extends Container {
 
         if (stack.isStackable()) {
             while (stack.stackSize > 0 && (!backwards && k < end || backwards && k >= start)) {
-                slot = (Slot) this.inventorySlots.get(k);
+                slot = this.inventorySlots.get(k);
                 itemstack1 = slot.getStack();
 
                 if (!slot.isItemValid(stack)) {
@@ -130,7 +130,7 @@ public class ContainerPlasmaLauncher extends Container {
         if (stack.stackSize > 0) {
             k = backwards ? end - 1 : start;
             while (!backwards && k < end || backwards && k >= start) {
-                slot = (Slot) this.inventorySlots.get(k);
+                slot = this.inventorySlots.get(k);
                 itemstack1 = slot.getStack();
 
                 if (!slot.isItemValid(stack)) {
@@ -146,14 +146,13 @@ public class ContainerPlasmaLauncher extends Container {
                         this.inventory.markDirty();
                         flag1 = true;
                         break;
-                    } else {
-                        this.putStackInSlot(
-                                k,
-                                new ItemStack(stack.getItem(), slot.getSlotStackLimit(), stack.getItemDamage()));
-                        stack.stackSize -= slot.getSlotStackLimit();
-                        this.inventory.markDirty();
-                        flag1 = true;
                     }
+                    this.putStackInSlot(
+                            k,
+                            new ItemStack(stack.getItem(), slot.getSlotStackLimit(), stack.getItemDamage()));
+                    stack.stackSize -= slot.getSlotStackLimit();
+                    this.inventory.markDirty();
+                    flag1 = true;
                 }
 
                 k += backwards ? -1 : 1;

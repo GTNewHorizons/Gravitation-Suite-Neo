@@ -243,32 +243,28 @@ public class ItemPlasmaCell extends Item
     public Color getColorForMaxValue(ItemStack itemStack, int barIndex) {
         if (barIndex == 0) {
             return Color.GREEN;
-        } else {
-            return Color.YELLOW;
         }
+        return Color.YELLOW;
     }
 
     @Override
     public double getMaxValue(ItemStack itemStack, int barIndex) {
         if (barIndex == 0) {
             return this.maxCharge;
-        } else {
-            return CAPACITY;
         }
+        return CAPACITY;
     }
 
     @Override
     public double getValueForBar(ItemStack itemStack, int barIndex) {
         if (barIndex == 0) {
             return ElectricItem.manager.getCharge(itemStack);
-        } else {
-            FluidStack tFluid = this.getFluid(itemStack);
-            if (tFluid != null) {
-                return tFluid.amount;
-            } else {
-                return 0;
-            }
         }
+        FluidStack tFluid = this.getFluid(itemStack);
+        if (tFluid != null) {
+            return tFluid.amount;
+        }
+        return 0;
     }
 
     @Override
