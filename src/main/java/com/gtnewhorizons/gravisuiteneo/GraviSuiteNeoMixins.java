@@ -21,7 +21,7 @@ public class GraviSuiteNeoMixins implements ILateMixinLoader {
     public List<String> getMixins(Set<String> loadedMods) {
         List<String> mixins = new ArrayList<>();
         mixins.add("MixinEntityPlasmaBall");
-        mixins.add("MixinGraviSuite");
+        mixins.add("MixinGraviSuite_General");
         mixins.add("MixinHelpers");
         mixins.add("MixinItemAdvancedJetPack");
         mixins.add("MixinItemAdvancedLappack");
@@ -34,6 +34,10 @@ public class GraviSuiteNeoMixins implements ILateMixinLoader {
         mixins.add("MixinItemVajra");
         mixins.add("MixinPacketHandler");
         mixins.add("MixinKeyboard");
+
+        if (!loadedMods.contains("dreamcraft")) {
+            mixins.add("MixinGraviSuite_Recipes");
+        }
 
         if (FMLCommonHandler.instance().getSide().isClient()) {
             mixins.add("MixinBlockRelocatorPortal");
