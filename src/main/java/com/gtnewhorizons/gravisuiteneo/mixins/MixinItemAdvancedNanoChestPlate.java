@@ -13,12 +13,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 
+import cpw.mods.fml.common.Optional;
 import gravisuite.ItemAdvancedJetPack;
 import gravisuite.ItemAdvancedNanoChestPlate;
+import gregtech.api.hazards.Hazard;
+import gregtech.api.hazards.IHazardProtector;
 import ic2.api.item.ElectricItem;
 
 @Mixin(value = ItemAdvancedNanoChestPlate.class, remap = false)
-public class MixinItemAdvancedNanoChestPlate extends ItemAdvancedJetPack {
+@Optional.Interface(iface = "gregtech.api.hazards.IHazardProtector", modid = "gregtech")
+public class MixinItemAdvancedNanoChestPlate extends ItemAdvancedJetPack implements IHazardProtector {
 
     @Shadow
     private static byte tickRate = 20;
@@ -70,5 +74,11 @@ public class MixinItemAdvancedNanoChestPlate extends ItemAdvancedJetPack {
             player.extinguish();
         }
         ci.cancel();
+    }
+
+    @Override
+    @Optional.Method(modid = "gregtech")
+    public boolean protectsAgainst(ItemStack itemStack, Hazard hazard) {
+        return true;
     }
 }
