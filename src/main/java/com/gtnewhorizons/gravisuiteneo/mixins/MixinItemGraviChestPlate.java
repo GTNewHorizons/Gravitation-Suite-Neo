@@ -19,14 +19,18 @@ import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import com.gtnewhorizons.gravisuiteneo.util.QuantumShieldHelper;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gravisuite.ItemGraviChestPlate;
 import gravisuite.ServerProxy;
+import gregtech.api.hazards.Hazard;
+import gregtech.api.hazards.IHazardProtector;
 import ic2.api.item.ElectricItem;
 
 @Mixin(ItemGraviChestPlate.class)
-public class MixinItemGraviChestPlate {
+@Optional.Interface(iface = "gregtech.api.hazards.IHazardProtector", modid = "gregtech")
+public class MixinItemGraviChestPlate implements IHazardProtector {
 
     @Inject(
             at = @At(opcode = Opcodes.IFEQ, ordinal = 7, value = "JUMP"),
@@ -123,5 +127,11 @@ public class MixinItemGraviChestPlate {
     @Overwrite(remap = false)
     private double getBaseAbsorptionRatio() {
         return 1.0;
+    }
+
+    @Override
+    @Optional.Method(modid = "gregtech")
+    public boolean protectsAgainst(ItemStack itemStack, Hazard hazard) {
+        return true;
     }
 }
