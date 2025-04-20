@@ -90,7 +90,7 @@ public class GraviSuiteNeoRegistry {
             }
             fluids.put(fluid, fuelValue);
         }
-        if (Loader.isModLoaded("gregtech")) {
+        if (Loader.isModLoaded("dreamcraft")) {
             fluids.putAll(GregTechAPIHelper.getGTPlasmaFluids());
         }
         long sum = 0;
