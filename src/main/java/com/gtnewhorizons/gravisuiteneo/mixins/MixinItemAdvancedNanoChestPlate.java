@@ -21,7 +21,7 @@ import gregtech.api.hazards.IHazardProtector;
 import ic2.api.item.ElectricItem;
 
 @Mixin(value = ItemAdvancedNanoChestPlate.class, remap = false)
-@Optional.Interface(iface = "gregtech.api.hazards.IHazardProtector", modid = "gregtech")
+@Optional.Interface(iface = "gregtech.api.hazards.IHazardProtector", modid = "dreamcraft")
 public class MixinItemAdvancedNanoChestPlate extends ItemAdvancedJetPack implements IHazardProtector {
 
     @Shadow
