@@ -21,7 +21,7 @@ import gregtech.api.hazards.IHazardProtector;
 import ic2.api.item.ElectricItem;
 
 @Mixin(value = ItemAdvancedNanoChestPlate.class, remap = false)
-@Optional.Interface(iface = "gregtech.api.hazards.IHazardProtector", modid = "dreamcraft")
+@Optional.Interface(iface = "gregtech.api.hazards.IHazardProtector", modid = "gregtechNH")
 public class MixinItemAdvancedNanoChestPlate extends ItemAdvancedJetPack implements IHazardProtector {
 
     @Shadow
@@ -77,7 +77,7 @@ public class MixinItemAdvancedNanoChestPlate extends ItemAdvancedJetPack impleme
     }
 
     @Override
-    @Optional.Method(modid = "gregtech")
+    @Optional.Method(modid = "gregtechNH")
     public boolean protectsAgainst(ItemStack itemStack, Hazard hazard) {
         return true;
     }
