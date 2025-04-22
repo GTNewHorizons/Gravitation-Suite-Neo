@@ -29,7 +29,7 @@ import gregtech.api.hazards.IHazardProtector;
 import ic2.api.item.ElectricItem;
 
 @Mixin(ItemGraviChestPlate.class)
-@Optional.Interface(iface = "gregtech.api.hazards.IHazardProtector", modid = "dreamcraft")
+@Optional.Interface(iface = "gregtech.api.hazards.IHazardProtector", modid = "gregtechNH")
 public class MixinItemGraviChestPlate implements IHazardProtector {
 
     @Inject(
@@ -130,7 +130,7 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
     }
 
     @Override
-    @Optional.Method(modid = "dreamcraft")
+    @Optional.Method(modid = "gregtechNH")
     public boolean protectsAgainst(ItemStack itemStack, Hazard hazard) {
         return true;
     }
