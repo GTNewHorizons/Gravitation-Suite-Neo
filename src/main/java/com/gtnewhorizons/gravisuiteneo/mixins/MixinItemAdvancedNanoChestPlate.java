@@ -2,6 +2,7 @@ package com.gtnewhorizons.gravisuiteneo.mixins;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.world.World;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -69,6 +70,7 @@ public class MixinItemAdvancedNanoChestPlate extends ItemAdvancedJetPack impleme
         byte currentTick = ticker;
         ticker = (byte) (currentTick + 1);
         if (currentTick % tickRate == 0 && player.isBurning()
+                && !player.isPotionActive(Potion.fireResistance)
                 && ElectricItem.manager.canUse(itemStack, energyForExtinguish)) {
             ItemAdvancedJetPack.use(itemStack, energyForExtinguish);
             player.extinguish();

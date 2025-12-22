@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -74,7 +75,8 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
             remap = false)
     private boolean gravisuiteneo$checkCanExtinguish(boolean original, World worldObj, EntityPlayer player,
             ItemStack itemStack) {
-        if (original && ElectricItem.manager.canUse(itemStack, QuantumShieldHelper.DISCHARGE_EXTINGUISH)) {
+        if (original && ElectricItem.manager.canUse(itemStack, QuantumShieldHelper.DISCHARGE_EXTINGUISH)
+                && !player.isPotionActive(Potion.fireResistance)) {
             ElectricItem.manager.discharge(itemStack, QuantumShieldHelper.DISCHARGE_EXTINGUISH, 4, true, false, false);
             return true;
         }
