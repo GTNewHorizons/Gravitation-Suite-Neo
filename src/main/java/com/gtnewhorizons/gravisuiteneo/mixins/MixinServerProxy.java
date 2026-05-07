@@ -6,7 +6,6 @@ import java.util.Map;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 
@@ -16,22 +15,21 @@ import org.spongepowered.asm.mixin.Overwrite;
 import gravisuite.ServerProxy;
 
 /**
- * Intercepts ServerProxy.sendPlayerMessage to replace hardcoded English strings from GraviSuite
- * with ChatComponentTranslation so translation happens client-side with the correct locale.
+ * Intercepts ServerProxy.sendPlayerMessage to replace hardcoded English strings from GraviSuite with
+ * ChatComponentTranslation so translation happens client-side with the correct locale.
  *
  * <p>
- * GraviSuite constructs messages server-side by concatenating StatCollector.translateToLocal() results
- * (e.g. "§a" + trans("message.graviChestPlate.gravitationEngine") + " " + trans("message.text.enabled")),
- * then passes the already-translated English string to sendPlayerMessage. We reverse-map these
- * known English strings back to compound ChatComponentTranslation objects.
+ * GraviSuite constructs messages server-side by concatenating StatCollector.translateToLocal() results (e.g. "§a" +
+ * trans("message.graviChestPlate.gravitationEngine") + " " + trans("message.text.enabled")), then passes the
+ * already-translated English string to sendPlayerMessage. We reverse-map these known English strings back to compound
+ * ChatComponentTranslation objects.
  */
 @Mixin(ServerProxy.class)
 public class MixinServerProxy {
 
     /**
-     * Maps stripped English text (no §-codes) to a pair of [translationKey1, translationKey2].
-     * If key2 is null, only key1 is used (single-key message).
-     * If key2 is non-null, the message is: trans(key1) + " " + trans(key2).
+     * Maps stripped English text (no §-codes) to a pair of [translationKey1, translationKey2]. If key2 is null, only
+     * key1 is used (single-key message). If key2 is non-null, the message is: trans(key1) + " " + trans(key2).
      */
     private static final Map<String, String[]> REVERSE_MAP = new HashMap<>();
 
@@ -61,12 +59,10 @@ public class MixinServerProxy {
 
         // AdvancedJetPack hover mode toggle
         // "§e" + trans(hoverMode) + " " + trans(text.enabled/disabled)
-        REVERSE_MAP.put(
-                "Hover mode enabled",
-                new String[] { "message.advElJetpack.hoverMode", "message.text.enabled" });
-        REVERSE_MAP.put(
-                "Hover mode disabled",
-                new String[] { "message.advElJetpack.hoverMode", "message.text.disabled" });
+        REVERSE_MAP
+                .put("Hover mode enabled", new String[] { "message.advElJetpack.hoverMode", "message.text.enabled" });
+        REVERSE_MAP
+                .put("Hover mode disabled", new String[] { "message.advElJetpack.hoverMode", "message.text.disabled" });
 
         // AdvancedJetPack engine toggle
         REVERSE_MAP.put(
@@ -97,8 +93,7 @@ public class MixinServerProxy {
                 comp = new ChatComponentTranslation(keys[0]);
             } else {
                 // Compound: "key1 key2"
-                comp = new ChatComponentTranslation(keys[0])
-                        .appendText(" ")
+                comp = new ChatComponentTranslation(keys[0]).appendText(" ")
                         .appendSibling(new ChatComponentTranslation(keys[1]));
             }
             if (color != null) {
