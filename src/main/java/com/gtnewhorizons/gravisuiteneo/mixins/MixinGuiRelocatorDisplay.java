@@ -274,8 +274,9 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
 
             if (realIDX >= tpList.size()) {
                 GraviSuiteNeo.LOGGER.error("WARNING: Caught IndexOutOfBounds while using Translocator");
-                player.addChatMessage(new ChatComponentTranslation("message.relocator.text.invalid")
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+                player.addChatMessage(
+                        new ChatComponentTranslation("message.relocator.text.invalid")
+                                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
                 player.closeScreen();
                 return;
             }

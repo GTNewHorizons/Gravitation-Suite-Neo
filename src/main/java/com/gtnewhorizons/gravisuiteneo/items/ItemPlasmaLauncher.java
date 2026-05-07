@@ -61,20 +61,23 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
         ItemStack ammoStack = this.getAmmunition(itemStackIn);
 
         if (ammoStack == null) {
-            player.addChatMessage(new ChatComponentTranslation("message.plasmaLauncher.noPlasmaCellFound")
-                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.plasmaLauncher.noPlasmaCellFound")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return itemStackIn;
         }
 
         FluidStack plasma = ((ItemPlasmaCell) GraviSuiteNeoRegistry.itemPlasmaCell).getFluid(ammoStack);
         if (plasma == null) {
-            player.addChatMessage(new ChatComponentTranslation("message.plasmaLauncher.PlasmaCellEmpty")
-                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.plasmaLauncher.PlasmaCellEmpty")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return itemStackIn;
         }
         if (plasma.amount < PLASMA_AMOUNT_PER_SHOT) {
-            player.addChatMessage(new ChatComponentTranslation("message.plasmaLauncher.NotEnoughPlasma")
-                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.plasmaLauncher.NotEnoughPlasma")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return itemStackIn;
         }
 
@@ -94,8 +97,9 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
             }
             player.swingItem();
         } else {
-            player.addChatMessage(new ChatComponentTranslation("message.plasmaLauncher.noEnergy")
-                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.plasmaLauncher.noEnergy")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
         }
 
         return itemStackIn;
