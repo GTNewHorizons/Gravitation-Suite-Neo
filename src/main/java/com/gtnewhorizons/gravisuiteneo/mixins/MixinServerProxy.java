@@ -81,7 +81,7 @@ public class MixinServerProxy {
     public static void sendPlayerMessage(EntityPlayer player, String message) {
         if (message == null || message.isEmpty()) return;
 
-        String stripped = EnumChatFormatting.getTextWithoutFormattingCodes(message);
+        String stripped = stripFormattingCodes(message);
         String[] keys = REVERSE_MAP.get(stripped);
 
         if (keys != null) {
@@ -103,6 +103,20 @@ public class MixinServerProxy {
         } else {
             player.addChatMessage(new ChatComponentText(message));
         }
+    }
+
+    /** Strips §x formatting codes from a string (replaces EnumChatFormatting.getTextWithoutFormattingCodes). */
+    private static String stripFormattingCodes(String text) {
+        if (text == null) return "";
+        StringBuilder sb = new StringBuilder(text.length());
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == '§' && i + 1 < text.length()) {
+                i++; // skip the code character
+            } else {
+                sb.append(text.charAt(i));
+            }
+        }
+        return sb.toString();
     }
 
     private static EnumChatFormatting detectPrimaryColor(String message) {
