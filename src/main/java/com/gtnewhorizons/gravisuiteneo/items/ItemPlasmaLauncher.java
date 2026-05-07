@@ -7,6 +7,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -21,7 +23,6 @@ import com.gtnewhorizons.gravisuiteneo.inventory.InventoryItem;
 
 import gravisuite.EntityPlasmaBall;
 import gravisuite.GraviSuite;
-import gravisuite.ServerProxy;
 import ic2.api.item.ElectricItem;
 
 public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
@@ -60,24 +61,20 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
         ItemStack ammoStack = this.getAmmunition(itemStackIn);
 
         if (ammoStack == null) {
-            ServerProxy.sendPlayerMessage(
-                    player,
-                    EnumChatFormatting.RED
-                            + StatCollector.translateToLocal("message.plasmaLauncher.noPlasmaCellFound"));
+            player.addChatMessage(new ChatComponentTranslation("message.plasmaLauncher.noPlasmaCellFound")
+                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return itemStackIn;
         }
 
         FluidStack plasma = ((ItemPlasmaCell) GraviSuiteNeoRegistry.itemPlasmaCell).getFluid(ammoStack);
         if (plasma == null) {
-            ServerProxy.sendPlayerMessage(
-                    player,
-                    EnumChatFormatting.RED + StatCollector.translateToLocal("message.plasmaLauncher.PlasmaCellEmpty"));
+            player.addChatMessage(new ChatComponentTranslation("message.plasmaLauncher.PlasmaCellEmpty")
+                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return itemStackIn;
         }
         if (plasma.amount < PLASMA_AMOUNT_PER_SHOT) {
-            ServerProxy.sendPlayerMessage(
-                    player,
-                    EnumChatFormatting.RED + StatCollector.translateToLocal("message.plasmaLauncher.NotEnoughPlasma"));
+            player.addChatMessage(new ChatComponentTranslation("message.plasmaLauncher.NotEnoughPlasma")
+                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return itemStackIn;
         }
 
@@ -97,9 +94,8 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
             }
             player.swingItem();
         } else {
-            ServerProxy.sendPlayerMessage(
-                    player,
-                    EnumChatFormatting.RED + StatCollector.translateToLocal("message.plasmaLauncher.noEnergy"));
+            player.addChatMessage(new ChatComponentTranslation("message.plasmaLauncher.noEnergy")
+                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
         }
 
         return itemStackIn;

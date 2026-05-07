@@ -6,6 +6,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -24,7 +27,6 @@ import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
 import gravisuite.EntityPlasmaBall;
 import gravisuite.ItemRelocator;
 import gravisuite.ItemRelocator.TeleportPoint;
-import gravisuite.ServerProxy;
 
 @Mixin(ItemRelocator.class)
 public class MixinItemRelocator {
@@ -69,11 +71,11 @@ public class MixinItemRelocator {
             remap = false)
     private void gravisuiteneo$sendTeleportingNowMessage(EntityPlayer player, ItemStack itemStack, String tpName,
             CallbackInfo ci, TeleportPoint point) {
-        ServerProxy.sendPlayerMessage(
-                player,
-                EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.relocator.text.teleportingnow")
-                        + " "
-                        + EnumChatFormatting.GREEN
-                        + point.pointName);
+        player.addChatMessage(
+                new ChatComponentTranslation("message.relocator.text.teleportingnow")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD))
+                        .appendText(" ")
+                        .appendSibling(new ChatComponentText(point.pointName)
+                                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN))));
     }
 }
