@@ -12,10 +12,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.ChatStyle;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
@@ -220,8 +218,8 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
                             player.addChatMessage(
                                     new ChatComponentText(
                                             ((MixinEntityPlasmaBall) this).getOwnerEntity().getCommandSenderName()
-                                                    + " ")
-                                                            .appendSibling(new ChatComponentTranslation(
+                                                    + " ").appendSibling(
+                                                            new ChatComponentTranslation(
                                                                     "message.relocator.text.messageToTarget")));
                             ElectricItem.manager
                                     .discharge(itemstack, dischargeArmorValue, Integer.MAX_VALUE, true, false, false);

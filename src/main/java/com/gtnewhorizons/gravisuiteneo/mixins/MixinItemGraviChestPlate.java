@@ -44,8 +44,9 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
         if (!QuantumShieldHelper.readShieldMode(itemStack)) return;
 
         if (!QuantumShieldHelper.hasValidShieldEquipment(player)) {
-            player.addChatMessage(new ChatComponentTranslation("message.graviChestPlate.invalidSetupShieldBreak")
-                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.graviChestPlate.invalidSetupShieldBreak")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             QuantumShieldHelper.saveShieldMode(itemStack, false);
             QuantumShieldHelper.notifyWorldShieldDown(player);
             ci.cancel();
@@ -54,8 +55,9 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
 
         if (!player.capabilities.isCreativeMode) {
             if (ItemGraviChestPlate.getCharge(itemStack) < QuantumShieldHelper.DISCHARGE_IDLE) {
-                player.addChatMessage(new ChatComponentTranslation("message.graviChestPlate.lowpowerShieldBreak")
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+                player.addChatMessage(
+                        new ChatComponentTranslation("message.graviChestPlate.lowpowerShieldBreak")
+                                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
                 QuantumShieldHelper.saveShieldMode(itemStack, false);
                 QuantumShieldHelper.notifyWorldShieldDown(player);
                 ci.cancel();

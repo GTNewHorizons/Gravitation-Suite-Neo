@@ -10,7 +10,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -73,9 +72,8 @@ public class MixinItemRelocator {
             CallbackInfo ci, TeleportPoint point) {
         player.addChatMessage(
                 new ChatComponentTranslation("message.relocator.text.teleportingnow")
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD))
-                        .appendText(" ")
-                        .appendSibling(new ChatComponentText(point.pointName)
-                                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN))));
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD)).appendText(" ").appendSibling(
+                                new ChatComponentText(point.pointName)
+                                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN))));
     }
 }

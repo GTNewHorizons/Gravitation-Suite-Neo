@@ -186,8 +186,7 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
         }
         player.addChatMessage(
                 new ChatComponentTranslation("message.text.mode")
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN))
-                        .appendText(": ")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(": ")
                         .appendSibling(modeMsg));
 
         return itemStackIn;
@@ -408,8 +407,9 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
             }
 
             if (lowPower) {
-                player.addChatMessage(new ChatComponentTranslation("message.advDDrill.noEnergy")
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+                player.addChatMessage(
+                        new ChatComponentTranslation("message.advDDrill.noEnergy")
+                                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
                 return false;
             }
             return true;

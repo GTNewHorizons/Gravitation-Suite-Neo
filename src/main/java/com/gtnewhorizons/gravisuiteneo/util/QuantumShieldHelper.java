@@ -16,7 +16,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -80,14 +79,16 @@ public class QuantumShieldHelper {
      */
     public static void switchShieldMode(EntityPlayer player, ItemStack itemstack) {
         if (!hasValidShieldEquipment(player)) {
-            player.addChatMessage(new ChatComponentTranslation("message.graviChestPlate.invalidshieldSetup")
-                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.graviChestPlate.invalidshieldSetup")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return;
         }
 
         if (!ElectricItem.manager.canUse(itemstack, DISCHARGE_IDLE * 10)) {
-            player.addChatMessage(new ChatComponentTranslation("message.graviChestPlate.ShieldUpNotEnoughPower")
-                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.graviChestPlate.ShieldUpNotEnoughPower")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return;
         }
 
@@ -95,19 +96,19 @@ public class QuantumShieldHelper {
             saveShieldMode(itemstack, false);
             player.addChatMessage(
                     new ChatComponentTranslation("message.graviChestPlate.shieldMode")
-                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.YELLOW))
-                            .appendText(" ")
-                            .appendSibling(new ChatComponentTranslation("message.text.disabled")
-                                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED))));
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.YELLOW)).appendText(" ")
+                            .appendSibling(
+                                    new ChatComponentTranslation("message.text.disabled")
+                                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED))));
             notifyWorldShieldDown(player);
         } else {
             saveShieldMode(itemstack, true);
             player.addChatMessage(
                     new ChatComponentTranslation("message.graviChestPlate.shieldMode")
-                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.YELLOW))
-                            .appendText(" ")
-                            .appendSibling(new ChatComponentTranslation("message.text.enabled")
-                                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN))));
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.YELLOW)).appendText(" ")
+                            .appendSibling(
+                                    new ChatComponentTranslation("message.text.enabled")
+                                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN))));
             notifyWorldShieldUp(player);
             player.triggerAchievement(Achievements.QSHIELD);
         }
@@ -183,15 +184,18 @@ public class QuantumShieldHelper {
                 curePotions(itemstack, player, true);
                 // TODO: add medkit sound player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":medkit",
                 // 1.25F, 1.0F);
-                player.addChatMessage(new ChatComponentTranslation("message.graviChestPlate.MedkitInjected")
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
+                player.addChatMessage(
+                        new ChatComponentTranslation("message.graviChestPlate.MedkitInjected")
+                                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
             } else {
-                player.addChatMessage(new ChatComponentTranslation("message.graviChestPlate.MedkitNoNanoBots")
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+                player.addChatMessage(
+                        new ChatComponentTranslation("message.graviChestPlate.MedkitNoNanoBots")
+                                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             }
         } else {
-            player.addChatMessage(new ChatComponentTranslation("message.graviChestPlate.MedkitNoPower")
-                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.graviChestPlate.MedkitNoPower")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
         }
     }
 

@@ -162,8 +162,7 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
             }
             player.addChatMessage(
                     new ChatComponentTranslation("message.text.mode")
-                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN))
-                            .appendText(": ")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(": ")
                             .appendSibling(modeMsg));
         }
 

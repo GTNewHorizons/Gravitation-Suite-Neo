@@ -6,7 +6,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 
@@ -24,8 +23,9 @@ public class LevelableToolHelper {
 
         int nextLevel = getLevel(currentXP);
         if (nextLevel > currLevel) {
-            player.addChatMessage(new ChatComponentTranslation("message.xp.levelup")
-                    .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD)));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.xp.levelup")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD)));
         }
 
         saveToolXP(itemStack, currentXP);
