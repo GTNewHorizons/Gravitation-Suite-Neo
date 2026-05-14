@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
@@ -128,6 +129,64 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
     @Overwrite(remap = false)
     private double getBaseAbsorptionRatio() {
         return 1.0;
+    }
+
+    // Redirect GraviSuite's sendPlayerMessage calls in switchFlyState (gravity engine toggle).
+    // switchFlyState has 3 calls: ordinal 0 = disabled (§c), ordinal 1 = enabled (§a),
+    // ordinal 2 = low energy when trying to activate (no color prefix).
+    @Redirect(
+            at = @At(
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "switchFlyState",
+            remap = false)
+    private static void gravisuiteneo$translateGravityEngineMessage(EntityPlayer player, String message) {
+        if (!message.contains("§a") && !message.contains("§c")) {
+            // Ordinal 2: not enough energy to activate the engine
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.graviChestPlate.lowEnergy")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+            return;
+        }
+        boolean enabled = message.contains("§a");
+        player.addChatMessage(
+                new ChatComponentTranslation("message.graviChestPlate.gravitationEngine")
+                        .setChatStyle(
+                                new ChatStyle().setColor(enabled ? EnumChatFormatting.GREEN : EnumChatFormatting.RED))
+                        .appendText(" ").appendSibling(
+                                new ChatComponentTranslation(
+                                        enabled ? "message.text.enabled" : "message.text.disabled")));
+    }
+
+    // Redirect GraviSuite's sendPlayerMessage calls in onArmorTick.
+    // onArmorTick has 2 calls: ordinal 0 = shutdown, ordinal 1 = noEnergyToBoost.
+    @Redirect(
+            at = @At(
+                    ordinal = 0,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "onArmorTick",
+            remap = false)
+    private void gravisuiteneo$translateShutdownMessage(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.graviChestPlate.shutdown")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+    }
+
+    @Redirect(
+            at = @At(
+                    ordinal = 1,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "onArmorTick",
+            remap = false)
+    private void gravisuiteneo$translateNoEnergyToBoostMessage(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.graviChestPlate.noEnergyToBoost")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
 
     @Override

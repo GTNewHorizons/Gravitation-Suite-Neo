@@ -34,7 +34,6 @@ public class GraviSuiteNeoMixins implements ILateMixinLoader {
         mixins.add("MixinItemVajra");
         mixins.add("MixinPacketHandler");
         mixins.add("MixinKeyboard");
-        mixins.add("MixinServerProxy");
 
         if (!loadedMods.contains("dreamcraft")) {
             mixins.add("MixinGraviSuite_Recipes");
