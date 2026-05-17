@@ -218,7 +218,7 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
                     value = "INVOKE"),
             method = { "switchFlyState", "onArmorTick", "switchWorkMode" },
             remap = false)
-    private String gravisuiteneo$noopFormatMessage(String key) {
+    private static String gravisuiteneo$noopFormatMessage(String key) {
         return "";
     }
 
