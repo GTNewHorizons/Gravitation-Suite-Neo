@@ -44,26 +44,49 @@ public class MixinItemAdvancedJetPack {
         return 1.0;
     }
 
-    // Redirect GraviSuite's sendPlayerMessage calls in switchFlyState (hover/engine toggle).
-    // §e prefix = hover mode (YELLOW), no §e = jetpack engine; §a = enabled, §c = disabled.
+    // Redirect GraviSuite's sendPlayerMessage calls in switchFlyState (jetpack engine toggle).
+    // switchFlyState has 2 calls: ordinal 0 = engine disabled, ordinal 1 = engine enabled.
     @Redirect(
             at = @At(
+                    ordinal = 0,
                     remap = false,
                     target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
                     value = "INVOKE"),
             method = "switchFlyState",
             remap = false)
-    private static void gravisuiteneo$translateJetpackMessage(EntityPlayer player, String message) {
-        boolean isHover = message.contains("§e");
-        boolean enabled = message.contains("§a");
-        String modeKey = isHover ? "message.advElJetpack.hoverMode" : "message.advElJetpack.jetpackEngine";
-        EnumChatFormatting color = isHover ? EnumChatFormatting.YELLOW
-                : (enabled ? EnumChatFormatting.GREEN : EnumChatFormatting.RED);
+    private static void gravisuiteneo$translateJetpackEngineDisabled(EntityPlayer player, String ignored) {
         player.addChatMessage(
-                new ChatComponentTranslation(modeKey).setChatStyle(new ChatStyle().setColor(color)).appendText(" ")
-                        .appendSibling(
-                                new ChatComponentTranslation(
-                                        enabled ? "message.text.enabled" : "message.text.disabled")));
+                new ChatComponentTranslation("message.advElJetpack.jetpackEngine")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.disabled")));
+    }
+
+    @Redirect(
+            at = @At(
+                    ordinal = 1,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "switchFlyState",
+            remap = false)
+    private static void gravisuiteneo$translateJetpackEngineEnabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.advElJetpack.jetpackEngine")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.enabled")));
+    }
+
+    // NO-OP Helpers.formatMessage() calls in switchFlyState — the strings they build are discarded
+    // because every sendPlayerMessage call site is redirected above.
+    @Redirect(
+            at = @At(
+                    remap = false,
+                    target = "Lgravisuite/Helpers;formatMessage(Ljava/lang/String;)Ljava/lang/String;",
+                    value = "INVOKE"),
+            method = "switchFlyState",
+            remap = false)
+    private static String gravisuiteneo$noopFormatMessageInSwitchFlyState(String key) {
+        return "";
     }
 
     @ModifyExpressionValue(
