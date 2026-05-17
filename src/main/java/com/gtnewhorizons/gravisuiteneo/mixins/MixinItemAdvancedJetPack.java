@@ -76,16 +76,47 @@ public class MixinItemAdvancedJetPack {
                         .appendSibling(new ChatComponentTranslation("message.text.enabled")));
     }
 
-    // NO-OP Helpers.formatMessage() calls in switchFlyState — the strings they build are discarded
-    // because every sendPlayerMessage call site is redirected above.
+    // Redirect GraviSuite's sendPlayerMessage calls in switchWorkMode (hover mode toggle).
+    // switchWorkMode has 2 calls: ordinal 0 = disabled, ordinal 1 = enabled.
+    @Redirect(
+            at = @At(
+                    ordinal = 0,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "switchWorkMode",
+            remap = false)
+    private static void gravisuiteneo$translateHoverModeDisabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.advElJetpack.hoverMode")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.disabled")));
+    }
+
+    @Redirect(
+            at = @At(
+                    ordinal = 1,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "switchWorkMode",
+            remap = false)
+    private static void gravisuiteneo$translateHoverModeEnabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.advElJetpack.hoverMode")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.enabled")));
+    }
+
+    // NO-OP Helpers.formatMessage() calls in switchFlyState and switchWorkMode.
     @Redirect(
             at = @At(
                     remap = false,
                     target = "Lgravisuite/Helpers;formatMessage(Ljava/lang/String;)Ljava/lang/String;",
                     value = "INVOKE"),
-            method = "switchFlyState",
+            method = { "switchFlyState", "switchWorkMode" },
             remap = false)
-    private static String gravisuiteneo$noopFormatMessageInSwitchFlyState(String key) {
+    private static String gravisuiteneo$noopFormatMessage(String key) {
         return "";
     }
 

@@ -177,28 +177,48 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
                         .appendSibling(new ChatComponentTranslation("message.text.enabled")));
     }
 
-    // NO-OP Helpers.formatMessage() calls in switchFlyState — the strings they build are discarded
-    // because every sendPlayerMessage call site is redirected above.
+    // Redirect GraviSuite's sendPlayerMessage calls in switchWorkMode (levitation toggle).
+    // switchWorkMode has 2 calls: ordinal 0 = disabled, ordinal 1 = enabled.
     @Redirect(
             at = @At(
+                    ordinal = 0,
                     remap = false,
-                    target = "Lgravisuite/Helpers;formatMessage(Ljava/lang/String;)Ljava/lang/String;",
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
                     value = "INVOKE"),
-            method = "switchFlyState",
+            method = "switchWorkMode",
             remap = false)
-    private static String gravisuiteneo$noopFormatMessageInSwitchFlyState(String key) {
-        return "";
+    private static void gravisuiteneo$translateLevitationModeDisabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.graviChestPlate.levitationMode")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.disabled")));
     }
 
-    // NO-OP Helpers.formatMessage() calls in onArmorTick — same reason.
+    @Redirect(
+            at = @At(
+                    ordinal = 1,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "switchWorkMode",
+            remap = false)
+    private static void gravisuiteneo$translateLevitationModeEnabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.graviChestPlate.levitationMode")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.enabled")));
+    }
+
+    // NO-OP Helpers.formatMessage() calls — strings are discarded because every sendPlayerMessage
+    // call site in these methods is redirected above.
     @Redirect(
             at = @At(
                     remap = false,
                     target = "Lgravisuite/Helpers;formatMessage(Ljava/lang/String;)Ljava/lang/String;",
                     value = "INVOKE"),
-            method = "onArmorTick",
+            method = { "switchFlyState", "onArmorTick", "switchWorkMode" },
             remap = false)
-    private String gravisuiteneo$noopFormatMessageInOnArmorTick(String key) {
+    private String gravisuiteneo$noopFormatMessage(String key) {
         return "";
     }
 

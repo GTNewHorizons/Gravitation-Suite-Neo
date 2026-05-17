@@ -2,6 +2,9 @@ package com.gtnewhorizons.gravisuiteneo.mixins;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,6 +12,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -48,6 +52,46 @@ public class MixinItemAdvancedLappack implements IItemCharger {
     @Overwrite(remap = false)
     private double getBaseAbsorptionRatio() {
         return 1.0;
+    }
+
+    // Redirect GraviSuite's sendPlayerMessage calls in onItemRightClick (power supply toggle).
+    // onItemRightClick has 2 calls: ordinal 0 = disabled, ordinal 1 = enabled.
+    @Redirect(
+            at = @At(
+                    ordinal = 0,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "onItemRightClick")
+    private void gravisuiteneo$translatePowerSupplyDisabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.text.powerSupply")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.disabled")));
+    }
+
+    @Redirect(
+            at = @At(
+                    ordinal = 1,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "onItemRightClick")
+    private void gravisuiteneo$translatePowerSupplyEnabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.text.powerSupply")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.enabled")));
+    }
+
+    @Redirect(
+            at = @At(
+                    remap = false,
+                    target = "Lgravisuite/Helpers;formatMessage(Ljava/lang/String;)Ljava/lang/String;",
+                    value = "INVOKE"),
+            method = "onItemRightClick")
+    private String gravisuiteneo$noopFormatMessageInOnItemRightClick(String key) {
+        return "";
     }
 
     @Inject(

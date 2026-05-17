@@ -42,6 +42,7 @@ message.graviChestPlate.MedkitNoPower=Not enough power to charge Nanobots
 message.graviChestPlate.MedkitNoNanoBots=No Nanobots found; Injection failed
 message.graviChestPlate.MedkitInjected=Nanobots injected
 message.relocator.text.defaultPointSet=Default teleport point set to
+message.relocator.text.noPoint=Teleport point not found
 message.relocator.text.teleportingnow=Teleport initiated
 message.relocator.text.dim=Dimension
 message.relocator.text.invalid=Used TP Point is invalid. Please remove and add again

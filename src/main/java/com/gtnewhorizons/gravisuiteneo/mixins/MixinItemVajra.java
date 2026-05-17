@@ -5,6 +5,8 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -28,6 +30,59 @@ import gravisuite.ItemVajra;
 
 @Mixin(ItemVajra.class)
 public class MixinItemVajra {
+
+    // Redirect GraviSuite's sendPlayerMessage calls in onItemRightClick (silk touch mode toggle).
+    // onItemRightClick has 3 calls: ordinal 0 = silk touch disabled, 1 = enabled, 2 = mode locked in config.
+    @Redirect(
+            at = @At(
+                    ordinal = 0,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "onItemRightClick")
+    private void gravisuiteneo$translateSilkTouchModeDisabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.vajra.silkTouchMode")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(": ")
+                        .appendSibling(new ChatComponentTranslation("message.text.disabled")));
+    }
+
+    @Redirect(
+            at = @At(
+                    ordinal = 1,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "onItemRightClick")
+    private void gravisuiteneo$translateSilkTouchModeEnabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.vajra.silkTouchMode")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(": ")
+                        .appendSibling(new ChatComponentTranslation("message.text.enabled")));
+    }
+
+    @Redirect(
+            at = @At(
+                    ordinal = 2,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "onItemRightClick")
+    private void gravisuiteneo$translateSilkTouchDisabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.vajra.silkTouchDisabled")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+    }
+
+    @Redirect(
+            at = @At(
+                    remap = false,
+                    target = "Lgravisuite/Helpers;formatMessage(Ljava/lang/String;)Ljava/lang/String;",
+                    value = "INVOKE"),
+            method = "onItemRightClick")
+    private String gravisuiteneo$noopFormatMessageInOnItemRightClick(String key) {
+        return "";
+    }
 
     /**
      * @author Namikon, glowredman
