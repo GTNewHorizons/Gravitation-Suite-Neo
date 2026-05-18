@@ -5,6 +5,8 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -14,6 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
@@ -24,7 +27,6 @@ import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gravisuite.ItemGraviChestPlate;
-import gravisuite.ServerProxy;
 import gregtech.api.hazards.Hazard;
 import gregtech.api.hazards.IHazardProtector;
 import ic2.api.item.ElectricItem;
@@ -43,10 +45,9 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
         if (!QuantumShieldHelper.readShieldMode(itemStack)) return;
 
         if (!QuantumShieldHelper.hasValidShieldEquipment(player)) {
-            ServerProxy.sendPlayerMessage(
-                    player,
-                    EnumChatFormatting.RED
-                            + StatCollector.translateToLocal("message.graviChestPlate.invalidSetupShieldBreak"));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.graviChestPlate.invalidSetupShieldBreak")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             QuantumShieldHelper.saveShieldMode(itemStack, false);
             QuantumShieldHelper.notifyWorldShieldDown(player);
             ci.cancel();
@@ -55,10 +56,9 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
 
         if (!player.capabilities.isCreativeMode) {
             if (ItemGraviChestPlate.getCharge(itemStack) < QuantumShieldHelper.DISCHARGE_IDLE) {
-                ServerProxy.sendPlayerMessage(
-                        player,
-                        EnumChatFormatting.RED
-                                + StatCollector.translateToLocal("message.graviChestPlate.lowpowerShieldBreak"));
+                player.addChatMessage(
+                        new ChatComponentTranslation("message.graviChestPlate.lowpowerShieldBreak")
+                                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
                 QuantumShieldHelper.saveShieldMode(itemStack, false);
                 QuantumShieldHelper.notifyWorldShieldDown(player);
                 ci.cancel();
@@ -129,6 +129,127 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
     @Overwrite(remap = false)
     private double getBaseAbsorptionRatio() {
         return 1.0;
+    }
+
+    // Redirect GraviSuite's sendPlayerMessage calls in switchFlyState (gravity engine toggle).
+    // switchFlyState has 3 calls: ordinal 0 = disabled, ordinal 1 = low energy, ordinal 2 = enabled.
+    @Redirect(
+            at = @At(
+                    ordinal = 0,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "switchFlyState",
+            remap = false)
+    private static void gravisuiteneo$translateGravityEngineDisabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.graviChestPlate.gravitationEngine")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.disabled")));
+    }
+
+    @Redirect(
+            at = @At(
+                    ordinal = 1,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "switchFlyState",
+            remap = false)
+    private static void gravisuiteneo$translateGravityEngineLowEnergy(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.graviChestPlate.lowEnergy")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+    }
+
+    @Redirect(
+            at = @At(
+                    ordinal = 2,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "switchFlyState",
+            remap = false)
+    private static void gravisuiteneo$translateGravityEngineEnabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.graviChestPlate.gravitationEngine")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.enabled")));
+    }
+
+    // Redirect GraviSuite's sendPlayerMessage calls in switchWorkMode (levitation toggle).
+    // switchWorkMode has 2 calls: ordinal 0 = disabled, ordinal 1 = enabled.
+    @Redirect(
+            at = @At(
+                    ordinal = 0,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "switchWorkMode",
+            remap = false)
+    private static void gravisuiteneo$translateLevitationModeDisabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.graviChestPlate.levitationMode")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.disabled")));
+    }
+
+    @Redirect(
+            at = @At(
+                    ordinal = 1,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "switchWorkMode",
+            remap = false)
+    private static void gravisuiteneo$translateLevitationModeEnabled(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.graviChestPlate.levitationMode")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.enabled")));
+    }
+
+    // NO-OP Helpers.formatMessage() calls — strings are discarded because every sendPlayerMessage
+    // call site in these methods is redirected above.
+    @Redirect(
+            at = @At(
+                    remap = false,
+                    target = "Lgravisuite/Helpers;formatMessage(Ljava/lang/String;)Ljava/lang/String;",
+                    value = "INVOKE"),
+            method = { "switchFlyState", "onArmorTick", "switchWorkMode" },
+            remap = false)
+    private static String gravisuiteneo$noopFormatMessage(String key) {
+        return "";
+    }
+
+    // Redirect GraviSuite's sendPlayerMessage calls in onArmorTick.
+    // onArmorTick has 2 calls: ordinal 0 = shutdown, ordinal 1 = noEnergyToBoost.
+    @Redirect(
+            at = @At(
+                    ordinal = 0,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "onArmorTick",
+            remap = false)
+    private void gravisuiteneo$translateShutdownMessage(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.graviChestPlate.shutdown")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+    }
+
+    @Redirect(
+            at = @At(
+                    ordinal = 1,
+                    remap = false,
+                    target = "Lgravisuite/ServerProxy;sendPlayerMessage(Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)V",
+                    value = "INVOKE"),
+            method = "onArmorTick",
+            remap = false)
+    private void gravisuiteneo$translateNoEnergyToBoostMessage(EntityPlayer player, String ignored) {
+        player.addChatMessage(
+                new ChatComponentTranslation("message.graviChestPlate.noEnergyToBoost")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
 
     @Override

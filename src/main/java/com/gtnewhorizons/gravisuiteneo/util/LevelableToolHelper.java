@@ -3,13 +3,13 @@ package com.gtnewhorizons.gravisuiteneo.util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 
 import gravisuite.GraviSuite;
-import gravisuite.ServerProxy;
 
 public class LevelableToolHelper {
 
@@ -23,9 +23,9 @@ public class LevelableToolHelper {
 
         int nextLevel = getLevel(currentXP);
         if (nextLevel > currLevel) {
-            ServerProxy.sendPlayerMessage(
-                    player,
-                    EnumChatFormatting.GOLD + StatCollector.translateToLocal("message.xp.levelup"));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.xp.levelup")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD)));
         }
 
         saveToolXP(itemStack, currentXP);

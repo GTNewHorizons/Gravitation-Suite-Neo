@@ -5,9 +5,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
@@ -21,7 +22,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import gravisuite.GraviSuite;
 import gravisuite.ItemGraviChestPlate;
-import gravisuite.ServerProxy;
 import ic2.api.item.ElectricItem;
 
 public class EventHandler {
@@ -99,10 +99,9 @@ public class EventHandler {
         if (!QuantumShieldHelper.hasValidShieldEquipment(player)) {
             // Shield mode is enabled, but player has the wrong armor items
             QuantumShieldHelper.saveShieldMode(chest, false);
-            ServerProxy.sendPlayerMessage(
-                    player,
-                    EnumChatFormatting.RED
-                            + StatCollector.translateToLocal("message.graviChestPlate.invalidSetupShieldBreak"));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.graviChestPlate.invalidSetupShieldBreak")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             QuantumShieldHelper.notifyWorldShieldDown(player);
             return;
         }
@@ -110,10 +109,9 @@ public class EventHandler {
         if (!ElectricItem.manager.canUse(chest, energyRequired)) {
             // Not enough energy to absorb damage. Shield "breaks"
             QuantumShieldHelper.saveShieldMode(chest, false);
-            ServerProxy.sendPlayerMessage(
-                    player,
-                    EnumChatFormatting.RED
-                            + StatCollector.translateToLocal("message.graviChestPlate.lowpowerShieldBreak"));
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.graviChestPlate.lowpowerShieldBreak")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             QuantumShieldHelper.notifyWorldShieldDown(player);
         }
 

@@ -7,6 +7,8 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -26,7 +28,6 @@ import com.gtnewhorizons.gravisuiteneo.common.PacketSortingPoints;
 import gravisuite.Helpers;
 import gravisuite.ItemRelocator;
 import gravisuite.ItemRelocator.TeleportPoint;
-import gravisuite.ServerProxy;
 import gravisuite.client.GuiRelocatorDisplay;
 import gravisuite.client.GuiRelocatorDisplay.SelectedItem;
 import gravisuite.network.PacketManagePoints;
@@ -273,9 +274,9 @@ public abstract class MixinGuiRelocatorDisplay extends GuiContainer {
 
             if (realIDX >= tpList.size()) {
                 GraviSuiteNeo.LOGGER.error("WARNING: Caught IndexOutOfBounds while using Translocator");
-                ServerProxy.sendPlayerMessage(
-                        player,
-                        EnumChatFormatting.RED + StatCollector.translateToLocal("message.relocator.text.invalid"));
+                player.addChatMessage(
+                        new ChatComponentTranslation("message.relocator.text.invalid")
+                                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
                 player.closeScreen();
                 return;
             }

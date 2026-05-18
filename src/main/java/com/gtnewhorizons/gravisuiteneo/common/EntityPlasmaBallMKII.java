@@ -10,9 +10,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
@@ -25,7 +26,6 @@ import gravisuite.GraviSuite;
 import gravisuite.Helpers;
 import gravisuite.ItemRelocator;
 import gravisuite.ItemRelocator.TeleportPoint;
-import gravisuite.ServerProxy;
 import gravisuite.TileEntityRelocatorPortal;
 import ic2.api.item.ElectricItem;
 
@@ -215,10 +215,12 @@ public class EntityPlasmaBallMKII extends EntityPlasmaBall {
                         if (ElectricItem.manager.getCharge(itemstack) < dischargeArmorValue) {
                             Helpers.teleportEntity(mop.entityHit, targetTpPoint);
                         } else if (GraviSuite.isSimulating()) {
-                            ServerProxy.sendPlayerMessage(
-                                    player,
-                                    ((MixinEntityPlasmaBall) this).getOwnerEntity().getCommandSenderName() + " "
-                                            + StatCollector.translateToLocal("message.relocator.text.messageToTarget"));
+                            player.addChatMessage(
+                                    new ChatComponentText(
+                                            ((MixinEntityPlasmaBall) this).getOwnerEntity().getCommandSenderName()
+                                                    + " ").appendSibling(
+                                                            new ChatComponentTranslation(
+                                                                    "message.relocator.text.messageToTarget")));
                             ElectricItem.manager
                                     .discharge(itemstack, dischargeArmorValue, Integer.MAX_VALUE, true, false, false);
                         }

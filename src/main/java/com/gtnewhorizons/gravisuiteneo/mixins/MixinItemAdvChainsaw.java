@@ -8,7 +8,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,7 +36,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gravisuite.ItemAdvChainsaw;
-import gravisuite.ServerProxy;
 import gravisuite.keyboard.Keyboard;
 import ic2.api.item.ElectricItem;
 
@@ -147,22 +149,21 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
             }
             this.saveToolMode(itemStack, toolMode);
 
-            StringBuilder message = new StringBuilder();
-            message.append(EnumChatFormatting.GREEN);
-            message.append(StatCollector.translateToLocal("message.text.mode"));
-            message.append(": ");
+            IChatComponent modeMsg;
             if (toolMode == 0) {
-                message.append(EnumChatFormatting.GREEN);
-                message.append(StatCollector.translateToLocal("message.advChainsaw.mode.axe"));
+                modeMsg = new ChatComponentTranslation("message.advChainsaw.mode.axe")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN));
             } else if (toolMode == 1) {
-                message.append(EnumChatFormatting.GOLD);
-                message.append(StatCollector.translateToLocal("message.advChainsaw.mode.shear"));
-            } else if (toolMode == 2) {
-                message.append(EnumChatFormatting.AQUA);
-                message.append(StatCollector.translateToLocal("message.advChainsaw.mode.treecapitator"));
+                modeMsg = new ChatComponentTranslation("message.advChainsaw.mode.shear")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD));
+            } else {
+                modeMsg = new ChatComponentTranslation("message.advChainsaw.mode.treecapitator")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.AQUA));
             }
-
-            ServerProxy.sendPlayerMessage(player, message.toString());
+            player.addChatMessage(
+                    new ChatComponentTranslation("message.text.mode")
+                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(": ")
+                            .appendSibling(modeMsg));
         }
 
         return itemStack;

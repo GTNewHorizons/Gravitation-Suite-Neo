@@ -12,8 +12,11 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -41,7 +44,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import gravisuite.GraviSuite;
 import gravisuite.Helpers;
 import gravisuite.ItemAdvDDrill;
-import gravisuite.ServerProxy;
 import ic2.api.item.ElectricItem;
 
 @Mixin(ItemAdvDDrill.class)
@@ -145,48 +147,47 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
 
         this.saveToolMode(itemStackIn, toolMode);
 
-        StringBuilder message = new StringBuilder();
-        message.append(EnumChatFormatting.GREEN);
-        message.append(StatCollector.translateToLocal("message.text.mode"));
-        message.append(": ");
-
+        IChatComponent modeMsg;
         switch (toolMode) {
             case 0:
-                message.append(EnumChatFormatting.GREEN);
-                message.append(StatCollector.translateToLocal("message.advDDrill.mode.normal"));
+                modeMsg = new ChatComponentTranslation("message.advDDrill.mode.normal")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN));
                 this.efficiencyOnProperMaterial = this.normalPower;
                 break;
             case 1:
-                message.append(EnumChatFormatting.GOLD);
-                message.append(StatCollector.translateToLocal("message.advDDrill.mode.lowPower"));
+                modeMsg = new ChatComponentTranslation("message.advDDrill.mode.lowPower")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD));
                 this.efficiencyOnProperMaterial = this.lowPower;
                 break;
             case 2:
-                message.append(EnumChatFormatting.AQUA);
-                message.append(StatCollector.translateToLocal("message.advDDrill.mode.fine"));
+                modeMsg = new ChatComponentTranslation("message.advDDrill.mode.fine")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.AQUA));
                 this.efficiencyOnProperMaterial = this.ultraLowPower;
                 break;
             case 3:
-                message.append(EnumChatFormatting.LIGHT_PURPLE);
-                message.append(StatCollector.translateToLocal("message.advDDrill.mode.bigHoles"));
+                modeMsg = new ChatComponentTranslation("message.advDDrill.mode.bigHoles")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.LIGHT_PURPLE));
                 this.efficiencyOnProperMaterial = this.bigHolePower;
                 break;
             case 4:
-                message.append(EnumChatFormatting.RED);
-                message.append(StatCollector.translateToLocal("message.advDDrill.mode.areYouSerious"));
+                modeMsg = new ChatComponentTranslation("message.advDDrill.mode.areYouSerious")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED));
                 this.efficiencyOnProperMaterial = this.areYouSerious;
                 break;
             case 5:
-                message.append(EnumChatFormatting.DARK_RED);
-                message.append(StatCollector.translateToLocal("message.advDDrill.mode.worldShatterer"));
+                modeMsg = new ChatComponentTranslation("message.advDDrill.mode.worldShatterer")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_RED));
                 this.efficiencyOnProperMaterial = this.worldShatterer;
                 break;
-
             default:
+                modeMsg = new ChatComponentTranslation("message.advDDrill.mode.normal")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN));
                 break;
         }
-
-        ServerProxy.sendPlayerMessage(player, message.toString());
+        player.addChatMessage(
+                new ChatComponentTranslation("message.text.mode")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(": ")
+                        .appendSibling(modeMsg));
 
         return itemStackIn;
     }
@@ -406,7 +407,9 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
             }
 
             if (lowPower) {
-                ServerProxy.sendPlayerMessage(player, StatCollector.translateToLocal("message.advDDrill.noEnergy"));
+                player.addChatMessage(
+                        new ChatComponentTranslation("message.advDDrill.noEnergy")
+                                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
                 return false;
             }
             return true;
