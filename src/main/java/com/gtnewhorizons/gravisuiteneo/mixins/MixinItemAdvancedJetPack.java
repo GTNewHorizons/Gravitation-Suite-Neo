@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.gtnewhorizons.gravisuiteneo.util.ChatUtil;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 
@@ -55,7 +56,8 @@ public class MixinItemAdvancedJetPack {
             method = "switchFlyState",
             remap = false)
     private static void gravisuiteneo$translateJetpackEngineDisabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.advElJetpack.jetpackEngine")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(" ")
                         .appendSibling(new ChatComponentTranslation("message.text.disabled")));
@@ -70,7 +72,8 @@ public class MixinItemAdvancedJetPack {
             method = "switchFlyState",
             remap = false)
     private static void gravisuiteneo$translateJetpackEngineEnabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.advElJetpack.jetpackEngine")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
                         .appendSibling(new ChatComponentTranslation("message.text.enabled")));
@@ -87,7 +90,8 @@ public class MixinItemAdvancedJetPack {
             method = "switchWorkMode",
             remap = false)
     private static void gravisuiteneo$translateHoverModeDisabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.advElJetpack.hoverMode")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(" ")
                         .appendSibling(new ChatComponentTranslation("message.text.disabled")));
@@ -102,7 +106,8 @@ public class MixinItemAdvancedJetPack {
             method = "switchWorkMode",
             remap = false)
     private static void gravisuiteneo$translateHoverModeEnabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.advElJetpack.hoverMode")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
                         .appendSibling(new ChatComponentTranslation("message.text.enabled")));

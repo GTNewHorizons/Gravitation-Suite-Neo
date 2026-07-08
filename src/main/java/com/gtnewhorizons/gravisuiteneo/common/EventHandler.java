@@ -15,6 +15,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeoRegistry;
 import com.gtnewhorizons.gravisuiteneo.common.DamageSources.EntityDamageSourcePlazma;
+import com.gtnewhorizons.gravisuiteneo.util.ChatUtil;
 import com.gtnewhorizons.gravisuiteneo.util.QuantumShieldHelper;
 
 import cpw.mods.fml.common.eventhandler.EventPriority;
@@ -99,7 +100,8 @@ public class EventHandler {
         if (!QuantumShieldHelper.hasValidShieldEquipment(player)) {
             // Shield mode is enabled, but player has the wrong armor items
             QuantumShieldHelper.saveShieldMode(chest, false);
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.graviChestPlate.invalidSetupShieldBreak")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             QuantumShieldHelper.notifyWorldShieldDown(player);
@@ -109,7 +111,8 @@ public class EventHandler {
         if (!ElectricItem.manager.canUse(chest, energyRequired)) {
             // Not enough energy to absorb damage. Shield "breaks"
             QuantumShieldHelper.saveShieldMode(chest, false);
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.graviChestPlate.lowpowerShieldBreak")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             QuantumShieldHelper.notifyWorldShieldDown(player);
