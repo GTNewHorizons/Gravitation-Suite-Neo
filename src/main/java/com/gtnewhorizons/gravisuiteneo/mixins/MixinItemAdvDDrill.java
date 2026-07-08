@@ -37,6 +37,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import com.gtnewhorizons.gravisuiteneo.common.Achievements;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.gtnewhorizons.gravisuiteneo.util.ChatUtil;
 import com.gtnewhorizons.gravisuiteneo.util.LevelableToolHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -184,7 +185,8 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN));
                 break;
         }
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.text.mode")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(": ")
                         .appendSibling(modeMsg));
@@ -407,7 +409,8 @@ public abstract class MixinItemAdvDDrill extends ItemTool {
             }
 
             if (lowPower) {
-                player.addChatMessage(
+                ChatUtil.sendToPlayer(
+                        player,
                         new ChatComponentTranslation("message.advDDrill.noEnergy")
                                 .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
                 return false;

@@ -20,6 +20,7 @@ import com.gtnewhorizons.gravisuiteneo.client.ICustomItemBars;
 import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import com.gtnewhorizons.gravisuiteneo.inventory.InventoryItem;
+import com.gtnewhorizons.gravisuiteneo.util.ChatUtil;
 
 import gravisuite.EntityPlasmaBall;
 import gravisuite.GraviSuite;
@@ -61,7 +62,8 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
         ItemStack ammoStack = this.getAmmunition(itemStackIn);
 
         if (ammoStack == null) {
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.plasmaLauncher.noPlasmaCellFound")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return itemStackIn;
@@ -69,13 +71,15 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
 
         FluidStack plasma = ((ItemPlasmaCell) GraviSuiteNeoRegistry.itemPlasmaCell).getFluid(ammoStack);
         if (plasma == null) {
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.plasmaLauncher.PlasmaCellEmpty")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return itemStackIn;
         }
         if (plasma.amount < PLASMA_AMOUNT_PER_SHOT) {
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.plasmaLauncher.NotEnoughPlasma")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return itemStackIn;
@@ -97,7 +101,8 @@ public class ItemPlasmaLauncher extends Item implements ICustomItemBars {
             }
             player.swingItem();
         } else {
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.plasmaLauncher.noEnergy")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
         }

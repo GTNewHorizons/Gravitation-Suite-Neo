@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import com.gtnewhorizons.gravisuiteneo.common.EntityPlasmaBallMKII;
+import com.gtnewhorizons.gravisuiteneo.util.ChatUtil;
 import com.llamalad7.mixinextras.sugar.Local;
 
 import gravisuite.EntityPlasmaBall;
@@ -71,7 +72,8 @@ public class MixinItemRelocator {
             remap = false)
     private void gravisuiteneo$sendTeleportingNowMessage(EntityPlayer player, ItemStack itemStack, String tpName,
             CallbackInfo ci, TeleportPoint point) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.relocator.text.teleportingnow")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD)).appendText(" ").appendSibling(
                                 new ChatComponentText(point.pointName)
@@ -88,7 +90,8 @@ public class MixinItemRelocator {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateModePersonal(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.text.mode").appendText(": ")
                         .appendSibling(new ChatComponentTranslation("message.relocator.mode.personal")));
     }
@@ -101,7 +104,8 @@ public class MixinItemRelocator {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateModeTranslocator(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.text.mode").appendText(": ")
                         .appendSibling(new ChatComponentTranslation("message.relocator.mode.translocator")));
     }
@@ -114,7 +118,8 @@ public class MixinItemRelocator {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateModePortal(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.text.mode").appendText(": ")
                         .appendSibling(new ChatComponentTranslation("message.relocator.mode.portal")));
     }
@@ -127,7 +132,8 @@ public class MixinItemRelocator {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateTranslocatorDisabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.relocator.text.modeTranslocatorDisabled")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
@@ -140,7 +146,8 @@ public class MixinItemRelocator {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translatePortalDisabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.relocator.text.modePortalDisabled")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
@@ -153,7 +160,8 @@ public class MixinItemRelocator {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateRelocatorNoEnergy(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.text.noenergy")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
@@ -166,7 +174,8 @@ public class MixinItemRelocator {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateNoDefaultPoint(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.relocator.text.noDefaultPoint")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
@@ -194,7 +203,8 @@ public class MixinItemRelocator {
             remap = false)
     private static void gravisuiteneo$translatePointExists(EntityPlayer player, String ignored,
             @Local(argsOnly = true) TeleportPoint tp) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentText(tp.pointName).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED))
                         .appendText(" ")
                         .appendSibling(new ChatComponentTranslation("message.relocator.text.pointExists")));
@@ -210,7 +220,8 @@ public class MixinItemRelocator {
             remap = false)
     private static void gravisuiteneo$translatePointAdded(EntityPlayer player, String ignored,
             @Local(argsOnly = true) TeleportPoint tp) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentText(tp.pointName).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN))
                         .appendText(" ")
                         .appendSibling(new ChatComponentTranslation("message.relocator.text.poindAdded")));
@@ -239,7 +250,8 @@ public class MixinItemRelocator {
             remap = false)
     private static void gravisuiteneo$translateDefaultPointSet(EntityPlayer player, String ignored,
             @Local(argsOnly = true) String pointName) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.relocator.text.defaultPointSet")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ").appendSibling(
                                 new ChatComponentText(pointName)
@@ -255,7 +267,8 @@ public class MixinItemRelocator {
             method = "setDefaultPoint",
             remap = false)
     private static void gravisuiteneo$translatePointNotFound(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.relocator.text.noPoint")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
@@ -280,7 +293,8 @@ public class MixinItemRelocator {
             method = "teleportPlayer",
             remap = false)
     private void gravisuiteneo$translateTeleportNoEnergy(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.text.noenergy")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }

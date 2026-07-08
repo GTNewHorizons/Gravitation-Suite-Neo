@@ -9,6 +9,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import com.gtnewhorizons.gravisuiteneo.util.ChatUtil;
+
 import gravisuite.ItemGraviTool;
 
 @Mixin(ItemGraviTool.class)
@@ -23,7 +25,8 @@ public class MixinItemGraviTool {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateHoeActivated(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("graviTool.snap.Hoe")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_GREEN)).appendText(" ")
                         .appendSibling(
@@ -39,7 +42,8 @@ public class MixinItemGraviTool {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateTreeTapActivated(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("graviTool.snap.TreeTap")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD)).appendText(" ").appendSibling(
                                 new ChatComponentTranslation("message.text.activated")
@@ -54,7 +58,8 @@ public class MixinItemGraviTool {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateWrenchActivated(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("graviTool.snap.Wrench")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.AQUA)).appendText(" ").appendSibling(
                                 new ChatComponentTranslation("message.text.activated")
@@ -69,7 +74,8 @@ public class MixinItemGraviTool {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateScrewdriverActivated(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("graviTool.snap.Screwdriver")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.LIGHT_PURPLE)).appendText(" ")
                         .appendSibling(
@@ -96,7 +102,8 @@ public class MixinItemGraviTool {
             method = { "onHoeUse", "onWrenchUse", "attemptExtract", "onScrewdriverUse", "canWrench" },
             remap = false)
     private void gravisuiteneo$translateNoEnergy(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.text.noenergy")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }

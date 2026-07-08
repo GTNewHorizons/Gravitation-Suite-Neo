@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.gtnewhorizons.gravisuiteneo.util.ChatUtil;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 
@@ -41,7 +42,8 @@ public class MixinItemVajra {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateSilkTouchModeDisabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.vajra.silkTouchMode")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(": ")
                         .appendSibling(new ChatComponentTranslation("message.text.disabled")));
@@ -55,7 +57,8 @@ public class MixinItemVajra {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateSilkTouchModeEnabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.vajra.silkTouchMode")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(": ")
                         .appendSibling(new ChatComponentTranslation("message.text.enabled")));
@@ -69,7 +72,8 @@ public class MixinItemVajra {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translateSilkTouchDisabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.vajra.silkTouchDisabled")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }

@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.gtnewhorizons.gravisuiteneo.util.ChatUtil;
 import com.gtnewhorizons.gravisuiteneo.util.QuantumShieldHelper;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 
@@ -45,7 +46,8 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
         if (!QuantumShieldHelper.readShieldMode(itemStack)) return;
 
         if (!QuantumShieldHelper.hasValidShieldEquipment(player)) {
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.graviChestPlate.invalidSetupShieldBreak")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             QuantumShieldHelper.saveShieldMode(itemStack, false);
@@ -56,7 +58,8 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
 
         if (!player.capabilities.isCreativeMode) {
             if (ItemGraviChestPlate.getCharge(itemStack) < QuantumShieldHelper.DISCHARGE_IDLE) {
-                player.addChatMessage(
+                ChatUtil.sendToPlayer(
+                        player,
                         new ChatComponentTranslation("message.graviChestPlate.lowpowerShieldBreak")
                                 .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
                 QuantumShieldHelper.saveShieldMode(itemStack, false);
@@ -142,7 +145,8 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
             method = "switchFlyState",
             remap = false)
     private static void gravisuiteneo$translateGravityEngineDisabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.graviChestPlate.gravitationEngine")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(" ")
                         .appendSibling(new ChatComponentTranslation("message.text.disabled")));
@@ -157,7 +161,8 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
             method = "switchFlyState",
             remap = false)
     private static void gravisuiteneo$translateGravityEngineLowEnergy(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.graviChestPlate.lowEnergy")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
@@ -171,7 +176,8 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
             method = "switchFlyState",
             remap = false)
     private static void gravisuiteneo$translateGravityEngineEnabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.graviChestPlate.gravitationEngine")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
                         .appendSibling(new ChatComponentTranslation("message.text.enabled")));
@@ -188,7 +194,8 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
             method = "switchWorkMode",
             remap = false)
     private static void gravisuiteneo$translateLevitationModeDisabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.graviChestPlate.levitationMode")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(" ")
                         .appendSibling(new ChatComponentTranslation("message.text.disabled")));
@@ -203,7 +210,8 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
             method = "switchWorkMode",
             remap = false)
     private static void gravisuiteneo$translateLevitationModeEnabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.graviChestPlate.levitationMode")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
                         .appendSibling(new ChatComponentTranslation("message.text.enabled")));
@@ -233,7 +241,8 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
             method = "onArmorTick",
             remap = false)
     private void gravisuiteneo$translateShutdownMessage(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.graviChestPlate.shutdown")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
@@ -247,7 +256,8 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
             method = "onArmorTick",
             remap = false)
     private void gravisuiteneo$translateNoEnergyToBoostMessage(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.graviChestPlate.noEnergyToBoost")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }

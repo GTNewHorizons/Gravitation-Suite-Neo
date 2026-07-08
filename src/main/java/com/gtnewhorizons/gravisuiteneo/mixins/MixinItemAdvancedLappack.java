@@ -20,6 +20,7 @@ import com.gtnewhorizons.gravisuiteneo.common.Achievements;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
 import com.gtnewhorizons.gravisuiteneo.items.IItemCharger;
 import com.gtnewhorizons.gravisuiteneo.items.ItemEpicLappack;
+import com.gtnewhorizons.gravisuiteneo.util.ChatUtil;
 
 import cofh.api.energy.IEnergyContainerItem;
 import gravisuite.GraviSuite;
@@ -64,7 +65,8 @@ public class MixinItemAdvancedLappack implements IItemCharger {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translatePowerSupplyDisabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.text.powerSupply")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)).appendText(" ")
                         .appendSibling(new ChatComponentTranslation("message.text.disabled")));
@@ -78,7 +80,8 @@ public class MixinItemAdvancedLappack implements IItemCharger {
                     value = "INVOKE"),
             method = "onItemRightClick")
     private void gravisuiteneo$translatePowerSupplyEnabled(EntityPlayer player, String ignored) {
-        player.addChatMessage(
+        ChatUtil.sendToPlayer(
+                player,
                 new ChatComponentTranslation("message.text.powerSupply")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
                         .appendSibling(new ChatComponentTranslation("message.text.enabled")));

@@ -23,7 +23,8 @@ public class LevelableToolHelper {
 
         int nextLevel = getLevel(currentXP);
         if (nextLevel > currLevel) {
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.xp.levelup")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD)));
         }

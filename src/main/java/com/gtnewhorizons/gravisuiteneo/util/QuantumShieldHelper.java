@@ -79,14 +79,16 @@ public class QuantumShieldHelper {
      */
     public static void switchShieldMode(EntityPlayer player, ItemStack itemstack) {
         if (!hasValidShieldEquipment(player)) {
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.graviChestPlate.invalidshieldSetup")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return;
         }
 
         if (!ElectricItem.manager.canUse(itemstack, DISCHARGE_IDLE * 10)) {
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.graviChestPlate.ShieldUpNotEnoughPower")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             return;
@@ -94,7 +96,8 @@ public class QuantumShieldHelper {
 
         if (readShieldMode(itemstack)) {
             saveShieldMode(itemstack, false);
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.graviChestPlate.shieldMode")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.YELLOW)).appendText(" ")
                             .appendSibling(
@@ -103,7 +106,8 @@ public class QuantumShieldHelper {
             notifyWorldShieldDown(player);
         } else {
             saveShieldMode(itemstack, true);
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.graviChestPlate.shieldMode")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.YELLOW)).appendText(" ")
                             .appendSibling(
@@ -184,16 +188,19 @@ public class QuantumShieldHelper {
                 curePotions(itemstack, player, true);
                 // TODO: add medkit sound player.worldObj.playSoundAtEntity(player, GraviSuiteNeo.MODID + ":medkit",
                 // 1.25F, 1.0F);
-                player.addChatMessage(
+                ChatUtil.sendToPlayer(
+                        player,
                         new ChatComponentTranslation("message.graviChestPlate.MedkitInjected")
                                 .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
             } else {
-                player.addChatMessage(
+                ChatUtil.sendToPlayer(
+                        player,
                         new ChatComponentTranslation("message.graviChestPlate.MedkitNoNanoBots")
                                 .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             }
         } else {
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.graviChestPlate.MedkitNoPower")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
         }

@@ -30,6 +30,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.gtnewhorizons.gravisuiteneo.GraviSuiteNeo;
 import com.gtnewhorizons.gravisuiteneo.common.Properties;
+import com.gtnewhorizons.gravisuiteneo.util.ChatUtil;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -160,7 +161,8 @@ public abstract class MixinItemAdvChainsaw extends ItemTool {
                 modeMsg = new ChatComponentTranslation("message.advChainsaw.mode.treecapitator")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.AQUA));
             }
-            player.addChatMessage(
+            ChatUtil.sendToPlayer(
+                    player,
                     new ChatComponentTranslation("message.text.mode")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(": ")
                             .appendSibling(modeMsg));
