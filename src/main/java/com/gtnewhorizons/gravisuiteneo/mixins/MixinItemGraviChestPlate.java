@@ -262,6 +262,24 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
 
+    // onArmorTick runs independently on both sides with no isRemote check. On the client, ItemStack charge
+    // can briefly read stale/out-of-sync values (e.g. under latency), which made the client call
+    // switchFlyState(false) on its own and locally disable flight even though the server still had charge.
+    // The server is authoritative for charge, so only it should be allowed to auto-disable flight here.
+    @Redirect(
+            at = @At(
+                    remap = false,
+                    target = "Lgravisuite/ItemGraviChestPlate;switchFlyState(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/item/ItemStack;)I",
+                    value = "INVOKE"),
+            method = "onArmorTick",
+            remap = false)
+    private int gravisuiteneo$serverOnlyAutoShutdown(EntityPlayer player, ItemStack itemstack, World worldObj) {
+        if (worldObj.isRemote) {
+            return 0;
+        }
+        return ItemGraviChestPlate.switchFlyState(player, itemstack);
+    }
+
     @Override
     @Optional.Method(modid = "gregtech_nh")
     public boolean protectsAgainst(ItemStack itemStack, Hazard hazard) {
