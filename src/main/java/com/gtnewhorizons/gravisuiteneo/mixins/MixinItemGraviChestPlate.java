@@ -135,7 +135,7 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
     }
 
     // Redirect GraviSuite's sendPlayerMessage calls in switchFlyState (gravity engine toggle).
-    // switchFlyState has 3 calls: ordinal 0 = disabled, ordinal 1 = low energy, ordinal 2 = enabled.
+    // Bytecode order (javap) of the 3 calls: ordinal 0 = disabled, ordinal 1 = enabled, ordinal 2 = low energy.
     @Redirect(
             at = @At(
                     ordinal = 0,
@@ -160,11 +160,12 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
                     value = "INVOKE"),
             method = "switchFlyState",
             remap = false)
-    private static void gravisuiteneo$translateGravityEngineLowEnergy(EntityPlayer player, String ignored) {
+    private static void gravisuiteneo$translateGravityEngineEnabled(EntityPlayer player, String ignored) {
         ChatUtil.sendToPlayer(
                 player,
-                new ChatComponentTranslation("message.graviChestPlate.lowEnergy")
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+                new ChatComponentTranslation("message.graviChestPlate.gravitationEngine")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
+                        .appendSibling(new ChatComponentTranslation("message.text.enabled")));
     }
 
     @Redirect(
@@ -175,12 +176,11 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
                     value = "INVOKE"),
             method = "switchFlyState",
             remap = false)
-    private static void gravisuiteneo$translateGravityEngineEnabled(EntityPlayer player, String ignored) {
+    private static void gravisuiteneo$translateGravityEngineLowEnergy(EntityPlayer player, String ignored) {
         ChatUtil.sendToPlayer(
                 player,
-                new ChatComponentTranslation("message.graviChestPlate.gravitationEngine")
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)).appendText(" ")
-                        .appendSibling(new ChatComponentTranslation("message.text.enabled")));
+                new ChatComponentTranslation("message.graviChestPlate.lowEnergy")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
 
     // Redirect GraviSuite's sendPlayerMessage calls in switchWorkMode (levitation toggle).
@@ -260,6 +260,24 @@ public class MixinItemGraviChestPlate implements IHazardProtector {
                 player,
                 new ChatComponentTranslation("message.graviChestPlate.noEnergyToBoost")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+    }
+
+    // onArmorTick runs independently on both sides with no isRemote check. On the client, ItemStack charge
+    // can briefly read stale/out-of-sync values (e.g. under latency), which made the client call
+    // switchFlyState(false) on its own and locally disable flight even though the server still had charge.
+    // The server is authoritative for charge, so only it should be allowed to auto-disable flight here.
+    @Redirect(
+            at = @At(
+                    remap = false,
+                    target = "Lgravisuite/ItemGraviChestPlate;switchFlyState(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/item/ItemStack;)I",
+                    value = "INVOKE"),
+            method = "onArmorTick",
+            remap = false)
+    private int gravisuiteneo$serverOnlyAutoShutdown(EntityPlayer player, ItemStack itemstack, World worldObj) {
+        if (worldObj.isRemote) {
+            return 0;
+        }
+        return ItemGraviChestPlate.switchFlyState(player, itemstack);
     }
 
     @Override
