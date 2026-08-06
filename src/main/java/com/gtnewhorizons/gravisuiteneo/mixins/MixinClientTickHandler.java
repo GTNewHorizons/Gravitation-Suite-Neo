@@ -61,6 +61,10 @@ public class MixinClientTickHandler {
     @Unique
     private static int gravisuiteneo$cachedDisplayHeight = -1;
     @Unique
+    private static int gravisuiteneo$cachedGuiScale = -1;
+    @Unique
+    private static boolean gravisuiteneo$cachedUnicode;
+    @Unique
     private static ScaledResolution gravisuiteneo$scaledResolution;
 
     /**
@@ -174,11 +178,17 @@ public class MixinClientTickHandler {
 
     @Unique
     private static ScaledResolution gravisuiteneo$getScaledResolution(Minecraft mc) {
+        int guiScale = mc.gameSettings.guiScale;
+        boolean unicode = mc.func_152349_b();
         if (gravisuiteneo$scaledResolution == null || gravisuiteneo$cachedDisplayWidth != mc.displayWidth
-                || gravisuiteneo$cachedDisplayHeight != mc.displayHeight) {
+                || gravisuiteneo$cachedDisplayHeight != mc.displayHeight
+                || gravisuiteneo$cachedGuiScale != guiScale
+                || gravisuiteneo$cachedUnicode != unicode) {
             gravisuiteneo$scaledResolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
             gravisuiteneo$cachedDisplayWidth = mc.displayWidth;
             gravisuiteneo$cachedDisplayHeight = mc.displayHeight;
+            gravisuiteneo$cachedGuiScale = guiScale;
+            gravisuiteneo$cachedUnicode = unicode;
         }
         return gravisuiteneo$scaledResolution;
     }
