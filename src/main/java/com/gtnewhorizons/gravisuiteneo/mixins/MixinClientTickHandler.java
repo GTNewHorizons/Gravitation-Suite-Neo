@@ -6,6 +6,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -23,7 +24,7 @@ import ic2.api.item.IElectricItem;
 public class MixinClientTickHandler {
 
     @Unique
-    private static final String KEY_ENERGY_LEVEL = "message.text.energyLevel";
+    private static final String KEY_ENERGY_LEVEL = "message.hud.energyLevel";
     @Unique
     private static final String KEY_LEVITATION_MODE = "message.graviChestPlate.levitationMode.short";
     @Unique
@@ -33,7 +34,9 @@ public class MixinClientTickHandler {
     @Unique
     private static final String KEY_JETPACK_ENGINE = "message.advElJetpack.jetpackEngine";
     @Unique
-    private static final String KEY_ON = "message.text.on";
+    private static final String KEY_ENGINE_ON = "message.hud.engineOn";
+    @Unique
+    private static final String KEY_ENGINE_ON_WITH_MODE = "message.hud.engineOnWithMode";
 
     @Unique
     private static final int HUD_OFFSET = 3;
@@ -198,27 +201,15 @@ public class MixinClientTickHandler {
         Item it = item.getItem();
         int charge = 0;
         float energy = 0.0F;
-        String levitationModeStatus = "";
-        String levitationColorStatus = "";
-        String hoverModeStatus = "";
-        String hoverModeColorStatus = "";
 
         if (it == GraviSuite.graviChestPlate) {
             charge = ItemGraviChestPlate.getCharge(item);
             energy = charge / (float) ((IElectricItem) it).getMaxCharge(item) * 100.0F;
             if (ItemGraviChestPlate.readFlyStatus(item)) {
-                if (ItemGraviChestPlate.readWorkMode(item)) {
-                    String mode = I18n.format(KEY_LEVITATION_MODE);
-                    levitationModeStatus = "(" + mode + ")";
-                    levitationColorStatus = "\u00A7e(" + mode + ")";
-                }
-                gravisuiteneo$statusText = "\u00A7a" + I18n.format(KEY_GRAVITATION_ENGINE)
-                        + " "
-                        + I18n.format(KEY_ON)
-                        + levitationColorStatus;
-                gravisuiteneo$statusFontWidth = ClientTickHandler.mc.fontRenderer.getStringWidth(
-                        I18n.format(KEY_GRAVITATION_ENGINE) + " " + I18n.format(KEY_ON) + levitationModeStatus);
-                gravisuiteneo$hasStatusText = true;
+                gravisuiteneo$setStatusText(
+                        KEY_GRAVITATION_ENGINE,
+                        KEY_LEVITATION_MODE,
+                        ItemGraviChestPlate.readWorkMode(item));
             } else {
                 gravisuiteneo$statusText = "";
                 gravisuiteneo$hasStatusText = false;
@@ -236,38 +227,35 @@ public class MixinClientTickHandler {
         } else if (it == GraviSuite.advJetpack || it == GraviSuite.advNanoChestPlate) {
             charge = ItemAdvancedJetPack.getCharge(item);
             energy = charge / (float) ((IElectricItem) it).getMaxCharge(item) * 100.0F;
-            if (ItemAdvancedJetPack.readWorkMode(item)) {
-                String mode = I18n.format(KEY_HOVER_MODE);
-                hoverModeStatus = "(" + mode + ")";
-                hoverModeColorStatus = "\u00A7e(" + mode + ")";
-            }
             if (ItemAdvancedJetPack.readFlyStatus(item)) {
-                gravisuiteneo$statusText = "\u00A7a" + I18n.format(KEY_JETPACK_ENGINE)
-                        + " "
-                        + I18n.format(KEY_ON)
-                        + hoverModeColorStatus;
-                gravisuiteneo$statusFontWidth = ClientTickHandler.mc.fontRenderer
-                        .getStringWidth(I18n.format(KEY_JETPACK_ENGINE) + " " + I18n.format(KEY_ON) + hoverModeStatus);
-                gravisuiteneo$hasStatusText = true;
+                gravisuiteneo$setStatusText(KEY_JETPACK_ENGINE, KEY_HOVER_MODE, ItemAdvancedJetPack.readWorkMode(item));
             } else {
                 gravisuiteneo$statusText = "";
                 gravisuiteneo$hasStatusText = false;
             }
         }
 
-        String energyName = "" + I18n.format(KEY_ENERGY_LEVEL) + ":";
-        gravisuiteneo$energyText = energyName + getEnergyStatusText(energy);
-        gravisuiteneo$energyFontWidth = ClientTickHandler.mc.fontRenderer
-                .getStringWidth(energyName + Math.round(energy) + "%");
+        gravisuiteneo$energyText = I18n.format(KEY_ENERGY_LEVEL, getEnergyStatusText(energy));
+        gravisuiteneo$energyFontWidth = ClientTickHandler.mc.fontRenderer.getStringWidth(gravisuiteneo$energyText);
+    }
+
+    @Unique
+    private static void gravisuiteneo$setStatusText(String engineKey, String modeKey, boolean modeEnabled) {
+        String engine = I18n.format(engineKey);
+        gravisuiteneo$statusText = EnumChatFormatting.GREEN
+                + (modeEnabled ? I18n.format(KEY_ENGINE_ON_WITH_MODE, engine, I18n.format(modeKey))
+                        : I18n.format(KEY_ENGINE_ON, engine));
+        gravisuiteneo$statusFontWidth = ClientTickHandler.mc.fontRenderer.getStringWidth(gravisuiteneo$statusText);
+        gravisuiteneo$hasStatusText = true;
     }
 
     @Unique
     private static String getEnergyStatusText(float energy) {
         int rounded = Math.round(energy);
         if (energy > 5.0F && energy <= 10.0F) {
-            return "\u00A76" + rounded + "%";
+            return EnumChatFormatting.GOLD + "" + rounded + "%";
         } else if (energy <= 5.0F) {
-            return "\u00A7c" + rounded + "%";
+            return EnumChatFormatting.RED + "" + rounded + "%";
         }
         return "" + rounded + "%";
     }
