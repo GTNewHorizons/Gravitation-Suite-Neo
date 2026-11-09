@@ -23,6 +23,12 @@ public class MixinKeyboardClient {
         return Keyboard.KEY_NONE;
     }
 
+    // GraviSuite appends ": " twice when the HUD is enabled; ordinals 1 and 2 are that branch.
+    @ModifyConstant(method = "SwitchDisplayHud", constant = @Constant(stringValue = ": ", ordinal = 2), remap = false)
+    private static String gravisuiteneo$removeDuplicateColon(String original) {
+        return "";
+    }
+
     /**
      * @author glowredman
      * @reason Use IC2 API instead of hacky workaround
